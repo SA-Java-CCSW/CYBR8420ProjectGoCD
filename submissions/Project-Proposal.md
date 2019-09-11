@@ -15,7 +15,6 @@ GoCD has various ways to contribute to the project. Contributors can:
 ![Contributors Per Month](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/images/community.jpg)
 
 ### Activity
-
 This project has nearly 9,930 commits by around 217 contributors and over a 696,809 lines of code. Statistics for this project are analyzed from the [GoCD on OpenHub](https://www.openhub.net/p/gocd).
 
 ![Commit Activity of GoCD](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/images/activity.jpg)
@@ -24,6 +23,7 @@ This project has nearly 9,930 commits by around 217 contributors and over a 696,
 
 
 ### Popularity
+38 companies reportedly use GoCD in their tech stacks according to https://stackshare.io/go-cd  
 
 
 ### Languages Used
