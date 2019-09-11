@@ -26,7 +26,7 @@ This project has nearly 9,930 commits by around 217 contributors and over a 696,
 
 
 ### Languages Used
-The language used to develop GoCD is Java. GoCD uses a dialect of Java called JRuby on Rails. Some parts of the server use Groovy, another dialect of Java, HTML, XML, and CSS.
+The language used to develop GoCD is Java. GoCD uses a dialect of Java called JRuby on Rails. Some parts of the server use Groovy, another dialect of Java, HTML, XML, and CSS.  
 ![Languages Used](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/images/language.jpg)
 
 
