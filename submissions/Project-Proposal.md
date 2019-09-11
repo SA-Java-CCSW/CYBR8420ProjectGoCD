@@ -11,7 +11,8 @@ GoCD has various ways to contribute to the project. Contributors can:
 *Create a [plugin](https://docs.gocd.org/current/extension_points/plugin_user_guide.html) to extend the server's functionality.
 *Research and [report](https://hackerone.com/gocd) any security issue found in GoCD
 *Join [GoCD Forums](https://groups.google.com/forum/#!forum/go-cd) and discuss issues, features and ideas.
-*Contribute to GoCD's [blog](https://www.gocd.org/blog/).
+*Contribute to GoCD's [blog](https://www.gocd.org/blog/).  
+![Contributors Per Month](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/images/community.jpg)
 
 ### Activity
 
