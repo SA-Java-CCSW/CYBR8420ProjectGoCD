@@ -27,7 +27,7 @@ This project has nearly 9,930 commits by around 217 contributors and over a 696,
 
 ![Lines of Code](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/images/code.jpg)
 
-The software is a well established, mature project. The software project began in December 2013 and has an active community.
+The software is a well established, mature project. The software project began in December 2013 and has a large, active community.
 
 
 ### Popularity
@@ -57,7 +57,7 @@ For users, this application runs on browsers like Chrome. As a continuous delive
 
 
 ### Documentation Sources
-Main features and other detailed information is explained in [GoCD features page](https://www.gocd.org/why-gocd/). 
+Main features and other detailed information is explained in [GoCD features page](https://www.gocd.org/why-gocd/). Main documentation can be found on the [GoCD User Documentation](https://docs.gocd.org/current/) page.
 
 
 ### License
@@ -77,10 +77,10 @@ To contribute code to the software project, the process is as follows:
 7. The GoCD team will merge the request.
 
 ### Security History
-
+The software project uses [hackerone](https://hackerone.com/gocd/) to track security vulnerabilities. As of date, there are 40 security reports that have been posted and resolved.
 
 ### User Security Needs
-Below are some basic security needs that users would probably need from the software package and are a couple of scenarios to highlight how it might exist in many different types of environments.
+Some basic security needs are as follows:
 
 **User authentication** to protect data flow from unauthorized users and modifications.
 
@@ -89,14 +89,17 @@ Below are some basic security needs that users would probably need from the soft
 **Identity Access Management** to ensure different role of users could appropriately access to corresponding resources.
 > *Scenario: Ensure that an insider threat does not inject code into the build stream by accessing and modifying pipeline jobs through role permissions.*
     
-**Access controls** on stored data procedures. 
+**Access controls** on build chains.
+> *Scenario: Prevent an insider threat to modify a pipeline that should not be changed.*
        
 **Data Encryption** to protect data as it travels throughout build pipeline.
+> *Scenario: SSL/TSL is not properly implemented by the software, allowing for disclosure of data that could allow a threat to gather information that could lead in a software breach.*
 
 **Secure Configuration** to ensure build processes and automation remain secure.
 > *Scenario: GoCD is configured to build upon repository pull request. A malicious attacker can pull build and trigger GoCD to begin building malicious code.*
 
-**Principle of Least Privileges** to make sure the software using microservices are not compromised by trust relationships.
+**Principle of Least Privileges** to make sure the software using micro-services and plugins are not compromised by trust relationships.
+> *Scenario: Plugins give too much privileges by default.*
 
 Two major threats to the software are:
 
@@ -105,10 +108,12 @@ Two major threats to the software are:
 **Outsider Threats** such as cybercriminals.
         
 ### Security Features
-
+The software has built-in encryption with SSL/TSL, authentication features, access tokens for api calls, user authorization settings, and group permissions.
 
 ### Motivations
 The software is used for continuous integration in software development environments. Continuous integration is becoming more popular in Agile and DevOp teams as it allows for quicker development, testing and deployment of technology value streams. Continuous integration allows the code base to always be in a deployable state by merging all branches into a repository trunk through automation. Since Agile and DevOp methodologies focus on speed of deployment, security features within the software might be lacking against known threats to continuous integration.
+
+New research is being conducted on continuous integration software; such as the [CIDER framework](https://github.com/spaceB0x/cider). New security frameworks might help assure security on the software project.
 
 ### Project Links
 * Team Repository: https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD
