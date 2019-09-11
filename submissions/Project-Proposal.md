@@ -24,7 +24,7 @@ This project has nearly 9,930 commits by around 217 contributors and over a 696,
 
 ### Popularity
 38 companies reportedly use GoCD in their tech stacks according to https://stackshare.io/go-cd  
-
+![Popularity of GoCD](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/images/popularity.jpg)
 
 ### Languages Used
 The language used to develop GoCD is Java. GoCD uses a dialect of Java called JRuby on Rails. Some parts of the server use Groovy, another dialect of Java, HTML, XML, and CSS.  
