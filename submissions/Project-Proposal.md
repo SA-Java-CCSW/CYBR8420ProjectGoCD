@@ -19,7 +19,7 @@ This project has nearly 9,930 commits by around 217 contributors and over a 696,
 
 ![Commit Activity of GoCD](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/images/activity.jpg)
 
-![Lines of Code]()
+![Lines of Code](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/images/code.jpg)
 
 
 ### Popularity
