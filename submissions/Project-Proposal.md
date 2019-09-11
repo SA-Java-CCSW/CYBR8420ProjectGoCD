@@ -10,12 +10,12 @@ The software will be used in a hypothetical software development environment at 
 The software's [Contributor Guide](https://www.gocd.org/contribute/) describes how to contribute to the project. 
 
 There are various ways to contribute to the software project. Contributors can:
-*Test run the project and report discovered [issues](https://github.com/gocd/gocd/issues). 
-*Contribute code to the project by creating a [pull request] (https://github.com/gocd/gocd/).
-*Create a [plugin](https://docs.gocd.org/current/extension_points/plugin_user_guide.html) to extend the server's functionality.
-*Research and [report](https://hackerone.com/gocd) any security issue found in GoCD
-*Join [GoCD Forums](https://groups.google.com/forum/#!forum/go-cd) and discuss issues, features and ideas.
-*Contribute to GoCD's [blog](https://www.gocd.org/blog/). 
+* Test run the project and report discovered [issues](https://github.com/gocd/gocd/issues). 
+* Contribute code to the project by creating a [pull request] (https://github.com/gocd/gocd/).
+* Create a [plugin](https://docs.gocd.org/current/extension_points/plugin_user_guide.html) to extend the server's functionality.
+* Research and [report](https://hackerone.com/gocd) any security issue found in GoCD
+* Join [GoCD Forums](https://groups.google.com/forum/#!forum/go-cd) and discuss issues, features and ideas.
+* Contribute to GoCD's [blog](https://www.gocd.org/blog/). 
 
 ![Contributors Per Month](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/images/community.jpg)
 
@@ -42,14 +42,14 @@ The language used to develop GoCD is Java. GoCD uses a dialect of Java called JR
 
 ### Platform Used
 For project developers, the technology stack is as follows:
-*JDK 8 or above(OpenJDK or Oracle)
-*Git (1.9+)
-*NodeJS latest of 8.x (https://nodejs.org/en/download/)
-*Python 2.x [Note: Python 3 does NOT work]
-*yarn package manager (https://yarnpkg.com/en/docs/install)
-*gcc/g++ 6.x (linux only). CentOS/RH users can find it here. Ubuntu 12.04 and 14.04 users can find it here.
-*Microsoft Visual C++ Build Tools 2015 (Windows only).
-*Microsoft Build Tools 2015 (Windows only).
+* JDK 8 or above(OpenJDK or Oracle)
+* Git (1.9+)
+* NodeJS latest of 8.x (https://nodejs.org/en/download/)
+* Python 2.x [Note: Python 3 does NOT work]
+* yarn package manager (https://yarnpkg.com/en/docs/install)
+* gcc/g++ 6.x (linux only). CentOS/RH users can find it here. Ubuntu 12.04 and 14.04 users can find it here.
+* Microsoft Visual C++ Build Tools 2015 (Windows only).
+* Microsoft Build Tools 2015 (Windows only).
 
 Help setting up the environment can be found on GoCD's [documentation](https://developer.gocd.org/current/2/2.1.html).
 
@@ -95,12 +95,20 @@ Below are some basic security needs that users would probably need from the soft
 
 **Secure Configuration** to ensure build processes and automation remain secure.
 > *Scenario: GoCD is configured to build upon repository pull request. A malicious attacker can pull build and trigger GoCD to begin building malicious code.*
+
+**Principle of Least Privileges** to make sure the software using microservices are not compromised by trust relationships.
+
+Two major threats to the software are:
+
+**Insider Threats** such as developers inside the enterprise.
+
+**Outsider Threats** such as cybercriminals.
         
 ### Security Features
 
 
 ### Motivations
-The software is used for continuous integration in software development environments. Continuous integration is becoming more popular in Agile and DevOp teams as it allows for quicker development, testing and deployment of technology value streams. Continuous integration allows the code base to always be in a deployable state by merging all branches into a repository trunk through automation. Since the 
+The software is used for continuous integration in software development environments. Continuous integration is becoming more popular in Agile and DevOp teams as it allows for quicker development, testing and deployment of technology value streams. Continuous integration allows the code base to always be in a deployable state by merging all branches into a repository trunk through automation. Since Agile and DevOp methodologies focus on speed of deployment, security features within the software might be lacking against known threats to continuous integration.
 
 ### Project Links
 * Team Repository: https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD
