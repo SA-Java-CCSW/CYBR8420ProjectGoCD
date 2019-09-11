@@ -17,7 +17,7 @@ GoCD has various ways to contribute to the project. Contributors can:
 
 This project has nearly 9,930 commits by around 217 contributors and over a 696,809 lines of code. Statistics for this project are analyzed from the [GoCD on OpenHub](https://www.openhub.net/p/gocd).
 
-![Commit Activity of GoCD]()
+![Commit Activity of GoCD](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/images/activity.jpg)
 
 ![Lines of Code]()
 
