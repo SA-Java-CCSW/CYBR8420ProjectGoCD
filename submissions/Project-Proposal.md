@@ -51,13 +51,13 @@ For project developers, the technology stack is as follows:
 * Microsoft Visual C++ Build Tools 2015 (Windows only).
 * Microsoft Build Tools 2015 (Windows only).
 
-Help setting up the environment can be found on GoCD's [documentation](https://developer.gocd.org/current/2/2.1.html).
+Help setting up the environment can be found on GoCD's [Developer documentation](https://developer.gocd.org/current/2/2.1.html).
 
 For users, this application runs on browsers like Chrome. As a continuous delivery server, repository such as github and a deployment environment will be required.
 
 
 ### Documentation Sources
-Main features and other detailed information is explained in [GoCD features page](https://www.gocd.org/why-gocd/). Main documentation can be found on the [GoCD User Documentation](https://docs.gocd.org/current/) page.
+Main features and other detailed information is explained in [GoCD features page](https://www.gocd.org/why-gocd/). Main user documentation can be found on the [GoCD User Documentation](https://docs.gocd.org/current/) page. Other resources can be found at [GoCD Resources](https://www.gocd.org/resources/) page.
 
 
 ### License
