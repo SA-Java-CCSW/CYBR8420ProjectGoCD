@@ -1,10 +1,9 @@
 ## Project Proposal - GoCD
 GoCD is a free, open-source continuous delivery server. The server is meant to be used by software development teams in Agile or DevOp environments. The project is sponsored and maintained by [ThoughtWorks](https://www.thoughtworks.com/), a software development consulting company.
 
+The proposed project will involve software assurance analysis to be conducted on the GoCD. Software assurance will identify potential security weaknesses that exist during the project's intended use, and provide justifiable confidence that the software will run correctly under adverse conditions by testing with hypothetical threat environments.
+
 GoCD will be referred to as "software" in this proposal.
-
-The software will be used in a hypothetical software development environment at the enterprise level using the continuous integration methodology. The proposed project will involve software assurance analysis to be conducted on the software. Software assurance will identify potential security weaknesses that exist during the project's intended use, and provide justifiable confidence that the software will run correctly under adverse conditions under specific threat environments.
-
 
 ### Contributors
 The software project community invites all to contribute toward the software's use and improvement.
@@ -88,8 +87,11 @@ To contribute code to the software project, the process is as follows:
 ### Security History
 The software project uses [hackerone](https://hackerone.com/gocd/) to track security vulnerabilities. As of date, there are 40 security reports that have been posted and resolved.
 
+### Project Environment
+The software will be used in a hypothetical software development environment at the enterprise level using the continuous integration methodology. 
+
 ### User Security Needs
-The software requires security features to safegaurd information flow and system functions from unauthorized modification and disclosure.
+The software requires security features to safeguard information flow and system functions from unauthorized modification and disclosure.
 
 Two major threats to the software are:
 
@@ -122,7 +124,7 @@ Some basic security features required to ensure security are:
 
         
 ### Security Features
-The software has built-in encryption with SSL/TSL, authentication features, access tokens for api calls, user authorization settings, and group permissions. The software's security features are meant to protect and safeguard data flow from third-party ease-droppers and unauthorized modification. Some of the software's security features must first be configured to work correctly. Thus, depending on the enterprise's need  
+The software has built-in encryption with SSL/TSL, authentication features, access tokens for api calls, user authorization settings, and group permissions. The software's security features are meant to protect and safeguard data flow from third-party ease-droppers and unauthorized modification. Some of the software's security features must first be configured to work correctly. Thus, depending on the enterprise's need, the software's default configuration may not be secure.
 
 ### Motivations
 The software is used for continuous integration in software development environments. Continuous integration is becoming more popular in Agile and DevOp teams as it allows for quicker development, testing and deployment of technology value streams. Continuous integration allows the code base to always be in a deployable state by merging all branches into a repository trunk through automation. Since Agile and DevOp methodologies focus on speed of deployment, security features within the software might be lacking against known threats to continuous integration.
