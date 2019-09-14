@@ -1,7 +1,7 @@
 ## Project Proposal - GoCD
 GoCD is a free, open-source continuous delivery server. The server is meant to be used by software development teams in Agile or DevOp environments. The project is sponsored and maintained by [ThoughtWorks](https://www.thoughtworks.com/), a software development consulting company.
 
-The proposed project will involve software assurance analysis to be conducted on the GoCD. Software assurance will identify potential security weaknesses that exist during the project's intended use, and provide justifiable confidence that the software will run correctly under adverse conditions by testing with hypothetical threat environments.
+The proposed project will involve software assurance analysis to be conducted on GoCD. Software assurance will identify potential security weaknesses that exist during the project's intended use, and provide justifiable confidence that the software will run correctly under adverse conditions through testing with hypothetical threat environments.
 
 GoCD will be referred to as "software" in this proposal.
 
@@ -51,7 +51,7 @@ For project developers, the technology stack is as follows:
 * NodeJS latest of 8.x (https://nodejs.org/en/download/)
 * Python 2.x [Note: Python 3 does NOT work]
 * yarn package manager (https://yarnpkg.com/en/docs/install)
-* gcc/g++ 6.x (linux only). CentOS/RH users can find it here. Ubuntu 12.04 and 14.04 users can find it here.
+* gcc/g++ 6.x (linux only). 
 * Microsoft Visual C++ Build Tools 2015 (Windows only).
 * Microsoft Build Tools 2015 (Windows only).
 
