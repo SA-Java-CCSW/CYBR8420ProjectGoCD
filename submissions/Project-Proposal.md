@@ -1,12 +1,14 @@
 ## Project Proposal - GoCD
 GoCD is a free, open-source continuous delivery server. The server is meant to be used by software development teams in Agile or DevOp environments. The project is sponsored and maintained by [ThoughtWorks](https://www.thoughtworks.com/), a software development consulting company.
 
-GoCD will be referred to as "software" in this proposal. 
+GoCD will be referred to as "software" in this proposal.
 
-The software will be used in a hypothetical software development environment at the enterprise level using the continuous integration methodology. 
+The software will be used in a hypothetical software development environment at the enterprise level using the continuous integration methodology. The proposed project will involve software assurance analysis to be conducted on the software. Software assurance will identify potential security weaknesses that exist during the project's intended use, and provide justifiable confidence that the software will run correctly under adverse conditions under specific threat environments.
 
 
 ### Contributors
+The software project community invites all to contribute toward the software's use and improvement.
+
 The software's [Contributor Guide](https://www.gocd.org/contribute/) describes how to contribute to the project. 
 
 There are various ways to contribute to the software project. Contributors can:
@@ -16,6 +18,7 @@ There are various ways to contribute to the software project. Contributors can:
 * Research and [report](https://hackerone.com/gocd) any security issue found in GoCD
 * Join [GoCD Forums](https://groups.google.com/forum/#!forum/go-cd) and discuss issues, features and ideas.
 * Contribute to GoCD's [blog](https://www.gocd.org/blog/). 
+
 
 ![Contributors Per Month](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/images/community.jpg)
 
@@ -31,12 +34,14 @@ The software is a well established, mature project. The software project began i
 
 
 ### Popularity
-38 companies reportedly use GoCD in their technology stacks according to https://stackshare.io/go-cd  
+38 companies reportedly use the software in their technology stacks according to https://stackshare.io/go-cd  
+
 ![Popularity of GoCD](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/images/popularity.jpg)
 
 
 ### Languages Used
-The language used to develop GoCD is Java. GoCD uses a dialect of Java called JRuby on Rails. Some parts of the server use Groovy, another dialect of Java, HTML, XML, and CSS.  
+The language used to develop GoCD is Java. GoCD uses a dialect of Java called JRuby on Rails. Some parts of the server use Groovy, another dialect of Java. Other languages include HTML, XML, and CSS.  
+
 ![Languages Used](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/images/language.jpg)
 
 
@@ -53,7 +58,9 @@ For project developers, the technology stack is as follows:
 
 Help setting up the environment can be found on GoCD's [Developer documentation](https://developer.gocd.org/current/2/2.1.html).
 
-For users, this application runs on browsers like Chrome. As a continuous delivery server, repository such as github and a deployment environment will be required.
+The application interface runs on browsers like Chrome. 
+
+As a continuous delivery server, supporting systems such as a github repository and a deployment environment are required in order to use the software's intended functionality. 
 
 
 ### Documentation Sources
@@ -62,6 +69,8 @@ Main features and other detailed information is explained in [GoCD features page
 
 ### License
 GoCD is licensed under the [Apache License, version 2.0](https://www.apache.org/licenses/LICENSE-2.0). Our project adopts the same license.
+
+Contributors that add or modify code to the project must first sign the [Contributor License Agreement(CLA) form](https://www.gocd.org/contributor-license-agreement/) before the code is implemented in the software project.
 
 
 ### Procedure for making contributions
@@ -80,35 +89,40 @@ To contribute code to the software project, the process is as follows:
 The software project uses [hackerone](https://hackerone.com/gocd/) to track security vulnerabilities. As of date, there are 40 security reports that have been posted and resolved.
 
 ### User Security Needs
-Some basic security needs are as follows:
-
-**User authentication** to protect data flow from unauthorized users and modifications.
-
-**Data Integrity** to prevent accidental data loss, corruption and unintentional modifications.
-    
-**Identity Access Management** to ensure different role of users could appropriately access to corresponding resources.
-> *Scenario: Ensure that an insider threat does not inject code into the build stream by accessing and modifying pipeline jobs through role permissions.*
-    
-**Access controls** on build chains.
-> *Scenario: Prevent an insider threat to modify a pipeline that should not be changed.*
-       
-**Data Encryption** to protect data as it travels throughout build pipeline.
-> *Scenario: SSL/TSL is not properly implemented by the software, allowing for disclosure of data that could allow a threat to gather information that could lead in a software breach.*
-
-**Secure Configuration** to ensure build processes and automation remain secure.
-> *Scenario: GoCD is configured to build upon repository pull request. A malicious attacker can pull build and trigger GoCD to begin building malicious code.*
-
-**Principle of Least Privileges** to make sure the software using micro-services and plugins are not compromised by trust relationships.
-> *Scenario: Plugins give too much privileges by default.*
+The software requires security features to safegaurd information flow and system functions from unauthorized modification and disclosure.
 
 Two major threats to the software are:
 
 **Insider Threats** such as developers inside the enterprise.
 
-**Outsider Threats** such as cybercriminals.
+**Outsider Threats** such as cybercriminals outside the enterprise.
+
+Some basic security features required to ensure security are:
+
+**User authentication** to protect data flow from unauthorized modifications.
+> *Scenario: An outsider threat is able to exploit authentication mechanism of the software and modify information flow.*
+
+**Data Integrity** to prevent accidental data loss, corruption and unintentional modifications.
+> *Scenario: An outsider threat is able to disrupt information flow between supporting systems and the software.*
+    
+**Identity Access Management** to ensure different role of users could appropriately access to corresponding resources.
+> *Scenario: An insider threat does injects code into the build stream by accessing and modifying pipeline jobs through role permissions.*
+    
+**Access controls** on build chains.
+> *Scenario: An insider threat modifies a pipeline that should not be changed.*
+       
+**Data Encryption** to protect data as it travels throughout build pipeline.
+> *Scenario: SSL/TSL is not properly implemented by the software, allowing for disclosure of data that could allow a threat to gather information that could lead in a software breach.*
+
+**Secure Configuration** to ensure build processes and automation remain secure.
+> *Scenario: The software is configured to build upon repository pull request. An outsider threat can pull build and trigger the software to begin building malicious code.*
+
+**Principle of Least Privileges** to make sure the software using micro-services and plugins are not compromised by trust relationships.
+> *Scenario: Plugins give too much privileges by default allowing a threat to obtain elevated privileges on the system or software.*
+
         
 ### Security Features
-The software has built-in encryption with SSL/TSL, authentication features, access tokens for api calls, user authorization settings, and group permissions.
+The software has built-in encryption with SSL/TSL, authentication features, access tokens for api calls, user authorization settings, and group permissions. The software's security features are meant to protect and safeguard data flow from third-party ease-droppers and unauthorized modification. Some of the software's security features must first be configured to work correctly. Thus, depending on the enterprise's need  
 
 ### Motivations
 The software is used for continuous integration in software development environments. Continuous integration is becoming more popular in Agile and DevOp teams as it allows for quicker development, testing and deployment of technology value streams. Continuous integration allows the code base to always be in a deployable state by merging all branches into a repository trunk through automation. Since Agile and DevOp methodologies focus on speed of deployment, security features within the software might be lacking against known threats to continuous integration.
