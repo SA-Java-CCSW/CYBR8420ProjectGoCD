@@ -129,7 +129,7 @@ The software has built-in encryption with SSL/TSL, authentication features, acce
 ### Motivations
 The software is used for continuous integration in software development environments. Continuous integration is becoming more popular in Agile and DevOp teams as it allows for quicker development, testing and deployment of technology value streams. Continuous integration allows the code base to always be in a deployable state by merging all branches into a repository trunk through automation. Since Agile and DevOp methodologies focus on speed of deployment, security features within the software might be lacking against known threats to continuous integration.
 
-New research is being conducted on continuous integration software; such as the [CIDER framework](https://github.com/spaceB0x/cider). New security frameworks might help assure security on the software project.
+New research is being conducted on continuous integration software; such as the [CIDER framework](https://github.com/spaceB0x/cider). New security frameworks might help assure security on the software project. Recent risks with continuous integration tools are (being recognized)[https://thenewstack.io/poorly-configured-ci-cd-systems-can-be-a-backdoor-into-your-infrastructure/] by the security industry. Thus, conducting software assurance analysis on the proposed continuous integration software might identify weaknesses that can be resolved.
 
 ### Project Links
 * Team Repository: https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD
