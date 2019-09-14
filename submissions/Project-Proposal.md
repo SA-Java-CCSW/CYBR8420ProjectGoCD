@@ -24,13 +24,13 @@ There are various ways to contribute to the software project. Contributors can:
 
 
 ### Activity
-This project has nearly 9,930 commits by around 217 contributors and over a 696,809 lines of code. Statistics for this project are analyzed from the [GoCD on OpenHub](https://www.openhub.net/p/gocd).
+The software is a well established, mature project. The software project began in December 2013 and has a large, active community.
 
 ![Commit Activity of GoCD](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/images/activity.jpg)
 
-![Lines of Code](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/images/code.jpg)
+The software project has nearly 9,930 commits by around 217 contributors and over a 696,809 lines of code. Statistics for this project are analyzed from the [GoCD on OpenHub](https://www.openhub.net/p/gocd).
 
-The software is a well established, mature project. The software project began in December 2013 and has a large, active community.
+![Lines of Code](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/images/code.jpg)
 
 
 ### Popularity
@@ -58,7 +58,7 @@ For project developers, the technology stack is as follows:
 
 Help setting up the environment can be found on GoCD's [Developer documentation](https://developer.gocd.org/current/2/2.1.html).
 
-The application interface runs on browsers like Chrome. 
+The software application interface runs on browsers like Chrome. 
 
 As a continuous delivery server, supporting systems such as a github repository and a deployment environment are required in order to use the software's intended functionality. 
 
@@ -68,9 +68,9 @@ Main features and other detailed information is explained in [GoCD features page
 
 
 ### License
-GoCD is licensed under the [Apache License, version 2.0](https://www.apache.org/licenses/LICENSE-2.0). Our project adopts the same license.
+The software is licensed under the [Apache License, version 2.0](https://www.apache.org/licenses/LICENSE-2.0). Our project adopts the same license.
 
-Contributors that add or modify code to the project must first sign the [Contributor License Agreement(CLA) form](https://www.gocd.org/contributor-license-agreement/) before the code is implemented in the software project.
+Contributors that add or modify code to the software project must first sign the [Contributor License Agreement(CLA) form](https://www.gocd.org/contributor-license-agreement/) before the code is implemented in the software project.
 
 
 ### Procedure for making contributions
