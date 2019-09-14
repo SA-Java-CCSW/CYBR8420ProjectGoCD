@@ -13,7 +13,7 @@ The software's [Contributor Guide](https://www.gocd.org/contribute/) describes h
 
 There are various ways to contribute to the software project. Contributors can:
 * Test run the project and report discovered [issues](https://github.com/gocd/gocd/issues). 
-* Contribute code to the project by creating a [pull request] (https://github.com/gocd/gocd/).
+* Contribute code to the project by creating a [pull request](https://github.com/gocd/gocd/).
 * Create a [plugin](https://docs.gocd.org/current/extension_points/plugin_user_guide.html) to extend the server's functionality.
 * Research and [report](https://hackerone.com/gocd) any security issue found in GoCD
 * Join [GoCD Forums](https://groups.google.com/forum/#!forum/go-cd) and discuss issues, features and ideas.
