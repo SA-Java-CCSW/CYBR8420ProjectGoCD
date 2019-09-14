@@ -91,7 +91,7 @@ Since the software's main interface is a web application, most of the reported s
 
 The software has had various weaknesses through its [enabling systems in the past](https://www.gocd.org/2015/11/09/deserialization-vulnerability-commons-collections/). Although out-of-scope for the proposed project, it should be noted the software community promptly released patches for the software to protect users from discovered weaknesses using the enabling system.
 
-The software does not have all possible [security features turned on upon installation](https://www.gocd.org/2019/03/19/user-authorization-ldap/). Default configuration of the software might be insufficient and open security weaknesses under certain threat environments.
+The software does not have all possible [security features turned on upon installation](https://www.gocd.org/2019/03/19/user-authorization-ldap/). Default configuration of the software might create security weaknesses under certain threat environments if left unchanged.
 
 ### Project Environment
 The software will be used in a hypothetical software development environment at the enterprise level using the continuous integration methodology. 
