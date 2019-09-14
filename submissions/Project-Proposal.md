@@ -85,7 +85,9 @@ To contribute code to the software project, the process is as follows:
 7. The GoCD team will merge the request.
 
 ### Security History
-The software project uses [hackerone](https://hackerone.com/gocd/) to track security vulnerabilities. As of date, there are 40 security reports that have been posted and resolved.
+The software project uses [hackerone](https://hackerone.com/gocd/) to track security weaknesses. As of date, there are 40 security reports that have been posted and resolved.
+
+Since the software's main interface is a web application, most of the reported security weaknesses are known web application vulnerabilities; such as cross-site scripting or cross-site request forgery. 
 
 ### Project Environment
 The software will be used in a hypothetical software development environment at the enterprise level using the continuous integration methodology. 
