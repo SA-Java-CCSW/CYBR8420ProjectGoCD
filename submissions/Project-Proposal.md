@@ -107,10 +107,10 @@ Some basic security features required to ensure security are:
 **Data Integrity** to prevent accidental data loss, corruption and unintentional modifications.
 > *Scenario: An outsider threat is able to disrupt information flow between supporting systems and the software.*
     
-**Identity Access Management** to ensure different role of users could appropriately access to corresponding resources.
-> *Scenario: An insider threat does injects code into the build stream by accessing and modifying pipeline jobs through role permissions.*
+**Identity Access Management** to ensure users only access resources that correspond to the user's given role.
+> *Scenario: An insider threat injects code into the build stream by accessing and modifying software functionality through ineffective role permissions.*
     
-**Access controls** on build chains.
+**Access controls** on software functions.
 > *Scenario: An insider threat modifies a pipeline that should not be changed.*
        
 **Data Encryption** to protect data as it travels throughout build pipeline.
