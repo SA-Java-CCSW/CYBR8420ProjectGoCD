@@ -10,7 +10,7 @@ First, we briefly defined security requirements of GoCD by following environment
 ##### Data Flows
 1. Data Flow 1
 2. User Creates Value Stream Map (VSM) - *Example: User login GoCD to create end-to-end from commit to deployment workflow or the so-called Value Stream Map (VSM)*
-3. Data Flow 3
+3. Internal cluster communication when user run job in group of agents -  run the Job on all agents that match the environment and resources specified in the job.
 4. Data Flow 4
 5. Data Flow 5
 
