@@ -20,7 +20,8 @@ First, we briefly defined security requirements of GoCD by following environment
 
 ##### Use Case 1
 
-##### Use Case 2
+##### User Creates Value Stream Map (VSM)
+![Malicous User Modifies VSM](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/UseCase2/MisuseCases/UserCreatesVSM.png)
 
 ##### Use Case 3
 
