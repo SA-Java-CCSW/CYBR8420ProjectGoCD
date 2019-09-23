@@ -22,6 +22,18 @@ First, we briefly defined security requirements of GoCD by following environment
 
 ##### User Creates Value Stream Map (VSM)
 ![Malicous User Modifies VSM](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/MisuseCases/UserCreatesVSM.png)
+GoCD is a best-of-breed tool for Continuous Delivery (CD) which allows a software development team to get changes of all types—including new features, configuration changes, bug fixes and experiments—into production, or into the hands of customers as quickly as possible. The most important use case in GoCD is to let users create an end-to-end from commit to deployment workflow or the so-called Value Stream Map (VSM). VSM helps you visualize your entire CI/CD workflow and allows you to trace a commit from when it is checked in up to when it is deployed. VSM is laid out as an end-to-end dependency graph originating from source control materials and flows from left to right passing various pipelines. Check [GoCD User Documentation](https://docs.gocd.org/current/navigation/value_stream_map.html) for more info. A GoCD pipeline consists of one or more "stages", each stage consists of one or more "jobs" and each job is made up of one or more "tasks". Each stage must run sequentially, but multiple jobs in the same stage are independent of each other and can be run in parallel at the same time. Each task in a job must run sequentially as well. Check [GoCD Get Started Tutorial](https://www.gocd.org/getting-started/part-1/#concept4) for more info about these key concepts in GoCD.
+
+The misuse case mainly focused on configuring tasks of GoCD jobs in the GoCD pipelines by unauthorized internal Malicious user. Different operations can be performed to inject malicious codes into final deployed product. GoCD has implemented the protection mechanism for the role-based user access. Ways to control what data users can have access to and what tasks they can perform based on the security privileges are clearly documented in the [GoCD User Documentation](https://docs.gocd.org/current/configuration/dev_authorization.html)
+
+Security Requirements
+* Role-based access control should be enabled to prevent users from performing unauthorized actions on configuring the entire VSM workflow.
+* Enable the IP filtering feature to prevent blacklisted IP’s from joining the GoCD Server. For example, the external attacker attempting to join the GoCD Server without permissions.
+
+GoCD seems to have Role-based access control feature. Role based access controls and security privileges are very clearly documented in their documentation [Role based access controls page](https://docs.gocd.org/current/configuration/dev_authorization.html). 
+
+From my observation, GoCD failed in securing the file-based user login data which is stored in the GoCD Server from the Ransomware attack. A feature of IP filtering through which only whitelisted ones only can access and perform certain operations on GoCD Server should be added. In addition, Duo Mobile authentication is highly recommended to improve its user login security.
+
 
 ##### Use Case 3
 
