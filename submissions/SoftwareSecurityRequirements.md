@@ -34,6 +34,7 @@ GoCD seems to have Role-based access control feature. Role based access controls
 
 From my observation, GoCD failed in securing the file-based user login data which is stored in the GoCD Server from the Ransomware attack. A feature of IP filtering through which only whitelisted ones only can access and perform certain operations on GoCD Server should be added. In addition, Duo Mobile authentication is highly recommended to improve its user login security.
 
+
 ##### Use Case 3
 
 #####  Use Case 4
