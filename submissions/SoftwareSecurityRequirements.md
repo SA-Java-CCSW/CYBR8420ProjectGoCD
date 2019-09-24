@@ -15,6 +15,10 @@ First, we briefly defined security requirements of GoCD by following environment
 5. Data Flow 5
 
 ##### Threat Actor Examples
+There are many threat actors that might want to attack an GoCD Server when it contains valuable software to be deployed.  Threat actors might also want to disrupt the functions that GoCD provides to the software development team.  The following are some examples of threat actors identified for this scenario.
+1. Ransomware Authors
+2. Malicious Insider User
+3. Hacktivist Agents
 
 ### Use Cases / Misuse Cases
 
