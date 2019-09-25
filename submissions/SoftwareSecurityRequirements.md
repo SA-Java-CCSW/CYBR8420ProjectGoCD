@@ -10,7 +10,7 @@ First, we briefly defined security requirements of GoCD by following environment
 ##### Data Flows
 1. Data Flow 1
 2. User Creates Value Stream Map (VSM) - *Example: User login GoCD to create end-to-end from commit to deployment workflow or the so-called Value Stream Map (VSM)*
-3. Data Flow 3
+3. Run Single Instance of Pipeline and Lock on Failure - *The pipeline is not unlocked if it reaches a manual stage. If a pipeline is locked, it will not allow any new instances to run, unless it is unlocked, either manually or through the API.*
 4. Data Flow 4
 5. Data Flow 5
 
