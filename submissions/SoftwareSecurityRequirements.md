@@ -8,21 +8,34 @@ First, we briefly defined security requirements of GoCD by following environment
 
 
 ##### Data Flows
-1. Data Flow 1
-2. User Creates Value Stream Map (VSM) - *Example: User login GoCD to create end-to-end from commit to deployment workflow or the so-called Value Stream Map (VSM)*
+1. User Login & Management - *Example: GoCD System Administrator enables one or more chosen authentication methods and manages users with proper permissions via user/role based authorization*
+2. User Creates Value Stream Map (VSM) - *Example: User creates end-to-end from commit to deployment workflow or the so-called Value Stream Map (VSM)*
 3. Pipeline Locking: Run Instance of Pipeline - *The pipeline is not unlocked if it reaches a manual stage. If a pipeline is locked, it will not allow any new instances to run, unless it is unlocked, either manually or through the API.*
 4. Data Flow 4
 5. Data Flow 5
 
 ##### Threat Actor Examples
 There are many threat actors that might want to attack an GoCD Server when it contains valuable software to be deployed.  Threat actors might also want to disrupt the functions that GoCD provides to the software development team.  The following are some examples of threat actors identified for this scenario.
-1. Ransomware Authors
+1. External Attacker
 2. Malicious Insider User
 3. Hacktivist Agents
 
 ### Use Cases / Misuse Cases
 
-##### Use Case 1
+##### User Login & Management
+![Malicous User Modifies VSM](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/MisuseCases/UserManagement.png) 
+A newly installed GoCD server does not require users to authenticate which is great for a test drive of GoCD. However, enabling authentication is one of the first things you should do, as soon as you decide to use GoCD more widely. GoCD provides many different authentication plugins. Two authentication plugins are bundled with GoCD installation. One is password file based authentication which allows you to create an encrypted username/password file saved on the GoCD Server via the plugin command line interface (CLI) or the htpasswd program from Apache Web Server package. It is highly recommended to force password hashing with bcrypt which is currently considered to be very secure. The other is the popular LDAP server based authentication. Besides these two bundled authentication plugins, GoCD also provides optional third-party authentication plugins such as Google OAuth or Github OAuth plugins which requires installation. One security issue with LDAP server and other OAuth third-party authentication is that by default GoCD allow users to automatically login via third-party plugin authentication into GoCD, even if these users haven't been explicitly added to GoCD. This is convenient for GoCD Admins to add new users, but should be disabled for security reasons explained later. Once authentication is enabled, the default is that any user can perform any operation. Specifying administrators(Admin) is optional – without it, all users are automatically made Admins(newly added users can be GoCD Admins). However, once a user is specified as GoCD Admin, other users will lose their Admin permissions unless they are specified as Admins as well. Only GoCD Admins are able to authorize users with different permissions via its role-based authorization. A role in GoCD is just a group of users which can be assigned with different permissions. Only GoCD Admins are able to create new pipeline groups and assign specified user or role as Pipeline Group Admins(PGA). PGA has permission to control which users/roles have view/operate/admin permissions for their assigned pipeline group. If GoCD Admin does not set any permission control on a newly created pipeline group, then any user is able to view/operate pipelines defined in that pipeline group. Only GoCD Admins are able to create new pipeline templates and assign specified user or role as Pipeline Template Admins(PTA). PTA has permission to create/modify stages in their assigned pipeline template. 
+
+The misuse case mainly focused on blackmailing GoCD users for money by external attackers via DoS(Denial of Service) attack/getting unauthorized permissions/Unauthored logins. DoS attacks could threaten user's ability to login GoCD which could be prevented by implementing a feature to limit IP range/Add Duo Mobile authentication. Getting unauthorized permission could threaten the entire process of GoCD pipeline configuration which could be prevented by user/role-based authorization. Unauthorized auto-login could threaten every aspect of GoCD administration if an auto-login user is added as GoCD Admin, which can be prevented by disabling user login without existing accounts.
+
+Security Requirements
+* Role-based access control should be enabled to prevent users from getting unauthorized permissions on the entire configuring process of GoCD pipeline.
+* Automatically login via third-party plugin authentication into GoCD should be disabled to prevent new users from becoming GoCD Admins automatically. 
+* A feature to limit IP range/Add Duo Mobile authentication to the user Sign-in service should be implemented to prevent DoS attacks.
+
+GoCD seems to have Role-based access control feature enabled. Role based access controls and security privileges are very clearly documented in their documentation [Role based access controls page](https://docs.gocd.org/current/configuration/dev_authorization.html). However, it should disable auto-login via third-party plugin authentication into GoCD by default. 
+
+From my observation, GoCD failed in securing the user login service from DoS attacks and a feature to limit IP range/Add Duo Mobile authentication is highly recommended.
 
 ##### User Creates Value Stream Map (VSM)
 ![Malicous User Modifies VSM](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/MisuseCases/UserCreatesVSM2.png)
