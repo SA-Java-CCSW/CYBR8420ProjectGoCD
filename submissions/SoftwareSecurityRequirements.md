@@ -22,21 +22,33 @@ GoCD Server Specifications
 
 ![System Engineering View of GoCD](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/MisuseCases/SystemEngineeringView.png)
 
+
 The organization has the following stakeholders that depend on the security of GoCD:
 
 **Executive Management** are concerned with creating competitive advantage by using GoCD with it's DevOPs transformation. Security violations can damage the organization's profit margins and reputation.
+
 **DevOPs Team** are concerned with the success of the project. Security violations can adversely impact the success of their project.
+
 **Clients** are concerned about the image of their brand. Security violations can damage their reputation.
+
 **Consumers** are trusting the website they visit will be secure and free of malicious code.
 
-DevOPs Team
+DevOPs Team members include the following:
+
 **DevOps Evangelist** is the leader of the DevOPs transition project for the organization; seeking executive support and organizing DevOP software projects.
+
 **Software Developer** are the programmers and developers producing the code.
+
 **Security and Compliance Engineers** are responsible to meet security and compliance requirements for the project working in conjuction with DevOP developers.
+
 **Release Manager** is responsible for coordinating development, testing, and deployment of the project.
+
 **Automation Architect** is responsible for designing and creating GoCD pipelines for continuous delivery.
+
 **QA Tester** responsible for creating automated and manual Jobs and Tasks for quality assurance purposes.
+
 **Utility Technology Professionals** (or System Administrators) are responsible for setting up external systems; such as the git repositories and webserver. 
+
 
 ##### Data Flows
 1. User Login & Management - *Example: GoCD System Administrator enables one or more chosen authentication methods and manages users with proper permissions via user/role based authorization*
