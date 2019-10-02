@@ -12,7 +12,7 @@ First, we briefly defined security requirements of GoCD by following environment
 2. User Creates Value Stream Map (VSM) - *Example: User creates end-to-end from commit to deployment workflow or the so-called Value Stream Map (VSM)*
 3. Pipeline Locking: Run Instance of Pipeline - *The pipeline is not unlocked if it reaches a manual stage. If a pipeline is locked, it will not allow any new instances to run, unless it is unlocked, either manually or through the API.*
 4. Data Flow 4
-5. Plugin Add/Delete/Configure: Add/Delete a plugin to GoCD server. Plugin is an extension to GoCD server which can help GoCD operation.*Example: Yum Repository Poller is installed to GoCD server, it helps polling yum repositories for rpm packages, and GoCD server interacts with this plugin via package material plugin interfaces.
+5. Plugin Add/Delete/Configure: Add/Delete a plugin to GoCD server. Plugin is an extension to GoCD server which can help GoCD operation.*Example: Yum Repository Poller is installed to GoCD server, it helps polling yum repositories for rpm packages, and GoCD server interacts with this plugin via package material plugin interfaces.*
 
 ##### Threat Actor Examples
 There are many threat actors that might want to attack an GoCD Server when it contains valuable software to be deployed.  Threat actors might also want to disrupt the functions that GoCD provides to the software development team.  The following are some examples of threat actors identified for this scenario.
@@ -70,7 +70,7 @@ I assumed the reason for the option to lock a pipeline is to prevent it from run
 #####  Use Case 4
 
 #####  Add/Delete Plugin to GoCD Server
-![Go Plugin add/delete/upgrade](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/MisuseCases/GoPluginUseCase.png)
+![Go Plugin add/delete/upgrade](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/SReq_s/MisuseCases/GoPluginUseCase.png)
 Plugins allow user to extend the functionalty of GoCD. Different kinds of plugins can be added to GoCD server. There are two types of plugins: Bundled plugins and External plugins. Bundled plugins are developed and supported by Thoughtworks GoCD development team. External plugins are all user authored plugins. GoCD server upgrade won't alter External plugins. Access to the GoCD server machine to be able to install/uninstall a plugin. To install a plugin, drop the plugin jar under the external plugin directory and restart GoCD server. To uninstall a plugin, remove the plugin jar from the external plugin directory on server and restart GoCD server. Plugins installed on GoCD server can also be upgraded. Admin users are allowed to check the plugin's status and failed reason. A malicious user might wants to change how the plugin runs in the GoCD server either by modify plugin identification id or fake authentification to request plugin information to GoCD server. A plugin metadata file should be used to maitain plugin unique id and admin user authentication methods mentioned in "User Login & Manangement" use case should help prevent it.
 
 Security Requirements
