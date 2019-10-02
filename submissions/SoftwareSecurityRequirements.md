@@ -43,7 +43,7 @@ DevOPs Team
 2. User Creates Value Stream Map (VSM) - *Example: User creates end-to-end from commit to deployment workflow or the so-called Value Stream Map (VSM)*
 3. Pipeline Locking: Run Instance of Pipeline - *The pipeline is not unlocked if it reaches a manual stage. If a pipeline is locked, it will not allow any new instances to run, unless it is unlocked, either manually or through the API.*
 4. Trigger Pipeline Events - *Example: GoCD will trigger pipelines either automatically or manually depending on configuration settings. If the github repository has unauthorized commits, a GoCD setup with automatic build could introduce malicious code.
-5. Data Flow 5
+5. Plugin Add/Delete/Configure: Add/Delete a plugin to GoCD server. Plugin is an extension to GoCD server which can help GoCD operation.*Example: Yum Repository Poller is installed to GoCD server, it helps polling yum repositories for rpm packages, and GoCD server interacts with this plugin via package material plugin interfaces.*
 
 ##### Threat Actor Examples
 There are many threat actors that might want to attack an GoCD Server when it contains valuable software to be deployed.  Threat actors might also want to disrupt the functions that GoCD provides to the software development team.  The following are some examples of threat actors identified for this scenario.
@@ -107,7 +107,28 @@ GoCD's role-based authorization is used to protect and insider threat to modify 
 
 Risks from external threats exist when GoCD polls material components from a repository over the network. First, GoCD requires in-transit encryption to protect against network easedropping and prevent unauthorized disclosure of information to an external threat. GoCD provides SSL/TSL encryption to protect material polling over the network and should be configured to protect against this threat. If an external threat is able to spoof a repository source to a repository containing malicious code, some form of integrity check should be provided to protect against a repository source spoofing attack. Finally, network validation should be implemented on GoCD's network interface to protect against network attacks, such as malformed network packets sent by an external threat to cause system crashes.
 
-##### Use Case 5
+#####  Add/Delete Plugin to GoCD Server
+![Go Plugin add/delete/upgrade](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/SReq_s/MisuseCases/GoPluginUseCase.png)
+Plugins allow user to extend the functionalty of GoCD. Different kinds of plugins can be added to GoCD server. There are two types of plugins: Bundled plugins and External plugins. Bundled plugins are developed and supported by Thoughtworks GoCD development team. External plugins are all user authored plugins. GoCD server upgrade won't alter External plugins. Access to the GoCD server machine to be able to install/uninstall a plugin. To install a plugin, drop the plugin jar under the external plugin directory and restart GoCD server. To uninstall a plugin, remove the plugin jar from the external plugin directory on server and restart GoCD server. Plugins installed on GoCD server can also be upgraded. Admin users are allowed to check the plugin's status and failed reason. A malicious user might wants to change how the plugin runs in the GoCD server either by modify plugin identification id or fake authentification to request plugin information to GoCD server. A plugin metadata file should be used to maitain plugin unique id and admin user authentication methods mentioned in "User Login & Manangement" use case should help prevent it.
+
+Security Requirements
+* maintain uniqiue plugin id and metadata for plugin validation and security
+* add/delete/modify plugin should take effect only when GoCD server is restarted
+* an analysis utility should be avaliable so that users can commuicate with GoCD server about plugin status and settings.
+
+From GoCD documentation, structure of a GoCD Plugin is a self contained plugin jar file. The jar file should contain plugin.xml (metadata of plugin), plugin extension class, and optional dependencies. Each plugin is assigned an identifier determined either by the id attribute in plugin metadata file or assigned as plugin jar file name. 
+
+Plugin Tab is under GoCD Server Administration. It shows all currently loaded plugins with details and status. It also marks invalid/incompatible plugin and reports the reasons.
+[GoCD Plugin User Guide](https://docs.gocd.org/current/extension_points/plugin_user_guide.html)
+Available plugins in GoCD includes Yum Repository Poller, SCM externsion, Task externsion, etc. check [GoCD Plugins](https://www.gocd.org/plugins/) for available plugins. They are grouped into artifact plugins, authorization plugins, configuration repository, elastic agents plugins, notification plugins, package repository plugins, SCM plugins, Secrets plugins, Task plugins and Commecial Offerings.
+
+Add/delete/upgrade of a plugin will take effect only after a GoCD server restarts.
+Two plugins can't have same id. If two external plugins with same id are available, then only one of them will be loaded successfully with no specific order. If one external plugin and one bundled plugin has same id, then the bundled plugin will always be loaded.
+
+An analytics extension point can be implemented when a plugin implements these four messages: Get Capabilities, Get Static Assets, Get Analytics, Plugin Settings Changed. To allow users to configure a plugin through the browsers, the plugin should implement thess four geneal purpose messages: Get Plugin Icon, Get Settings View, Get Plugin Configuration, Validate Plugin Configuration. Refer to [GoCD Plugin API](https://plugin-api.gocd.org/current/#introduction) for more information. Request to GoCD server can be sent as JSON object, and Response is also JSON object.
+
+[GoCD Server Backup](https://docs.gocd.org/current/advanced_usage/one_click_backup.html) doesn't backup plugins. It backups Database, Configuration, XML Configuration Version Repo, GoCD version.
+
 
 ### Documentation Review
 ##### Installation Settings
