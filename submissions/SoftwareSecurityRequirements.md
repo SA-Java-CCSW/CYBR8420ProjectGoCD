@@ -53,7 +53,20 @@ From my observation, GoCD successfully prevents users from getting unauthorized 
 
 
 ##### Use Case 3
+##### User runs single/multiple instances of pipeline
+
 ![Pipeline Locking: Run Instance of Pipeline](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/MisuseCases/RunPipelineInstance.png)
+
+Sometimes user wants to make sure that there has only a single instance of a pipeline is running. It is very important that the stages of a pipeline are interrelated. Here is the example, if the first stage may set up an environment, however, that environment is already used by the next stage in the pipeline. Thus, GoCD come up with a solution. If a pipeline is locked, GoCD will not allow any other instance of that pipeline to be scheduled until the currently running one has been completed. When pipeline finishes, no matter it is end up with failure of any stage or success of the final stage, the pipeline is automatically unlocked to achieve the principle. However, pipeline could also be unlocked if reaches a manual stage, which means there is a window that allows malicious agent who reaches this stage and unlock the pipeline maliciously to make pipeline continue operate in the incorrect way. 
+
+What's more, misuse case could also happen when developer wants to controll locking behavior from the config XML. To understand more detail about GoCD configuration reference, link below provide detail of [GoCD Configuration Reference](https://docs.gocd.org/current/configuration/configuration_reference.html#pipeline).
+
+Security Requirements
+* When instances in pipeline sometime need to ensure only one single instance of pipe line can run at a time, GoCD should remain the instances' consistency. 
+* Make sure stages of pipeline are not related in aspects such as resources, because different stages require the same resource might cause "deadlock".
+
+I assumed the reason for the option to lock a pipeline is to prevent it from running on multiple agents concurrently. But if a stage fails, the pipeline is over, seems it is not necessary to ask developer to resume manually, it could just show message and automatically start over again after bug fixed. Pipeline staying locked even if the stage fails was intentional. Consider a deployment pipeline. If the pipeline fails at a stage then it could be due to some environment issues which needs to be sorted before the stage could proceed and there is no point for another instance to start running. But if the issue is with deployment script then another checkin is needed and the pipeline should get triggered even if some stage had failed. So essentially user should have an option to unlock it if needed. Exact approach yet to be decided.
+
 #####  Use Case 4
 
 ##### Use Case 5
