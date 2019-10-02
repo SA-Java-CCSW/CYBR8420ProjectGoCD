@@ -70,18 +70,15 @@ I assumed the reason for the option to lock a pipeline is to prevent it from run
 #####  Use Case 4
 
 #####  Add/Delete Plugin to GoCD Server
-plugins allow user to extend the functionalty of GoCD. Structure of a GoCD Plugin is a self contained plugin jar file. The jar file should contain plugin.xml (metadata of plugin), plugin extension class, and optional dependencies. Each plugin is assigned an identifier determined either by the id attribute in plugin metadata file or assigned as plugin jar file name. There are two types of plugins: Bundled plugins and External plugins. Bundled plugins are developed and supported by Thoughtworks GoCD development team. External plugins are all user authored plugins. GoCD server upgrade won't alter External plugins.
-
-access to the GoCD server machine to be able to install/uninstall a plugin. To install a plugin, drop the plugin jar under the external plugin directory and restart GoCD server. To uninstall a plugin, remove the plugin jar from the external plugin directory on server and restart GoCD server.
-
-
-
+![Go Plugin add/delete/upgrade](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/MisuseCases/GoPluginUseCase.png)
+Plugins allow user to extend the functionalty of GoCD. Different kinds of plugins can be added to GoCD server. There are two types of plugins: Bundled plugins and External plugins. Bundled plugins are developed and supported by Thoughtworks GoCD development team. External plugins are all user authored plugins. GoCD server upgrade won't alter External plugins. Access to the GoCD server machine to be able to install/uninstall a plugin. To install a plugin, drop the plugin jar under the external plugin directory and restart GoCD server. To uninstall a plugin, remove the plugin jar from the external plugin directory on server and restart GoCD server. Plugins installed on GoCD server can also be upgraded. Admin users are allowed to check the plugin's status and failed reason. A malicious user might wants to change how the plugin runs in the GoCD server either by modify plugin identification id or fake authentification to request plugin information to GoCD server. A plugin metadata file should be used to maitain plugin unique id and admin user authentication methods mentioned in "User Login & Manangement" use case should help prevent it.
 
 Security Requirements
 * maintain uniqiue plugin id and metadata for plugin validation and security
 * add/delete/modify plugin should take effect only when GoCD server is restarted
 * an analysis utility should be avaliable so that users can commuicate with GoCD server about plugin status and settings.
 
+From GoCD documentation, structure of a GoCD Plugin is a self contained plugin jar file. The jar file should contain plugin.xml (metadata of plugin), plugin extension class, and optional dependencies. Each plugin is assigned an identifier determined either by the id attribute in plugin metadata file or assigned as plugin jar file name. 
 
 Plugin Tab is under GoCD Server Administration. It shows all currently loaded plugins with details and status. It also marks invalid/incompatible plugin and reports the reasons.
 [GoCD Plugin User Guide](https://docs.gocd.org/current/extension_points/plugin_user_guide.html)
