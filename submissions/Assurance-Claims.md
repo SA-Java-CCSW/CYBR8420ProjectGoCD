@@ -1,5 +1,6 @@
 ## Assurance Claim - 1: 
 **Top Claim 1:**
+![Preventions of unauthorized access](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/AssuranceClaims/GoCDPreventsUnauthorizedAccess.png)
 
 ## Assurance Claim - 2: 
 **Top Claim 2:**
