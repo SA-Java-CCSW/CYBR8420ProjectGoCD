@@ -10,6 +10,8 @@
 ## Assurance Claim - 4: 
 **Top Claim 4:**
 
+![Preventions of unauthorized access](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/AssuranceClaim4/AssuranceClaims/Assurance_Claim_4.png)
+
 ## Assurance Claim - 5: 
 **Top Claim 5:**
 
