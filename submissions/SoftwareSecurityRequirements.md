@@ -124,7 +124,7 @@ Risks from external threats exist when GoCD polls material components from a rep
 
 ##### Use Case 5
 #####  Add/Delete Plugin to GoCD Server
-![Go Plugin add/delete/upgrade](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/SReq_s/MisuseCases/GoPluginUseCase.png)
+![Go Plugin add/delete/upgrade](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/MisuseCases/GoPluginUseCase.png)
 Plugins allow user to extend the functionalty of GoCD. Different kinds of plugins can be added to GoCD server. There are two types of plugins: Bundled plugins and External plugins. Bundled plugins are developed and supported by Thoughtworks GoCD development team. External plugins are all user authored plugins. GoCD server upgrade won't alter External plugins. Access to the GoCD server machine to be able to install/uninstall a plugin. To install a plugin, drop the plugin jar under the external plugin directory and restart GoCD server. To uninstall a plugin, remove the plugin jar from the external plugin directory on server and restart GoCD server. Plugins installed on GoCD server can also be upgraded. Admin users are allowed to check the plugin's status and failed reason. A malicious user might wants to change how the plugin runs in the GoCD server either by modify plugin identification id or fake authentification to request plugin information to GoCD server. A plugin metadata file should be used to maitain plugin unique id and admin user authentication methods mentioned in "User Login & Manangement" use case should help prevent it.
 
 Security Requirements
