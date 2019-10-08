@@ -12,7 +12,7 @@
 
 ![Preventions of unauthorized access](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/AssuranceClaim4/AssuranceClaims/Assurance_Claim_4.png)
 
-* **Evidence E.1.1.1:** When GoCD run out of disk space, GoCD notice user with warning box or error message indicates the server has [run out of disk space](https://docs.gocd.org/current/faq/admin_out_of_disk_space.html), and scheduling has been stopped. GoCD could automatically delete the unused artifacts that occupied space on server. GoCD could also preserve artifacts that important to the stage by disable deletion of specific artifacts from the deleted execution.
+* **Evidence E.1.1.1:** When GoCD run out of disk space, GoCD notices user with warning box or error message to indicate the server has [run out of disk space](https://docs.gocd.org/current/faq/admin_out_of_disk_space.html), and the schedul has been stopped. GoCD could automatically delete the unused artifacts that occupied space on server. GoCD could also preserve artifacts that are important to the stage by disable deletion of specific artifact from the deleted process.
 
 * **Evidence E.1.2:** By [default](https://docs.gocd.org/current/advanced_usage/dev_clean_up_when_cancel.html), GoCD kills current running tasks and clean up environment for jobs if user already know the jobs are going to fail.  
 
