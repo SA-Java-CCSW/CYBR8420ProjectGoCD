@@ -1,5 +1,6 @@
 ## Assurance Claim - 1: 
-**Top Claim 1: GoCD prevents unauthorized access to data on GoCD Server**
+**Top Claim 1: GoCD server prevents unauthorized access to its data**
+todo: avoid use conjunctive claims, and avoid use features in claims
 ![Preventions of unauthorized access](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/AssuranceClaims/GoCDPreventsUnauthorizedAccess2.png)
 * **Evidence E1.1.1:** To gain authorized access to the GoCD Server, user must prove his/her identity via username and password credentials. [User authentication methods](https://docs.gocd.org/19.8.0/configuration/dev_authentication.html) such as password file-based authentication and LDAP server for managing and authentication are used in GoCD. Enabling authentication is one of the first things user should do. 
 * **Evidence E1.1.2:** From GoCD server version 19.2.0 onwards, you will be able to create personal access tokens to access GoCD API(s). However, a token can not be used to create or access any access token related API(s). Login using access token is not allowed through web UI. See [Token usage in GoCD](https://docs.gocd.org/19.8.0/configuration/access_tokens.html) for details.
@@ -9,10 +10,11 @@
 
 ## Assurance Claim - 2: 
 **Top Claim 2:GoCD ensures data consumed from enabling systems is safe from malicious intent**
+note: should be more specific
 ![GoCDExternalDataSourceSafe](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/AssuranceClaims/GoCDExternalDataSourceSafe.png)
 
 ## Assurance Claim - 3: 
-**Top Claim 3: Plugins in GoCD server is adequately secured**
+**Top Claim 3: GoCD server protects against malicious plugin**
 ![Preventions of unauthorized access](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/AssuranceClaims/Assurance3.png)
 * **Evidence E1.1.1:** Authorized users are allowed to install/remove plugins only when GoCD server restarts. A unique ID is maintained in metadata file for each plugin. GoCD server allows only one plugin of same ID run. 
 * **Evidence E1.1.2:** Bundled plugins are developed and supported by Thoughtworks GoCD development team. They will be refreshed with the latest packaged version with an upgrade. However, external plugins will not be upgraded with system upgrade.
@@ -20,7 +22,7 @@
 * **Evidence E1.2.2:** authorization plugins installed on GoCD server increases the GoCD server security. 
 
 ## Assurance Claim - 4: 
-**Top Claim 4: GoCD is sufficiently protected against running out of disk space**
+**Top Claim 4: GoCD is sufficiently protected against accidental data loss**
 
 ![Preventions of unauthorized access](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/AssuranceClaims/Assurance_Claim_4.png)
 
@@ -31,7 +33,7 @@
 * **Evidence E.1.3:** To maintain the state inconsistent, GoCD can be indicated to finish certain task during the cleanup process. GoCD allows user to use web interface or XML configuration to perform the [custom cleanup](https://docs.gocd.org/current/advanced_usage/dev_clean_up_when_cancel.html).
 
 ## Assurance Claim - 5: 
-**Top Claim 5: GoCD is sufficiently protected against accidental data loss**
+**Top Claim 5: **
 
 ### Project Links
 * Team Repository: https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD
