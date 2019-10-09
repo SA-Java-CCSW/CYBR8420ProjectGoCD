@@ -20,7 +20,7 @@
 * **Evidence E1.2.2:** authorization plugins installed on GoCD server increases the GoCD server security. 
 
 ## Assurance Claim - 4: 
-**Top Claim 4:**
+**Top Claim 4: GoCD is sufficiently protected against running out of disk space**
 
 ![Preventions of unauthorized access](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/AssuranceClaims/Assurance_Claim_4.png)
 
@@ -31,7 +31,7 @@
 * **Evidence E.1.3:** To maintain the state inconsistent, GoCD can be indicated to finish certain task during the cleanup process. GoCD allows user to use web interface or XML configuration to perform the [custom cleanup](https://docs.gocd.org/current/advanced_usage/dev_clean_up_when_cancel.html).
 
 ## Assurance Claim - 5: 
-**Top Claim 5:**
+**Top Claim 5: GoCD is sufficiently protected against accidental data loss**
 
 ### Project Links
 * Team Repository: https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD
