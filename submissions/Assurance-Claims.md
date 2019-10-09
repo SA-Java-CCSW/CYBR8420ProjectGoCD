@@ -8,11 +8,12 @@
 * **Evidence E1.3:** All GoCD APIs require user to authenticate himself/herself using his/her username and password. Starting with version 19.2.0 of GoCD, users may also use a bearer token to authenticate. See [API authentication in GoCD](https://api.gocd.org/current/#authentication) for details.
 
 ## Assurance Claim - 2: 
-**Top Claim 2:**
+**Top Claim 2:GoCD ensures data consumed from enabling systems is safe from malicious intent**
+![GoCDExternalDataSourceSafe](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/AssuranceClaims/GoCDExternalDataSourceSafe.png)
 
 ## Assurance Claim - 3: 
 **Top Claim 3: Plugins in GoCD server is adequately secured**
-![Preventions of unauthorized access](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/assurance3/AssuranceClaims/Assurance3.png)
+![Preventions of unauthorized access](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/AssuranceClaims/Assurance3.png)
 * **Evidence E1.1.1:** Authorized users are allowed to install/remove plugins only when GoCD server restarts. A unique ID is maintained in metadata file for each plugin. GoCD server allows only one plugin of same ID run. 
 * **Evidence E1.1.2:** Bundled plugins are developed and supported by Thoughtworks GoCD development team. They will be refreshed with the latest packaged version with an upgrade. However, external plugins will not be upgraded with system upgrade.
 * **Evidence E1.2.1:** GoCD server admin users can find all the plugins loaded to  the sever in plugin tab. The plugins' details and status are shown here, including incompatability and validity.
@@ -21,7 +22,7 @@
 ## Assurance Claim - 4: 
 **Top Claim 4:**
 
-![Preventions of unauthorized access](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/AssuranceClaim4/AssuranceClaims/Assurance_Claim_4.png)
+![Preventions of unauthorized access](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/AssuranceClaims/Assurance_Claim_4.png)
 
 * **Evidence E.1.1.1:** When GoCD run out of disk space, GoCD notices user with warning box or error message to indicate the server has [run out of disk space](https://docs.gocd.org/current/faq/admin_out_of_disk_space.html), and the schedul has been stopped. GoCD could automatically delete the unused artifacts that occupied space on server. GoCD could also preserve artifacts that are important to the stage by disable deletion of specific artifact from the deleted process.
 
