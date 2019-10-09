@@ -11,7 +11,12 @@
 **Top Claim 2:**
 
 ## Assurance Claim - 3: 
-**Top Claim 3:**
+**Top Claim 3: Plugins in GoCD server is adequately secured**
+![Preventions of unauthorized access](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/assurance3/AssuranceClaims/Assurance3.png)
+* **Evidence E1.1.1:** Authorized users are allowed to install/remove plugins only when GoCD server restarts. A unique ID is maintained in metadata file for each plugin. GoCD server allows only one plugin of same ID run. 
+* **Evidence E1.1.2:** Bundled plugins are developed and supported by Thoughtworks GoCD development team. They will be refreshed with the latest packaged version with an upgrade. However, external plugins will not be upgraded with system upgrade.
+* **Evidence E1.2.1:** GoCD server admin users can find all the plugins loaded to  the sever in plugin tab. The plugins' details and status are shown here, including incompatability and validity.
+* **Evidence E1.2.2:** authorization plugins installed on GoCD server increases the GoCD server security. 
 
 ## Assurance Claim - 4: 
 **Top Claim 4:**
