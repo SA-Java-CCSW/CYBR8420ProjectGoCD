@@ -8,7 +8,7 @@
 * **Evidence E1.3:** All GoCD APIs require user to authenticate himself/herself using his/her username and password. Starting with version 19.2.0 of GoCD, users may also use a bearer token to authenticate. See [API authentication in GoCD](https://api.gocd.org/current/#authentication) for details.
 
 ## Assurance Claim - 2: 
-**Top Claim 2:GoCD ensures data consumed from enabling systems is safe from malicious intent**
+**Top Claim 2:GoCD ensures a secure network data transfer from a material source repository**
 note: should be more specific
 ![GoCDExternalDataSourceSafe](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/AssuranceClaims/GoCDExternalDataSourceSafe.png)
 
