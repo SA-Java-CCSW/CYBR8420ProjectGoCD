@@ -2,19 +2,21 @@
 
 ## Summary
 
-5 assurance claims are made to increase confidence that GoCD fills the security requirements of the user. The 5 assurance claims are:
+5 assurance claims are made to increase confidence that GoCD satisfies the security requirements of the user. The 5 assurance claims are:
 
-Assurance Claim - 1: 
-Assurance Claim - 2: 
-Assurance Claim - 3: 
-Assurance Claim - 4: 
-Assurance Claim - 5: 
+* Assurance Claim - 1: GoCD Server prevents unauthorized access to its data.
+* Assurance Claim - 2: GoCD ensures a secure network data transfer from a material source repository.
+* Assurance Claim - 3: GoCD server protects against malicious plugin.
+* Assurance Claim - 4: GoCD is sufficiently protected against accidental data loss.
+* Assurance Claim - 5: GoCD server adequately safeguards against Cross-Site Request Forgery (CSRF) attacks.
+
+The Assurance Claims are based around user requirements for a secure system.
 
 ## Assurance Claim - 1: 
 **Top Claim 1: GoCD Server prevents unauthorized access to its data**
-![Preventions of unauthorized access](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/AssuranceClaims/GoCDPreventsUnauthorizedAccess4.png)
-* **Evidence E1.1.1:** GoCD does not seem to have security feature to lock user's account for X minutes after N unsuccessful login attempts, which should be implemented in the future.
-* **Evidence E1.1.2:** GoCD allow its Admin to choose any authentication plugin. See [Authentication in GoCD](https://docs.gocd.org/19.8.0/configuration/dev_authentication.html) for details.
+![Preventions of unauthorized access](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/AssuranceClaims/GoCDPreventsUnauthorizedAccess3.png)
+* **Evidence E1.1.1:** To gain authorized access to the GoCD Server, user must prove his/her identity via username and password credentials. [User authentication methods](https://docs.gocd.org/19.8.0/configuration/dev_authentication.html) such as password file-based authentication and LDAP server for managing and authentication are used in GoCD. Enabling authentication is one of the first things user should do. 
+* **Evidence E1.1.2:** From GoCD server version 19.2.0 onwards, you will be able to create personal access tokens to access GoCD API(s). However, a token can not be used to create or access any access token related API(s). Login using access token is not allowed through web UI. See [Token usage in GoCD](https://docs.gocd.org/19.8.0/configuration/access_tokens.html) for details.
 * **Evidence E1.2.1:** Once a user is specified as GoCD Admin, other users will lose their Admin permissions unless they are specified as Admins as well. Only GoCD Admins are able to authorize users with different permissions via its role-based authorization. A role in GoCD is just a group of users which can be assigned with different permissions. Role based access controls and security privileges are very clearly documented in the documentation [Role based access controls page](https://docs.gocd.org/current/configuration/dev_authorization.html).
 * **Evidence E1.2.2:** Only GoCD Admins are able to create new pipeline groups and assign specified user or role as Pipeline Group Admins(PGA). PGA has permission to control which users/roles have view/operate/admin permissions for their assigned pipeline group. See [Delegating Group Administration in GoCD](https://docs.gocd.org/19.8.0/configuration/delegating_group_administration.html) for details.
 * **Evidence E1.3:** All GoCD APIs require user to authenticate himself/herself using his/her username and password. Starting with version 19.2.0 of GoCD, users may also use a bearer token to authenticate. See [API authentication in GoCD](https://api.gocd.org/current/#authentication) for details.
@@ -44,7 +46,10 @@ note: should be more specific
 * **Evidence E.1.3:** To maintain the state inconsistent, GoCD can be indicated to finish certain task during the cleanup process. GoCD allows user to use web interface or XML configuration to perform the [custom cleanup](https://docs.gocd.org/current/advanced_usage/dev_clean_up_when_cancel.html).
 
 ## Assurance Claim - 5: 
-**Top Claim 5: GoCD server adequately safegaurds against Cross-Site Request Forgery (CSRF) attacks.**
+**Top Claim 5: GoCD server adequately safeguards against Cross-Site Request Forgery (CSRF) attacks.**
+
+![GoCD server adequately safeguards against CSRF](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/AssuranceClaims/GoCDSafegaurdsCSRF.png)
+
 
 ### Project Links
 * Team Repository: https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD
