@@ -2,13 +2,15 @@
 
 ## Summary
 
-5 assurance claims are made to increase confidence that GoCD fills the security requirements of the user. The 5 assurance claims are:
+5 assurance claims are made to increase confidence that GoCD satisfies the security requirements of the user. The 5 assurance claims are:
 
-Assurance Claim - 1: 
-Assurance Claim - 2: 
-Assurance Claim - 3: 
-Assurance Claim - 4: 
-Assurance Claim - 5: 
+* Assurance Claim - 1: GoCD Server prevents unauthorized access to its data.
+* Assurance Claim - 2: GoCD ensures a secure network data transfer from a material source repository.
+* Assurance Claim - 3: GoCD server protects against malicious plugin.
+* Assurance Claim - 4: GoCD is sufficiently protected against accidental data loss.
+* Assurance Claim - 5: GoCD server adequately safeguards against Cross-Site Request Forgery (CSRF) attacks.
+
+The Assurance Claims are based around user requirements for a secure system.
 
 ## Assurance Claim - 1: 
 **Top Claim 1: GoCD Server prevents unauthorized access to its data**
@@ -44,7 +46,10 @@ note: should be more specific
 * **Evidence E.1.3:** To maintain the state inconsistent, GoCD can be indicated to finish certain task during the cleanup process. GoCD allows user to use web interface or XML configuration to perform the [custom cleanup](https://docs.gocd.org/current/advanced_usage/dev_clean_up_when_cancel.html).
 
 ## Assurance Claim - 5: 
-**Top Claim 5: GoCD server adequately safegaurds against Cross-Site Request Forgery (CSRF) attacks.**
+**Top Claim 5: GoCD server adequately safeguards against Cross-Site Request Forgery (CSRF) attacks.**
+
+![GoCD server adequately safeguards against CSRF](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/AssuranceClaims/GoCDSafegaurdsCSRF.png)
+
 
 ### Project Links
 * Team Repository: https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD
