@@ -15,10 +15,12 @@ note: should be more specific
 ## Assurance Claim - 3: 
 **Top Claim 3: GoCD server protects against malicious plugin**
 ![Preventions of unauthorized access](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/AssuranceClaims/Assurance3.png)
-* **Evidence E1.1.1:** Authorized users are allowed to install/remove plugins only when GoCD server restarts. A unique ID is maintained in metadata file for each plugin. GoCD server allows only one plugin of same ID run. 
-* **Evidence E1.1.2:** Bundled plugins are developed and supported by Thoughtworks GoCD development team. They will be refreshed with the latest packaged version with an upgrade. However, external plugins will not be upgraded with system upgrade.
-* **Evidence E1.2.1:** GoCD server admin users can find all the plugins loaded to  the sever in plugin tab. The plugins' details and status are shown here, including incompatability and validity.
-* **Evidence E1.2.2:** authorization plugins installed on GoCD server increases the GoCD server security. 
+* **Evidence E3.1.1:** Authorized users are allowed to install/remove plugins only when GoCD server restarts. A unique ID is maintained in metadata file for each plugin. GoCD server allows only one plugin of same ID run. 
+* **Evidence E3.1.2:** Bundled plugins are developed and supported by Thoughtworks GoCD development team. They will be refreshed with the latest packaged version with an upgrade. However, external plugins will not be upgraded with system upgrade.
+* **Evidence E3.2.1:** GoCD server admin users can find all the plugins loaded to  the sever in plugin tab. The plugins' details and status are shown here, including incompatability and validity.
+* **Evidence E3.3.1:** GoCD server doesn't seem to have much validation mechanism on plugins. It only checks compatability of plugins, and displays reason of invalid plugin. Advanced plugin validation mechanism should be built in GoCD.[GoCD Plugin Test]
+* **Evidence E3.4.1:** GoCD server machine can have username/password login protection for local access and remote access which disallows malicious user from accessing server machine. But this is out of GoCD's protection, it depends on how admin users configured the server machine.
+* **Evidence E3.4.2:** GoCD server plugin installation folders(bundled and external) are protected with access control, only admin users can modify it. This is also out of GoCD's control, and is completely controled by server machine's user access control mechanism. 
 
 ## Assurance Claim - 4: 
 **Top Claim 4: GoCD is sufficiently protected against accidental data loss**
