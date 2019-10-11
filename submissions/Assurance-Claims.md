@@ -2,7 +2,7 @@
 
 ## Summary
 
-5 assurance claims are made to increase confidence that GoCD satisfies the security requirements of the user. The 5 assurance claims are:
+Assurance Claims increase confidence that GoCD satisfies security requirements of the user. The 5 Assurance Claims are:
 
 * Assurance Claim - 1: GoCD Server prevents unauthorized access to its data.
 * Assurance Claim - 2: GoCD ensures a secure network data transfer from a material source repository.
@@ -10,7 +10,7 @@
 * Assurance Claim - 4: GoCD is sufficiently protected against accidental data loss.
 * Assurance Claim - 5: GoCD server adequately safeguards against Cross-Site Request Forgery (CSRF) attacks.
 
-The Assurance Claims are based around user requirements for a secure system.
+The Assurance Claims are based around user requirements for a secure system. Each Assurance Claim was made to eliminate doubts that might exist from the user, and identify any security gaps that exist in GoCD.
 
 ## Assurance Claim - 1: 
 **Top Claim 1: GoCD Server prevents unauthorized access to its data**
