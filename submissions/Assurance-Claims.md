@@ -24,7 +24,7 @@
 
 ![Preventions of unauthorized access](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/Claim4Adjustment/AssuranceClaims/Assurance_Claim_4.png)
 
-* **Evidence E.1.1.1:** When GoCD runs the backup process, GoCD requires user ensure artifacts are manually backed up regularly. See [Running out of disk space](https://docs.gocd.org/current/faq/admin_out_of_disk_space.html#move-the-artifact-repository-to-a-new-larger-drive) for details. GoCD allows users specifically control the artifact purge. The document also points out user needs to manually back up elements such as Log files, plugins, etc. See [Backup GoCD Server] (https://docs.gocd.org/current/advanced_usage/one_click_backup.html) for details. 
+* **Evidence E.1.1.1:** When GoCD runs the backup process, GoCD requires user ensure artifacts are manually backed up regularly. See [Running out of disk space](https://docs.gocd.org/current/faq/admin_out_of_disk_space.html#move-the-artifact-repository-to-a-new-larger-drive) for details. GoCD allows users specifically control the artifact purge. The document also points out user needs to manually back up elements such as Log files, plugins, etc. See [Backup GoCD Server](https://docs.gocd.org/current/advanced_usage/one_click_backup.html) for details. 
 
 * **Evidence E.1.2.1:** GoCD requires user restore GoCD backup onto a version that is newer than the version that performs the backup. GoCD provides file version.txt to notice user to perform backup in correct version. See [Backup GoCD Server](https://docs.gocd.org/current/advanced_usage/one_click_backup.html) for more details.
 
