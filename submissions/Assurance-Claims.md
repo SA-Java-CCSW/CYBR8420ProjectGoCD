@@ -34,7 +34,7 @@ Assurance Claim 5 is a necessary assurance case as GoCD uses a web application f
 
 ## Assurance Claim - 2: 
 **Top Claim 2:GoCD ensures a secure network data transfer from a material source repository**
-note: should be more specific
+
 ![GoCDExternalDataSourceSafe](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/AssuranceClaims/GoCDExternalDataSourceSafe.png)
 
 * **Evidence E.2.1.1.1:** Security Gap: There is no indication that GoCD logs any changes to Pipeline setting changes. 
