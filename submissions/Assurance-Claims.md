@@ -13,6 +13,7 @@ Assurance Claims increase confidence that GoCD satisfies security requirements o
 The Assurance Claims are based around user requirements for a secure system. Each Assurance Claim was made to eliminate doubts that might exist from the user, and identify any security gaps that exist in GoCD.
 
 ## Assurance Claim - 1: 
+
 **Top Claim 1: GoCD Server prevents unauthorized access to its data**
 ![Preventions of unauthorized access](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/AssuranceClaims/GoCDPreventsUnauthorizedAccess4.png)
 * **Evidence E1.1.1:** GoCD does not seem to have security feature to lock user's account for X minutes after N unsuccessful login attempts, which should be implemented in the future.
@@ -37,13 +38,13 @@ note: should be more specific
 ## Assurance Claim - 4: 
 **Top Claim 4: GoCD is sufficiently protected against accidental data loss**
 
-![Preventions of unauthorized access](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/AssuranceClaims/Assurance_Claim_4.png)
+![Preventions of unauthorized access](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/Claim4Adjustment/AssuranceClaims/Assurance_Claim_4.png)
 
-* **Evidence E.1.1.1:** When GoCD run out of disk space, GoCD notices user with warning box or error message to indicate the server has [run out of disk space](https://docs.gocd.org/current/faq/admin_out_of_disk_space.html), and the schedul has been stopped. GoCD could automatically delete the unused artifacts that occupied space on server. GoCD could also preserve artifacts that are important to the stage by disable deletion of specific artifact from the deleted process.
+* **Evidence E.4.1.1:** When GoCD runs the backup process, GoCD requires user ensure artifacts are manually backed up regularly. See [Running out of disk space](https://docs.gocd.org/current/faq/admin_out_of_disk_space.html#move-the-artifact-repository-to-a-new-larger-drive) for details. GoCD allows users specifically control the artifact purge. The document also points out user needs to manually back up elements such as Log files, plugins, etc. See [Backup GoCD Server](https://docs.gocd.org/current/advanced_usage/one_click_backup.html) for details. 
 
-* **Evidence E.1.2:** By [default](https://docs.gocd.org/current/advanced_usage/dev_clean_up_when_cancel.html), GoCD kills current running tasks and clean up environment for jobs if user already know the jobs are going to fail.  
+* **Evidence E.4.2.1:** GoCD requires user restore GoCD backup onto a version that is newer than the version that performs the backup. GoCD provides file version.txt to notice user to perform backup in correct version. See [Backup GoCD Server](https://docs.gocd.org/current/advanced_usage/one_click_backup.html) for more details.
 
-* **Evidence E.1.3:** To maintain the state inconsistent, GoCD can be indicated to finish certain task during the cleanup process. GoCD allows user to use web interface or XML configuration to perform the [custom cleanup](https://docs.gocd.org/current/advanced_usage/dev_clean_up_when_cancel.html).
+* **Evidence E.4.3.1:** In order to save memory space, by default GoCD will remove all state that related to process which is known is going to fail. However, GoCD provides two alternatives to user to change behavior of removing all state in process. GoCD allows user to use web interface or XML configuration to perform the custom cleanup. See [Clean up after canceling a task]( https://docs.gocd.org/current/advanced_usage/dev_clean_up_when_cancel.html) for more details.
 
 ## Assurance Claim - 5: 
 **Top Claim 5: GoCD server adequately safeguards against Cross-Site Request Forgery (CSRF) attacks.**
