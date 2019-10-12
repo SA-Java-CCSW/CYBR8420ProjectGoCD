@@ -81,11 +81,11 @@ note: should be more specific
 
 **Evidence E.5.1:** GoCD's logins are based on cookie settings. Cookie settings can be changed that enable the logoff to occur after a certain amount of time. Default settings automatically log the user off after 14 days. See [Authentication Documentation](https://docs.gocd.org/current/configuration/dev_authentication.html). Security Gap: For added security, the default setting in configurable properties should be changed to "-1" in "go.sessioncookie.maxage.seconds". This setting will expire the session cookie upon browser close. Expiring the session cookie upon browser close will reduce the likelihood of an CSRF to occur.
 
-**Evidence E.5.2.1.1:** GoCD uses Spring Security for session token generation and authentication. More investigation through source code is required to give implementation details.
+**Evidence E.5.2.1.1:** GoCD uses Spring Security for session token generation and authentication. Spring Security is an industry standard security API using best cryptographic security practices. See [Spring Security](https://spring.io/projects/spring-security).
 
-**Evidence E.5.2.1.2:** GoCD uses Spring Security for session token generation and authentication. More investigation through source code is required to give implementation details.
+**Evidence E.5.2.1.2:** GoCD uses Spring Security for session token generation and authentication. Spring Security is an industry standard security API using best cryptographic security practices. See [Spring Security](https://spring.io/projects/spring-security).
 
-**Evidence E.5.2.1.3:** GoCD uses Spring Security for session token generation and authentication. More investigation through source code is required to give implementation details.
+**Evidence E.5.2.1.3:** GoCD uses Spring Security for session token generation and authentication. Spring Security is an industry standard security API using best cryptographic security practices. See [Spring Security](https://spring.io/projects/spring-security).
 
 **Evidence E.5.3:** GoCD implements [Hackerone](https://hackerone.com/gocd) for a vulnerability disclosure program. This program is used to reduce security weaknesses. A [Github issue](https://github.com/gocd/gocd/issues) is opened up about identified XSS weaknesses and corrected by development.
 
