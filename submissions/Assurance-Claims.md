@@ -51,6 +51,10 @@ note: should be more specific
 ![GoCD server adequately safeguards against CSRF](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/AssuranceClaims/GoCDSafegaurdsCSRF.png)
 
 
+Github has automatic bug tracking that alerts if a dependency has a reported bug.
+
+GoCD has settings that can trigger builds only with user intervention to prevent risk.
+
 ### Project Links
 * Team Repository: https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD
 * Project Board: https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/projects/3
