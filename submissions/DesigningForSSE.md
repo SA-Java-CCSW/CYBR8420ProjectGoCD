@@ -9,7 +9,7 @@ The complete threat report along with Level 1 diagram for User Login & Managemen
 #### Data Flow 2: User Creates Value Stream Map
 Level 0 DFD
 
-![Level 0 for User Login & Management](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/Threat%20Models/UserCreatesVSMDFDLevel0.PNG)
+![Level 0 for User Login & Management](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/Threat%20Models/UserCreatesVSMDFDLevel0-2.PNG)
 
 The complete threat report along with Level 1 diagram for User Creates Value Stream Map can be found <a href = "https://sa-java-ccsw.github.io/CYBR8420ProjectGoCD/Threat%20Models/UserCreatesVSMDFDLevel1.htm">here.</a>
 
