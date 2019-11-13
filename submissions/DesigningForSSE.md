@@ -13,7 +13,7 @@ Level 0 DFD
 
 The complete threat report along with Level 1 diagram for User Creates Value Stream Map can be found <a href = "https://sa-java-ccsw.github.io/CYBR8420ProjectGoCD/Threat%20Models/UserCreatesVSMDFDLevel1.htm">here.</a>
 
-#### Data Flow 3:GoCD Backup
+#### Data Flow 3: GoCD Backup
 Level 0 DFD  
 
 ![Level 0 for GoCD Backup](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/Threat%20Models/DataFlow3Level0ScreenShot.PNG)
