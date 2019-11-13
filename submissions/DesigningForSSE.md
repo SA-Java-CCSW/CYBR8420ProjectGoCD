@@ -16,8 +16,9 @@ The complete threat report along with Level 1 diagram for User Creates Value Str
 #### Data Flow 3:
 Level 0 DFD  
 
-Threat Model/Level 1 DFD  
-A full threat model and Level 1 data flow diagram has been completed <a href = "https://swrp.github.io/CYBR8420-SemesterProject/InternalClusterCommunication_ThreatReport.htm">here</a>.
+![Level 0 for GoCD Backup](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/DataFlow3/Threat%20Models/DataFlow3Level0ScreenShot.PNG)
+
+The complete threat report along with Level 1 diagram for GoCD Backup can be found <a href = "https://sa-java-ccsw.github.io/CYBR8420ProjectGoCD/Threat%20Models/DataFlow3DFDReport.htm">here.</a>
 
 #### Data Flow 4: Polling Material Components
 Level 0 DFD
