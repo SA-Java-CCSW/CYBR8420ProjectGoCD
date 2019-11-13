@@ -19,17 +19,15 @@ Level 0 DFD
 Threat Model/Level 1 DFD  
 A full threat model and Level 1 data flow diagram has been completed <a href = "https://swrp.github.io/CYBR8420-SemesterProject/InternalClusterCommunication_ThreatReport.htm">here</a>.
 
-#### Data Flow 4: Polling Material Components
+#### Data Flow 4:
 Level 0 DFD
 
-![Level 0 for User Login & Management](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/Threat%20Models/PollMaterialDFDLevel0.PNG)
-
-The complete threat report along with Level 4 diagram for User Login & Management can be found <a href = "https://sa-java-ccsw.github.io/CYBR8420ProjectGoCD/Threat%20Models/PollMaterialDFDLevel1.htm">here.</a>
+A full threat model and Level 1 data flow diagram has been completed <a href = "https://swrp.github.io/CYBR8420-SemesterProject/AnalystQueriesForFraudReprts.htm">here.</a>
 
 #### Data Flow 5: Plugin Extension Point Process
 Level 0 DFD
 
-![Level 0 for Plugin Extension Point Process](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/Threat%20Models/Plugin_DFD5_L0.PNG)
+![Level 0 for Plugin Extension Point Process](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/Threat%20Models/Plugin_DFD5_L0.png)
 
 The complete threat report along with Level 1 diagram for Plugin Extension Point Process can be found <a href = "https://sa-java-ccsw.github.io/CYBR8420ProjectGoCD/Threat%20Models/Plugin_DFD5_L1.htm">here.</a>
 
