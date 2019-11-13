@@ -24,10 +24,12 @@ Level 0 DFD
 
 A full threat model and Level 1 data flow diagram has been completed <a href = "https://swrp.github.io/CYBR8420-SemesterProject/AnalystQueriesForFraudReprts.htm">here.</a>
 
-#### Data Flow 5:
+#### Data Flow 5: Plugin Extension Point Process
 Level 0 DFD
 
-A full threat model and Level 1 data flow diagram has been completed <a href = "https://swrp.github.io/CYBR8420-SemesterProject/AlertToFraudAnalyst.htm">here.</a>
+![Level 0 for Plugin Extension Point Process](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/Threat%20Models/Plugin_DFD5_L0.PNG)
+
+The complete threat report along with Level 1 diagram for Plugin Extension Point Process can be found <a href = "https://sa-java-ccsw.github.io/CYBR8420ProjectGoCD/Threat%20Models/Plugin_DFD5_L1.htm">here.</a>
 
 **Threat Model Analysis**  
 GoCD has various ways to authenticate identity of users which makes spoofing users attack very unlikely. Role based access control and the default behavior of running go-server daemon as standard user "go" reduces the risk of elevation of privilege. GoCD has many additional features to be customized for logging detailed activities (See https://docs.gocd.org/current/advanced_usage/logging.html ) which help prevent repudiation threats in several analyzed data flows.
