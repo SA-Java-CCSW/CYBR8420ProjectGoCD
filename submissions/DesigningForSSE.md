@@ -16,7 +16,7 @@ The complete threat report along with Level 1 diagram for User Creates Value Str
 #### Data Flow 3:
 Level 0 DFD  
 
-![Level 0 for GoCD Backup](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/DataFlow3/Threat%20Models/DataFlow3Level0ScreenShot.PNG)
+![Level 0 for GoCD Backup](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/Threat%20Models/DataFlow3Level0ScreenShot.PNG)
 
 The complete threat report along with Level 1 diagram for GoCD Backup can be found <a href = "https://sa-java-ccsw.github.io/CYBR8420ProjectGoCD/Threat%20Models/DataFlow3DFDReport.htm">here.</a>
 
