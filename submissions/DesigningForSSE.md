@@ -30,7 +30,7 @@ The complete threat report along with Level 4 diagram for User Login & Managemen
 #### Data Flow 5: Plugin Extension Point Process
 Level 0 DFD
 
-![Level 0 for Plugin Extension Point Process](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/Threat%20Models/Plugin_DFD5_L0.png)
+![Level 0 for Plugin Extension Point Process](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/Threat%20Models/PluginDFD5L0.PNG)
 
 The complete threat report along with Level 1 diagram for Plugin Extension Point Process can be found <a href = "https://sa-java-ccsw.github.io/CYBR8420ProjectGoCD/Threat%20Models/Plugin_DFD5_L1.htm">here.</a>
 
