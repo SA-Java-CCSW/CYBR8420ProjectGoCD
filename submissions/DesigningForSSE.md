@@ -20,10 +20,12 @@ Level 0 DFD
 
 The complete threat report along with Level 1 diagram for GoCD Backup can be found <a href = "https://sa-java-ccsw.github.io/CYBR8420ProjectGoCD/Threat%20Models/DataFlow3DFDReport.htm">here.</a>
 
-#### Data Flow 4:
+#### Data Flow 4: Polling Material Components
 Level 0 DFD
 
-A full threat model and Level 1 data flow diagram has been completed <a href = "https://swrp.github.io/CYBR8420-SemesterProject/AnalystQueriesForFraudReprts.htm">here.</a>
+![Level 0 for Polling Material Components](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/Threat%20Models/PollMaterialDFDLevel0.PNG)
+
+The complete threat report along with Level 4 diagram for User Login & Management can be found <a href = "https://sa-java-ccsw.github.io/CYBR8420ProjectGoCD/Threat%20Models/PollMaterialDFDLevel1.htm">here.</a>
 
 #### Data Flow 5: Plugin Extension Point Process
 Level 0 DFD
