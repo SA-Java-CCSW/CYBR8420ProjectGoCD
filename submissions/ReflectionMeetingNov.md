@@ -1,5 +1,5 @@
 Team Reflection Meeting
-Date: 10/09/2019
+Date: 11/13/2019
 Present: Gavin Crowl, Jun Wang, Yifan Shi, Zhicheng Chen
 
 During the Team Reflection meeting, we reflected over our previous and current assignment. 
