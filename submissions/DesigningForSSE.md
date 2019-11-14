@@ -25,7 +25,7 @@ Level 0 DFD
 
 ![Level 0 for Polling Material Components](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/Threat%20Models/PollMaterialDFDLevel0.PNG)
 
-The complete threat report along with Level 4 diagram for User Login & Management can be found <a href = "https://sa-java-ccsw.github.io/CYBR8420ProjectGoCD/Threat%20Models/PollMaterialDFDLevel1.htm">here.</a>
+The complete threat report along with Level 4 diagram for Polling Material Components can be found <a href = "https://sa-java-ccsw.github.io/CYBR8420ProjectGoCD/Threat%20Models/PollMaterialDFDLevel1.htm">here.</a>
 
 #### Data Flow 5: Plugin Extension Point Process
 Level 0 DFD
