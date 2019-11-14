@@ -39,7 +39,7 @@ GoCD has various ways to authenticate the identity of users, which makes spoofin
 
 However, our threats model analysis does show some security issues which have not been mitigated by the current implementation of GoCD. For example, GoCD lacks ACL(Access Control List) such as IP restriction to protect its server from DoS Attack. GoCD lacks a security feature to prove that users are login to the authenticated legitimate website. May consider using third-party verified digital certificates or use user-chosen login picture to identify the site itself. Some of these findings are consistent with our previous misuse case analysis from GoCD's security requirements.
 
-Several threats require Code Review analysis to investigate if GoCD implemented design patterns. Processes interacting through the network should implement a Proxy Pattern and an Input Validator. Process-to-process interactions should implement Distrustful Decomposition and source verification to mitigate escalation threats.
+Several threats require Code Review analysis to investigate if GoCD implemented design patterns. Processes interacting through the network should implement a Proxy Pattern and an Input Validator. Process-to-process interactions should implement Distrustful Decomposition and source verification to mitigate elevation and spoofing threats.
 
 ### Project Links
 * Team Repository: https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD
