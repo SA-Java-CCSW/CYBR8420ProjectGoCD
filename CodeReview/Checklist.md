@@ -12,7 +12,7 @@
 
 7. Investigate material update sub-system(MCU) component against DoS attack
 
-8. Investigate pluign extension point component against Elevation Of Privilege attack and if it has built-in advanced plugin validation mechanism.
+8. Investigate pluign extension point component against Elevation Of Privilege attack and if it has built-in advanced plugin validation mechanism such as checking integrity of plugin jar file: plugin.xml (metadata of plugin), plugin extension class, and optional dependencies.
 
 9. Investigate authorization component to check if a new user is given the lowest privilege rights.
 
