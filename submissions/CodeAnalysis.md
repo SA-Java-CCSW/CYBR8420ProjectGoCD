@@ -84,7 +84,8 @@ TBD
 TBD
 
 **Checklist item 12**  
-TBD
+TBD  
+
 We analyzed our code in both automated and manual review process. The automated code review is performed using open source static code analysis tool called **PWD and Findbugs**. The list of resultant vulnerabilities from the automated tool scan was narrowed  down to analyze  **CWE(Common Weakness Enumeration)** that are related to our misuse case, assurance cases, and threat model and examined manually.
 
 ## Manual Code Review
