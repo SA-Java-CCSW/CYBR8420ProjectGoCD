@@ -52,10 +52,15 @@ TBD
 
 **Checklist item 3**  
 BackupsController.java is the main source code for user to perform the backup process in GoCD.
+
 setupRoutes method handles backup content type, verify backup confirm and authentication processes.
+
 create method handles request and response. Backup server runs based on the current user name and inform user the backup result.
+
 verifyConfirmHeader method verify request to see if it is satisfied in certain condition.
+
 backupConfigRepresenter.java is code that allows user to configure backup settings for the GoCD server.
+
 toJSON method and fromJSON method contain JSON object with information that lets user know about backup process is success or not.
 
 **Checklist item 4**  
@@ -69,9 +74,12 @@ TBD
 
 **Checklist item 7**  
 ServerMaintenanceModeControllerv1.java is the main source code to determine which the internal subsystems and processes continue to work.
+
 enableMaintenanceModeState method handles the existing maintenance mode state and notice user with certain information by checking the existingMaintenanceModeState first to see if the server is available in maintenance mode. 
+
 Comparing to the enableMaintenanceModestate method, disableMaintenanceModeState method works in the opposite way, it handles the existing maintenance mode state and notice user with certain information if the server is available.
-getRunningJobs method return information about the current running job instances. In the method, each running pipe line instance in the GoDashboardPipeline is collected and return as a list object.
+
+getRunningJobs method return information about the current running job instances. In this method, each running pipe line instance in the GoDashboardPipeline is collected and return as a list object.
 
 **Checklist item 8**  
 TBD
@@ -93,11 +101,17 @@ TBD
 
 **Checklist item 12**  
 AgentsControllerV6.java is the main source code to allow users with administrator role to manage agents.
+
 update method determines agent’s update action of agent with its id. If the updateAgentAttributes successfully update the agent’s attribute, then call the handleUpdateAgentResponse method. Exception will be handled if the update attribute method throws exception.
+
 bulkUpdate method handles attribute update of agent with certain id. If the update action is successfully finished, text explanation is printed out. Otherwise, exception is handled.
+
 deleteAgents method accepts request to handle deletion of specific agent with text explanation if no exception occurs.
+
 checkSecurityOr403 method handles GET request with apiAuthenticationHelper component.
+
 handleCreateOrUpdateResponse method handles response of new agent’s register or update status’s of existing agent.
+
 handleUpdateAgentResponse method handles response of specific agent’s update status and inform user with text explanation. 
 
 
