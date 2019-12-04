@@ -1,6 +1,11 @@
 ## Code Review Strategy
 Before diving into the detailed code analysis, we did a manual coarse-grained scan of GoCD's code base to see if there is any existance of most popular CWEs(Commone Weakness Enumeration) such as CWE-120/CWE-798/CWE-311/CWE-434/CWE-250/CWE-494/CWE-22/CWE-759. 
 
+Then we started with reviewing our assurance cases, misuse cases, and threat model report. From the review, we discovered the most critical weakness areas in the software and decided to choose the checklist review strategy which is the most appropriate method for analyzing the code of large-scale projects like GoCD. To reduce the effort of going through all the codes for each line we decided to review all 12 items from our [checklist](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/Checklist.md).  
+
+We analyzed our code in both automated and manual review process. The automated code review is performed using open source static code analysis tool called **PWD and Findbugs**. The list of resultant vulnerabilities from the automated tool scan was narrowed  down to analyze  **CWE(Common Weakness Enumeration)** that are related to our misuse case, assurance cases, and threat model and examined manually.
+
+## Manual Code Review
 **CWE-120: Classic buffer overflow**
 It seems that the chance of popular classic buffer overflow (CWE-120) in Java is very small unless JNI(Java Native Interface) is used to call native codes written in c/c++. See https://stackoverflow.com/questions/479701/does-java-have-buffer-overflows. Searches for keyword "native"  and "System.loadLibrary" under top-level gocd directory did not show any usage of JNI in GoCD. Therefore, GoCD does not seem to have CWE-120 issue.
 
@@ -34,8 +39,6 @@ Therefore, GoCD does not seem to have CWE-22 issue.
  
 **CWE-759: Use of one-way hash without a salt**  
 It seems that method hashCode() in source file [UsernamePassword.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/newsecurity/models/UsernamePassword.java) violates CWE-759.
-
-Then we started with reviewing our assurance cases, misuse cases, and threat model report. From the review, we discovered the most critical weakness areas in the software and decided to choose the checklist review strategy which is the most appropriate method for analyzing the code of large-scale projects like GoCD. To reduce the effort of going through all the codes for each line we decided to review all 12 items from our [checklist](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/Checklist.md).
 
 **Checklist item 1**  
 Looks like [AuthenticationController.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/newsecurity/controllers/AuthenticationController.java) is the main source code for user login authentication in GoCD.  
@@ -84,11 +87,8 @@ TBD
 TBD
 
 **Checklist item 12**  
-TBD  
+TBD
 
-We analyzed our code in both automated and manual review process. The automated code review is performed using open source static code analysis tool called **PWD and Findbugs**. The list of resultant vulnerabilities from the automated tool scan was narrowed  down to analyze  **CWE(Common Weakness Enumeration)** that are related to our misuse case, assurance cases, and threat model and examined manually.
-
-## Manual Code Review
 
 ## Automated Tool Scan
 After exploring the DHS SWAMP scanning platform we attempted to use the system to scan the GoCD Java code files.  We did use the SWAMP platform to scan the Java Bytecode with Findbugs 3.0.1.  We also used the PMD 6.9.0 tool to scan the Java code files.
