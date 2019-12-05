@@ -66,7 +66,7 @@ Assurance Claim 5 is a necessary assurance case as GoCD uses a web application f
 ## Assurance Claim - 4: 
 **Top Claim 4: GoCD is sufficiently protected against accidental data loss**
 
-![Preventions of unauthorized access](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/Claim4Adjustment/AssuranceClaims/Assurance_Claim_4.png)
+![Preventions of unauthorized access](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/AssuranceClaims/Assurance_Claim_4.png)
 
 * **Evidence E.4.1.1:** When GoCD runs the backup process, GoCD requires user ensure artifacts are manually backed up regularly. See [Running out of disk space](https://docs.gocd.org/current/faq/admin_out_of_disk_space.html#move-the-artifact-repository-to-a-new-larger-drive) for details. GoCD allows users specifically control the artifact purge. The document also points out user needs to manually back up elements such as Log files, plugins, etc. See [Backup GoCD Server](https://docs.gocd.org/current/advanced_usage/one_click_backup.html) for details. 
 
