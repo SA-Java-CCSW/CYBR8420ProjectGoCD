@@ -125,3 +125,4 @@ This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/C
 ### Project Links
 * Team Repository: https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD
 * Project Board: https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/projects/5
+* Reflection Meeting (December) https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/submissions/ReflectionMeetingDec.md
