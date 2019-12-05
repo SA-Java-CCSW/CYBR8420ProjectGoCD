@@ -61,7 +61,7 @@ TBD
 TBD
 
 **Checklist item 5: pipeline workflow components**  
-It seems that pipeline workflow components of GoCD mainly involves source files: [GoConfigService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/GoConfigService.java).
+It seems that pipeline workflow components of GoCD mainly involves source files: GoConfigService.java. Methods isPipelineEditable(), canEditPipeline(), addPipeline(), getAllPipelinesForEditInGroup(), findFirstStageOfPipeline(), in source file [GoConfigService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/GoConfigService.java) clearly showed the workflow of pipeline in GoCD.
 
 **Checklist item 6: web ui component**  
 TBD
@@ -80,7 +80,7 @@ noAdminsConfigured() means no user is assigned Administrator role by default.
 adminsConfig.isAdmin(admin, rolesConfig.memberRoles(admin)) means the user is a member of Administrator role.  
 This is consistent with GoCD's documentation https://docs.gocd.org/current/configuration/dev_authorization.html .  
 Therefore, a new user is actually given Administrator permission if none of existing users has been assigned as Administrator role.  
-Methods canEditPipeline(), isGroupAdministrator(), isUserAdminOfGroup(), isUserTemplateAdmin() in source file [GoConfigService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/GoConfigService.java) clearly showed GoCD's role-based authorization feature.  
+Methods isGroupAdministrator(), isUserAdminOfGroup(), isUserTemplateAdmin() in source file [GoConfigService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/GoConfigService.java) clearly showed GoCD's role-based authorization feature.  
 Overall, authorization component of GoCD could prevent elevation of privileges attacks. However, giving a new user Administrator permission as default is not secure.  
 **Checklist item 10: SSL/TLS component**  
 TBD
