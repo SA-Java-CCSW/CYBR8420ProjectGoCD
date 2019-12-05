@@ -40,7 +40,7 @@ Therefore, GoCD does not seem to have CWE-22 issue.
 **CWE-759: Use of one-way hash without a salt**  
 It seems that method hashCode() in source file [UsernamePassword.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/newsecurity/models/UsernamePassword.java) violates CWE-759.
 
-**Checklist item 1**  
+**Checklist item 1: login/authentication components**  
 Looks like [AuthenticationController.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/newsecurity/controllers/AuthenticationController.java) is the main source code for user login authentication in GoCD.  
 Method performLogin() use local password file based authentication plugin to authenticate user login.  
 Method redirectToThirdPartyLoginPage() redirect user's login request to proper third party login page based on the third party authentication plugin ID "pluginId".  
@@ -49,29 +49,30 @@ It seems that GoCD does not support user account lockout after N unsuccessful lo
 Method isSecurityEnabled() in [SecurityService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/SecurityService.java) and [GoConfigService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/GoConfigService.java) is to check if authentication has been enabled or not. By default authentication service is not enabled on a newly installed GoCD Server (See https://docs.gocd.org/current/configuration/dev_authentication.html).  
 Many GoCD system environment constants are defined in source file [SystemEnvironment.java](https://github.com/gocd/gocd/blob/master/base/src/main/java/com/thoughtworks/go/util/SystemEnvironment.java).  
 Looks like GoCD does not support IP range based ACL(Access Control List) even though there is a class called "GoAcl" in [GoAcl.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/security/GoAcl.java) which only determines if a username is contained in a list of authorizedUsers. It is used in method readAclBy() in [GoConfigService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/GoConfigService.java) to create a list of authorizedUsers to access a particular stage of some pipeline. In addition, it is used in method hasOperatePermissionForStage() in [SecurityService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/SecurityService.java) to determine if a particular user has operate permission for a particular stage of some pipeline.
+Overall, login/authentication components of GoCD could prevent Spoofing attacks after authentication service is enabled. However, it is better to implement IP range based ACL and auto-user account lockout after N unsuccessful login attempts to prevent DoS attacks.
 
-**Checklist item 2**   
+**Checklist item 2: source materials validation components**   
 TBD
 
-**Checklist item 3**  
+**Checklist item 3: backup/restore components**  
 TBD
 
-**Checklist item 4**  
+**Checklist item 4: poll material source components**  
 TBD
 
-**Checklist item 5**  
+**Checklist item 5: pipeline workflow components**  
 TBD
 
-**Checklist item 6**  
+**Checklist item 6: web ui component**  
 TBD
 
-**Checklist item 7**  
+**Checklist item 7: material update sub-system(MCU) component**  
 TBD
 
-**Checklist item 8**  
+**Checklist item 8:  pluign extension point component**  
 TBD
 
-**Checklist item 9**  
+**Checklist item 9: authorization component**  
 It seems that authorization component of GoCD mainly involves two source files: [SecurityService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/SecurityService.java) and [GoConfigService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/GoConfigService.java).  
 Based on method isAdmin() in [SecurityConfig.java](https://github.com/gocd/gocd/blob/master/config/config-api/src/main/java/com/thoughtworks/go/config/SecurityConfig.java) there are three ways to get Administrator permission in GoCD:  
 !isSecurityEnabled() means no authentication is enabled after initial GoCD installation by default.  
@@ -79,14 +80,15 @@ noAdminsConfigured() means no user is assigned Administrator role by default.
 adminsConfig.isAdmin(admin, rolesConfig.memberRoles(admin)) means the user is a member of Administrator role.  
 This is consistent with GoCD's documentation https://docs.gocd.org/current/configuration/dev_authorization.html .  
 Therefore, a new user is actually given Administrator permission if none of existing users has been assigned as Administrator role.  
-
-**Checklist item 10**  
+Methods canEditPipeline(), isGroupAdministrator(), isUserAdminOfGroup(), isUserTemplateAdmin() in source file [GoConfigService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/GoConfigService.java) clearly showed GoCD's role-based authorization feature. 
+Overall, authorization component of GoCD could prevent elevation of privileges attacks. However, giving a new user Administrator permission as default is not secure.  
+**Checklist item 10: SSL/TLS component**  
 TBD
 
-**Checklist item 11**  
+**Checklist item 11: Check authentication configuration component against CSRF attack**  
 TBD
 
-**Checklist item 12**  
+**Checklist item 12: Investigate usage of JRuby on Rails framework against CSRF attack**  
 TBD
 
 
@@ -115,7 +117,7 @@ This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/C
 **Security Concern 8: Open Redirect(CWE-601)**  
 This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/SpotBugs-UNVALIDATED_REDIRECT.pdf) is due to usage of unvalidated redirection in line 62 of source file [GoServerLoadingIndicationHandler.java](https://github.com/gocd/gocd/blob/master/jetty9/src/main/java/com/thoughtworks/go/server/GoServerLoadingIndicationHandler.java).  
 **Security Concern 9: HTTP Parameter Pollution(CAPEC-460)**  
-This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/SpotBugs-HTTP_PARAMETER_POLLUTION.pdf) is due to usage of unvalidated redirection in line 110 of source file [ServerBinaryDownloader.java](https://github.com/gocd/gocd/blob/master/agent-common/src/main/java/com/thoughtworks/go/agent/launcher/ServerBinaryDownloader.java), in line 115 of source file [AgentUpgradeService.java](https://github.com/gocd/gocd/blob/master/agent/src/main/java/com/thoughtworks/go/agent/service/AgentUpgradeService.java) and line 156 of source file [HttpService.java](https://github.com/gocd/gocd/blob/master/common/src/main/java/com/thoughtworks/go/util/HttpService.java).
+This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/SpotBugs-HTTP_PARAMETER_POLLUTION.pdf) is due to usage of unvalidated redirection in line 110 of source file [ServerBinaryDownloader.java](https://github.com/gocd/gocd/blob/master/agent-common/src/main/java/com/thoughtworks/go/agent/launcher/ServerBinaryDownloader.java), in line 115 of source file [AgentUpgradeService.java](https://github.com/gocd/gocd/blob/master/agent/src/main/java/com/thoughtworks/go/agent/service/AgentUpgradeService.java) and line 156 of source file [HttpService.java](https://github.com/gocd/gocd/blob/master/common/src/main/java/com/thoughtworks/go/util/HttpService.java).  
 **Security Concern 10: Malicious Code**  
 This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/SpotBugs-DP_CREATE_CLASSLOADER_INSIDE_DO_PRIVILEGED.pdf) is due to creation of classloader not within a doPrivileged block in line 110/111 of source file [JarUtil.java](https://github.com/gocd/gocd/blob/master/agent-common/src/main/java/com/thoughtworks/go/agent/common/util/JarUtil.java). 
 
