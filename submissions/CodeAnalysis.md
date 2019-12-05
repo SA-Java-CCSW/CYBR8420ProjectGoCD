@@ -3,7 +3,7 @@ Before diving into the detailed code analysis, we did a manual coarse-grained sc
 
 Then we started with reviewing our assurance cases, misuse cases, and threat model report. From the review, we discovered the most critical weakness areas in the software and decided to choose the checklist review strategy which is the most appropriate method for analyzing the code of large-scale projects like GoCD. To reduce the effort of going through all the codes for each line we decided to review all 12 items from our [checklist](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/Checklist.md).  
 
-We analyzed our code in both automated and manual review process. The automated code review is performed using open source static code analysis tool called **PWD and Findbugs**. The list of resultant vulnerabilities from the automated tool scan was narrowed  down to analyze  **CWE(Common Weakness Enumeration)** that are related to our misuse case, assurance cases, and threat model and examined manually.
+We analyzed our code in both automated and manual review process. The automated code review is performed using open source static code analysis tool called **SpotBugs and Findbugs**. The list of resultant vulnerabilities from the automated tool scan was narrowed down to analyze  **CWE(Common Weakness Enumeration)** that are related to our misuse case, assurance cases, and threat model and examined manually.
 
 ## Manual Code Review
 **CWE-120: Classic buffer overflow**
@@ -91,13 +91,15 @@ TBD
 
 
 ## Automated Tool Scan
-After exploring the DHS SWAMP scanning platform we attempted to use the system to scan the GoCD Java code files.  We did use the SWAMP platform to scan the Java Bytecode with Findbugs 3.0.1.  We also used the PMD 6.9.0 tool to scan the Java code files.
+After exploring the DHS SWAMP scanning platform we attempted to use the system to scan the GoCD source code files. However, the SWAMP platform does not support JDK 11 or above which is required to build GoCD source codes to byte code. Therefore, we directly downloaded precompiled GoCD byte codes in .zip format from https://www.gocd.org/download/#zip and uploaded them to https://www.mir-swamp.org/ to perform various assessments on the byte codes. We did successfully use the SWAMP platform to scan the GoCD Java Bytecode with SpotBugs 3.1.12.  We also used the OWASP Dependency Check 2.1.1 tool to scan the Java code files, but it did not find any issues.
 
 #### Findbugs 3.0.1
 This tool was used in the SWAMP platform to scan the GoCD Java Bytecode.  
 
-#### PMD 6.9.0
-The most recent version of the PMD tool was just downloaded locally to a Linux host and ran against the GoCD codebase.
+#### SpotBugs 3.1.12
+This tool was used in the SWAMP platform to scan the GoCD Java Bytecode. As shown in the [summary](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/SpotBugs-Scan-Summary.pdf) it has found total 40034 bugs. It turned out that only 152 bugs are related to security or malicious codes groups based on our manual scan of the generated assessment results. As a matter of fact only 23 lines of source codes are from GoCD, the rest are from third-party libraries which is beyond the scope of our code analysis. We further selected 10 bugs which are worth investigations by GoCD development team as show below:  
+**Security Concern 1**  
+
 
 ### Project Links
 * Team Repository: https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD
