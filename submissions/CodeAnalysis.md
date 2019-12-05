@@ -98,7 +98,8 @@ This tool was used in the SWAMP platform to scan the GoCD Java Bytecode.
 
 #### SpotBugs 3.1.12
 This tool was used in the SWAMP platform to scan the GoCD Java Bytecode. As shown in the [summary](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/SpotBugs-Scan-Summary.pdf) it has found total 40034 bugs. It turned out that only 152 bugs are related to security or malicious codes groups based on our manual scan of the generated assessment results. As a matter of fact only 23 lines of source codes are from GoCD, the rest are from third-party libraries which is beyond the scope of our code analysis. We further selected 10 bugs which are worth investigations by GoCD development team as show below:  
-**Security Concern 1**  
+**Security Concern 1: Missing Support for Cipher Integrity Check(CWE-353)**  
+This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/SpotBugs-CIPHER_INTEGRITY-AESEncrypter.pdf) is due to usage of insecure Java Cipher API call Cipher.getInstance("AES/CBC/PKCS5Padding") in line 62 and 85 of source file [AESEncrypter.java](https://github.com/gocd/gocd/blob/master/config/config-api/src/main/java/com/thoughtworks/go/security/AESEncrypter.java). Even though GoCD does explicitly provide algorithm(AES), cipher mode(CBC) and padding scheme(PKCS5Padding) as the transformation to avoid the IND-CPA insecure ECB cipher mode as mentioned in a [software security research article](https://dl.acm.org/citation.cfm?doid=2508859.2516693), it is still recommended to use more secure GCM cipher mode to mitigate this security concern.  
 
 
 ### Project Links
