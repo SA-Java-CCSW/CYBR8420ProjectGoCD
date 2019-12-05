@@ -37,7 +37,7 @@ It seems that method hashCode() in source file [UsernamePassword.java](https://g
 
 Then we started with reviewing our assurance cases, misuse cases, and threat model report. From the review, we discovered the most critical weakness areas in the software and decided to choose the checklist review strategy which is the most appropriate method for analyzing the code of large-scale projects like GoCD. To reduce the effort of going through all the codes for each line we decided to review all 12 items from our [checklist](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/Checklist.md).
 
-**Checklist item 1**  
+**Checklist item 1: login/authentication components**  
 Looks like [AuthenticationController.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/newsecurity/controllers/AuthenticationController.java) is the main source code for user login authentication in GoCD.  
 Method performLogin() use local password file based authentication plugin to authenticate user login.  
 Method redirectToThirdPartyLoginPage() redirect user's login request to proper third party login page based on the third party authentication plugin ID "pluginId".  
@@ -47,44 +47,37 @@ Method isSecurityEnabled() in [SecurityService.java](https://github.com/gocd/goc
 Many GoCD system environment constants are defined in source file [SystemEnvironment.java](https://github.com/gocd/gocd/blob/master/base/src/main/java/com/thoughtworks/go/util/SystemEnvironment.java).  
 Looks like GoCD does not support IP range based ACL(Access Control List) even though there is a class called "GoAcl" in [GoAcl.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/security/GoAcl.java) which only determines if a username is contained in a list of authorizedUsers. It is used in method readAclBy() in [GoConfigService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/GoConfigService.java) to create a list of authorizedUsers to access a particular stage of some pipeline. In addition, it is used in method hasOperatePermissionForStage() in [SecurityService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/SecurityService.java) to determine if a particular user has operate permission for a particular stage of some pipeline.
 
-**Checklist item 2**   
+**Checklist item 2: source materials validation components**   
 TBD
 
 **Checklist item 3: backup/restore components**  
-BackupsController.java is the main source code for user to perform the backup process in GoCD.
-
+[BackupsController.java](https://github.com/gocd/gocd/blob/master/api/api-backups-v1/src/main/java/com/thoughtworks/go/apiv1/admin/backups/BackupsController.java) is the main source code for user to perform the backup process in GoCD.
 setupRoutes method handles backup content type, verify backup confirm and authentication processes.
-
 create method handles request and response. Backup server runs based on the current user name and inform user the backup result.
-
 verifyConfirmHeader method verify request to see if it is satisfied in certain condition.
 
-backupConfigRepresenter.java is code that allows user to configure backup settings for the GoCD server.
-
+[BackupConfigRepresenter.java](https://github.com/gocd/gocd/blob/master/api/api-backup-config-v1/src/main/java/com/thoughtworks/go/apiv1/backupconfig/representers/BackupConfigRepresenter.java) is code that allows user to configure backup settings for the GoCD server.
 toJSON method and fromJSON method contain JSON object with information that lets user know about backup process is success or not.
 
-**Checklist item 4**  
+**Checklist item 4: poll material source components**  
 TBD
 
-**Checklist item 5**  
+**Checklist item 5: pipeline workflow components**  
 TBD
 
-**Checklist item 6**  
+**Checklist item 6: web ui component**  
 TBD
 
 **Checklist item 7: material update sub-system(MCU) component**  
-ServerMaintenanceModeControllerv1.java is the main source code to determine which the internal subsystems and processes continue to work.
-
+(ServerMaintenanceModeControllerv1.java)[https://github.com/gocd/gocd/blob/master/api/api-server-maintenance-mode-v1/src/main/java/com/thoughtworks/go/apiv1/servermaintenancemode/ServerMaintenanceModeControllerV1.java] is the main source code to determine which the internal subsystems and processes continue to work.
 enableMaintenanceModeState method handles the existing maintenance mode state and notice user with certain information by checking the existingMaintenanceModeState first to see if the server is available in maintenance mode. 
-
 Comparing to the enableMaintenanceModestate method, disableMaintenanceModeState method works in the opposite way, it handles the existing maintenance mode state and notice user with certain information if the server is available.
-
 getRunningJobs method return information about the current running job instances. In this method, each running pipe line instance in the GoDashboardPipeline is collected and return as a list object.
 
-**Checklist item 8**  
+**Checklist item 8: pluign extension point component**  
 TBD
 
-**Checklist item 9**  
+**Checklist item 9: authorization component**  
 It seems that authorization component of GoCD mainly involves two source files: [SecurityService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/SecurityService.java) and [GoConfigService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/GoConfigService.java).  
 Based on method isAdmin() in [SecurityConfig.java](https://github.com/gocd/gocd/blob/master/config/config-api/src/main/java/com/thoughtworks/go/config/SecurityConfig.java) there are three ways to get Administrator permission in GoCD:  
 !isSecurityEnabled() means no authentication is enabled after initial GoCD installation by default.  
@@ -93,25 +86,19 @@ adminsConfig.isAdmin(admin, rolesConfig.memberRoles(admin)) means the user is a 
 This is consistent with GoCD's documentation https://docs.gocd.org/current/configuration/dev_authorization.html .  
 Therefore, a new user is actually given Administrator permission if none of existing users has been assigned as Administrator role.  
 
-**Checklist item 10**  
+**Checklist item 10: SSL/TLS component**  
 TBD
 
-**Checklist item 11**  
+**Checklist item 11: Check authentication configuration component against CSRF attack**  
 TBD
 
 **Checklist item 12: Investigate usage of JRuby on Rails framework against CSRF attack**  
-AgentsControllerV6.java is the main source code to allow users with administrator role to manage agents.
-
+(AgentsControllerV6.java)[https://github.com/gocd/gocd/blob/master/api/api-agents-v6/src/main/java/com/thoughtworks/go/apiv6/agents/AgentsControllerV6.java] is the main source code to allow users with administrator role to manage agents.
 update method determines agent’s update action of agent with its id. If the updateAgentAttributes successfully update the agent’s attribute, then call the handleUpdateAgentResponse method. Exception will be handled if the update attribute method throws exception.
-
 bulkUpdate method handles attribute update of agent with certain id. If the update action is successfully finished, text explanation is printed out. Otherwise, exception is handled.
-
 deleteAgents method accepts request to handle deletion of specific agent with text explanation if no exception occurs.
-
 checkSecurityOr403 method handles GET request with apiAuthenticationHelper component.
-
 handleCreateOrUpdateResponse method handles response of new agent’s register or update status’s of existing agent.
-
 handleUpdateAgentResponse method handles response of specific agent’s update status and inform user with text explanation. 
 
 
