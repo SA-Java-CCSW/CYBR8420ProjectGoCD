@@ -50,7 +50,7 @@ Looks like GoCD does not support IP range based ACL(Access Control List) even th
 **Checklist item 2**   
 TBD
 
-**Checklist item 3**  
+**Checklist item 3: backup/restore components**  
 BackupsController.java is the main source code for user to perform the backup process in GoCD.
 
 setupRoutes method handles backup content type, verify backup confirm and authentication processes.
@@ -72,7 +72,7 @@ TBD
 **Checklist item 6**  
 TBD
 
-**Checklist item 7**  
+**Checklist item 7: material update sub-system(MCU) component**  
 ServerMaintenanceModeControllerv1.java is the main source code to determine which the internal subsystems and processes continue to work.
 
 enableMaintenanceModeState method handles the existing maintenance mode state and notice user with certain information by checking the existingMaintenanceModeState first to see if the server is available in maintenance mode. 
@@ -99,7 +99,7 @@ TBD
 **Checklist item 11**  
 TBD
 
-**Checklist item 12**  
+**Checklist item 12: Investigate usage of JRuby on Rails framework against CSRF attack**  
 AgentsControllerV6.java is the main source code to allow users with administrator role to manage agents.
 
 update method determines agent’s update action of agent with its id. If the updateAgentAttributes successfully update the agent’s attribute, then call the handleUpdateAgentResponse method. Exception will be handled if the update attribute method throws exception.
