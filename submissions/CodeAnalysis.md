@@ -48,7 +48,7 @@ Method authenticateWithWebBasedPlugin() use proper third party authentication pl
 It seems that GoCD does not support user account lockout after N unsuccessful login attempts. It only calls method badAuthentication() to show message "Invalid credentials. Either your username and password are incorrect, or there is a problem with your browser cookies. Please check with your administrator." when authentication fails.  
 Method isSecurityEnabled() in [SecurityService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/SecurityService.java) and [GoConfigService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/GoConfigService.java) is to check if authentication has been enabled or not. By default authentication service is not enabled on a newly installed GoCD Server (See https://docs.gocd.org/current/configuration/dev_authentication.html).  
 Many GoCD system environment constants are defined in source file [SystemEnvironment.java](https://github.com/gocd/gocd/blob/master/base/src/main/java/com/thoughtworks/go/util/SystemEnvironment.java).  
-Looks like GoCD does not support IP range based ACL(Access Control List) even though there is a class called "GoAcl" in [GoAcl.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/security/GoAcl.java) which only determines if a username is contained in a list of authorizedUsers. It is used in method readAclBy() in [GoConfigService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/GoConfigService.java) to create a list of authorizedUsers to access a particular stage of some pipeline. In addition, it is used in method hasOperatePermissionForStage() in [SecurityService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/SecurityService.java) to determine if a particular user has operate permission for a particular stage of some pipeline.
+Looks like GoCD does not support IP range based ACL(Access Control List) even though there is a class called "GoAcl" in [GoAcl.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/security/GoAcl.java) which only determines if a username is contained in a list of authorizedUsers. It is used in method readAclBy() in [GoConfigService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/GoConfigService.java) to create a list of authorizedUsers to access a particular stage of some pipeline. In addition, it is used in method hasOperatePermissionForStage() in [SecurityService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/SecurityService.java) to determine if a particular user has operate permission for a particular stage of some pipeline.  
 Overall, login/authentication components of GoCD could prevent Spoofing attacks after authentication service is enabled. However, it is better to implement IP range based ACL and auto-user account lockout after N unsuccessful login attempts to prevent DoS attacks.
 
 **Checklist item 2: source materials validation components**   
@@ -61,7 +61,7 @@ TBD
 TBD
 
 **Checklist item 5: pipeline workflow components**  
-TBD
+It seems that pipeline workflow components of GoCD mainly involves source files: [GoConfigService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/GoConfigService.java).
 
 **Checklist item 6: web ui component**  
 TBD
@@ -80,7 +80,7 @@ noAdminsConfigured() means no user is assigned Administrator role by default.
 adminsConfig.isAdmin(admin, rolesConfig.memberRoles(admin)) means the user is a member of Administrator role.  
 This is consistent with GoCD's documentation https://docs.gocd.org/current/configuration/dev_authorization.html .  
 Therefore, a new user is actually given Administrator permission if none of existing users has been assigned as Administrator role.  
-Methods canEditPipeline(), isGroupAdministrator(), isUserAdminOfGroup(), isUserTemplateAdmin() in source file [GoConfigService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/GoConfigService.java) clearly showed GoCD's role-based authorization feature. 
+Methods canEditPipeline(), isGroupAdministrator(), isUserAdminOfGroup(), isUserTemplateAdmin() in source file [GoConfigService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/GoConfigService.java) clearly showed GoCD's role-based authorization feature.  
 Overall, authorization component of GoCD could prevent elevation of privileges attacks. However, giving a new user Administrator permission as default is not secure.  
 **Checklist item 10: SSL/TLS component**  
 TBD
