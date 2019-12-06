@@ -155,7 +155,7 @@ This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/C
 This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/SpotBugs-DP_CREATE_CLASSLOADER_INSIDE_DO_PRIVILEGED.pdf) is due to creation of classloader not within a doPrivileged block in line 110/111 of source file [JarUtil.java](https://github.com/gocd/gocd/blob/master/agent-common/src/main/java/com/thoughtworks/go/agent/common/util/JarUtil.java). 
 
 **Security Concern 11: Improper Handling of Parameters (CWE-233)**
-This concern about situation in (BackupConfig.java)[[https://github.com/gocd/gocd/blob/master/config/config-api/src/main/java/com/thoughtworks/go/config/BackupConfig.java]: software does not properly handle when the expected number of parameters, fields, or arguments is not provided in input, or if those parameters are undefined.
+This concern about situation in [BackupConfig.java](https://github.com/gocd/gocd/blob/master/config/config-api/src/main/java/com/thoughtworks/go/config/BackupConfig.java): software does not properly handle when the expected number of parameters, fields, or arguments is not provided in input, or if those parameters are undefined.
 
 **Security Concern 12: Improper Validation of Integrity Check Value (CWE-354)**  
 This concern is about methods in setBackupDate, getBackupDate in class AppleForkedDateEntry that methods do not validate or incorrectly validates the integrity check values. 
