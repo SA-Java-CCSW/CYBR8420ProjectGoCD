@@ -9,7 +9,7 @@ We analyzed our code in both automated and manual review process. The automated 
 **CWE-120: Classic buffer overflow**  
 It seems that the chance of popular classic buffer overflow (CWE-120) in Java is very small unless JNI(Java Native Interface) is used to call native codes written in c/c++. See https://stackoverflow.com/questions/479701/does-java-have-buffer-overflows. Searches for keyword "native"  and "System.loadLibrary" under top-level gocd directory did not show any usage of JNI in GoCD. Therefore, GoCD does not seem to have CWE-120 issue.
 
-**CWE-798 issue: Use of hardcoded credentials**  
+**CWE-798: Use of hardcoded credentials**  
 Search with command ( grep -R "password"|less ) showed many hardcoded credentials usage, but most of them are from source codes written to test GoCD's functionalities. The only concern we have found is use of hardcoded credentials in source file [SystemEnvironment.java](https://github.com/gocd/gocd/blob/master/base/src/main/java/com/thoughtworks/go/util/SystemEnvironment.java):  
 public static GoSystemProperty<String> GO_AGENT_KEYSTORE_PASSWORD = new GoStringSystemProperty("go.agent.keystore.password", "agent5s0repa55w0rd");  
 public static GoSystemProperty<String> GO_SERVER_KEYSTORE_PASSWORD = new GoStringSystemProperty("go.server.keystore.password", "serverKeystorepa55w0rd");  
