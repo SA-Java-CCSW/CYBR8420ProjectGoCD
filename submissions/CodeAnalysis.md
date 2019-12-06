@@ -156,13 +156,10 @@ This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/C
 
 **Security Concern 11: Improper Handling of Parameters(CWE-233)**  
 This [concern](https://https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/CodeReview_Item_3_7_12/CodeReview/SpotBugs-C-USBR_UNNECESSARY_STORE_BEFORE_RETURN.pdf) about situation in [BackupConfig.java](https://github.com/gocd/gocd/blob/master/config/config-api/src/main/java/com/thoughtworks/go/config/BackupConfig.java): software does not properly handle when the expected number of parameters, fields, or arguments is not provided in input, or if those parameters are undefined.
-
 **Security Concern 12: Improper Validation of Integrity Check Value (CWE-354)**  
 This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/CodeReview_Item_3_7_12/CodeReview/SpotBugs-C-SEC_SIDE_EFFECT_CONSTRUCTOR.pdf.pdf) is about methods in setBackupDate, getBackupDate in class AppleForkedDateEntry that methods do not validate or incorrectly validates the integrity check values. 
-
 **Security Concern 13: Uncontrolled Resource Consumption(CWE-400)**  
 This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/CodeReview_Item_3_7_12/CodeReview/SpotBugs-C-EI_EXPOSE_REP.pdf) is about software does not properly control the allocation and maintenance of a limited resource thereby enabling an actor to influence.
-
 **Security Concern 14: External Control of Critical State Data(CWE-642)**  
 This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/CodeReview_Item_3_7_12/CodeReview/SpotBugs-C-EXS_EXCEPTION_SOFTENING_HAS_CHECKED.pdf) is about method getScriptedObject stores security-critical state information about its users that is accessible to unauthorized actors.
 
