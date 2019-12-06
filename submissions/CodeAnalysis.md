@@ -55,6 +55,30 @@ Overall, login/authentication components of GoCD could prevent Spoofing attacks 
 TBD
 
 **Checklist item 3: backup/restore components**  
+[BackupsController.java](https://github.com/gocd/gocd/blob/master/api/api-backups-v1/src/main/java/com/thoughtworks/go/apiv1/admin/backups/BackupsController.java) is the main source code for user to perform the backup process in GoCD.
+setupRoutes method handles backup content type, verify backup confirm and authentication processes.
+create method handles request and response. Backup server runs based on the current user name and inform user the backup result.
+verifyConfirmHeader method verify request to see if it is satisfied in certain condition.
+
+[BackupConfigRepresenter.java](https://github.com/gocd/gocd/blob/master/api/api-backup-config-v1/src/main/java/com/thoughtworks/go/apiv1/backupconfig/representers/BackupConfigRepresenter.java) is code that allows user to configure backup settings for the GoCD server.
+toJSON method and fromJSON method contain JSON object with information that lets user know about backup process is success or not.
+
+**Checklist item 4: poll material source components**  
+TBD
+
+**Checklist item 5: pipeline workflow components**  
+TBD
+
+**Checklist item 6: web ui component**  
+TBD
+
+**Checklist item 7: material update sub-system(MCU) component**  
+(ServerMaintenanceModeControllerv1.java)[https://github.com/gocd/gocd/blob/master/api/api-server-maintenance-mode-v1/src/main/java/com/thoughtworks/go/apiv1/servermaintenancemode/ServerMaintenanceModeControllerV1.java] is the main source code to determine which the internal subsystems and processes continue to work.
+enableMaintenanceModeState method handles the existing maintenance mode state and notice user with certain information by checking the existingMaintenanceModeState first to see if the server is available in maintenance mode. 
+Comparing to the enableMaintenanceModestate method, disableMaintenanceModeState method works in the opposite way, it handles the existing maintenance mode state and notice user with certain information if the server is available.
+getRunningJobs method return information about the current running job instances. In this method, each running pipe line instance in the GoDashboardPipeline is collected and return as a list object.
+
+**Checklist item 8: pluign extension point component**  
 TBD
 
 **Checklist item 4: poll material source components**  
@@ -81,8 +105,10 @@ noAdminsConfigured() means no user is assigned Administrator role by default.
 adminsConfig.isAdmin(admin, rolesConfig.memberRoles(admin)) means the user is a member of Administrator role.  
 This is consistent with GoCD's documentation https://docs.gocd.org/current/configuration/dev_authorization.html .  
 Therefore, a new user is actually given Administrator permission if none of existing users has been assigned as Administrator role.  
+
 Methods canEditPipeline(), isGroupAdministrator(), isUserAdminOfGroup(), isUserTemplateAdmin() in source file [GoConfigService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/GoConfigService.java) clearly showed GoCD's role-based authorization feature.  
 Overall, authorization component of GoCD could prevent elevation of privileges attacks. However, giving a new user Administrator permission as default is not secure.  
+
 **Checklist item 10: SSL/TLS component**  
 TBD
 
@@ -90,7 +116,14 @@ TBD
 TBD
 
 **Checklist item 12: Investigate usage of JRuby on Rails framework against CSRF attack**  
-TBD
+(AgentsControllerV6.java)[https://github.com/gocd/gocd/blob/master/api/api-agents-v6/src/main/java/com/thoughtworks/go/apiv6/agents/AgentsControllerV6.java] is the main source code to allow users with administrator role to manage agents.
+update method determines agent’s update action of agent with its id. If the updateAgentAttributes successfully update the agent’s attribute, then call the handleUpdateAgentResponse method. Exception will be handled if the update attribute method throws exception.
+bulkUpdate method handles attribute update of agent with certain id. If the update action is successfully finished, text explanation is printed out. Otherwise, exception is handled.
+deleteAgents method accepts request to handle deletion of specific agent with text explanation if no exception occurs.
+checkSecurityOr403 method handles GET request with apiAuthenticationHelper component.
+handleCreateOrUpdateResponse method handles response of new agent’s register or update status’s of existing agent.
+handleUpdateAgentResponse method handles response of specific agent’s update status and inform user with text explanation. 
+
 
 
 ## Automated Tool Scan
@@ -122,8 +155,17 @@ This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/C
 **Security Concern 10: Malicious Code**  
 This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/SpotBugs-DP_CREATE_CLASSLOADER_INSIDE_DO_PRIVILEGED.pdf) is due to creation of classloader not within a doPrivileged block in line 110/111 of source file [JarUtil.java](https://github.com/gocd/gocd/blob/master/agent-common/src/main/java/com/thoughtworks/go/agent/common/util/JarUtil.java). 
 
+**Security Concern 11: Improper Handling of Parameters(CWE-233)**   
+This [concern](https://https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/CodeReview_Item_3_7_12/CodeReview/SpotBugs-C-USBR_UNNECESSARY_STORE_BEFORE_RETURN.pdf) about situation in [BackupConfig.java](https://github.com/gocd/gocd/blob/master/config/config-api/src/main/java/com/thoughtworks/go/config/BackupConfig.java): software does not properly handle when the expected number of parameters, fields, or arguments is not provided in input, or if those parameters are undefined.
+**Security Concern 12: Improper Validation of Integrity Check Value (CWE-354)**   
+This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/CodeReview_Item_3_7_12/CodeReview/SpotBugs-C-SEC_SIDE_EFFECT_CONSTRUCTOR.pdf.pdf) is about methods in setBackupDate, getBackupDate in class AppleForkedDateEntry that methods do not validate or incorrectly validates the integrity check values.   
+**Security Concern 13: Uncontrolled Resource Consumption(CWE-400)**   
+This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/CodeReview_Item_3_7_12/CodeReview/SpotBugs-C-EI_EXPOSE_REP.pdf) is about software does not properly control the allocation and maintenance of a limited resource thereby enabling an actor to influence.  
+**Security Concern 14: External Control of Critical State Data(CWE-642)**   
+This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/CodeReview_Item_3_7_12/CodeReview/SpotBugs-C-EXS_EXCEPTION_SOFTENING_HAS_CHECKED.pdf) is about method getScriptedObject stores security-critical state information about its users that is accessible to unauthorized actors.  
 
 ### Project Links
 * Team Repository: https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD
 * Project Board: https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/projects/5
 * Reflection Meeting (December) https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/submissions/ReflectionMeetingDec.md
+
