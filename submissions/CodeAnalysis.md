@@ -1,9 +1,9 @@
 ## Code Review Strategy
-Before diving into the detailed code analysis, we did a manual coarse-grained scan of GoCD's code base to see if there is any existance of most popular CWEs(Commone Weakness Enumeration) such as CWE-120/CWE-798/CWE-311/CWE-434/CWE-250/CWE-494/CWE-22/CWE-759. 
+Before diving into the detailed code analysis, we did a manual coarse-grained scan of GoCD's codebase to see if there is any existence of most popular CWEs(Common Weakness Enumeration) such as CWE-120/CWE-798/CWE-311/CWE-434/CWE-250/CWE-494/CWE-22/CWE-759.
 
-Then we started with reviewing our assurance cases, misuse cases, and threat model report. From the review, we discovered the most critical weakness areas in the software and decided to choose the checklist review strategy which is the most appropriate method for analyzing the code of large-scale projects like GoCD. To reduce the effort of going through all the codes for each line we decided to review all 12 items from our [checklist](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/Checklist.md).  
+Then we started with reviewing our assurance cases, misuse cases, and threat model reports. From the review, we discovered the most critical weakness areas in the software. We decided to choose the checklist review strategy, which is the most appropriate method for analyzing the code of large-scale projects like GoCD. We decided to review all 12 items from our [checklist](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/Checklist.md).
 
-We analyzed our code in both automated and manual review process. The automated code review is performed using open source static code analysis tool called **SpotBugs and Findbugs**. The list of resultant vulnerabilities from the automated tool scan was narrowed down to analyze  **CWE(Common Weakness Enumeration)** that are related to our misuse case, assurance cases, and threat model and examined manually.
+We analyzed our code in both automated and manual review processes. The automated code review is performed using an open source static code analysis tool called SpotBugs and Findbugs. The list of resultant vulnerabilities from the automated tool scan was narrowed down to analyze CWE(Common Weakness Enumeration) that are related to our misuse case, assurance cases, and threat model and examined manually.
 
 ## Manual Code Review
 **CWE-120: Classic buffer overflow**  
