@@ -53,7 +53,7 @@ Looks like GoCD does not support IP range based ACL(Access Control List) even th
 Overall, login/authentication components of GoCD could prevent Spoofing attacks after authentication service is enabled. However, it is better to implement IP range based ACL and auto-user account lockout after N unsuccessful login attempts to prevent DoS attacks.
 
 **Checklist item 2: Source Materials Validation Components**   
-GoCD contains validator classes in directory "GoCD\server\src\main\java\com\thoughtworks\go\validators". The Validators check for correct IP and port, and include whitelisting of characters for network connections. The files contain: HostNameValidator.java, PortValidator.java, Validator.java classes. These validators help protect against malformed ip packets with GoCD's network connections. 
+GoCD contains validator classes in directory "GoCD\server\src\main\java\com\thoughtworks\go\validators". The Validators check for correct IP and port, and include whitelisting of characters for network connections. The files contain: HostNameValidator.java, PortValidator.java, Validator.java classes. These validators help protect against malformed ip packets with GoCD's network connections. Finally, GoCD uses `URISyntaxException` to ensure that the config files are properly using proper URI syntax in "GoCD\server\src\main\java\com\thoughtworks\go\server\web\BaseUrlProvider.java". These classes are used in 
 
 
 
@@ -127,7 +127,9 @@ TBD
 * Method handleCreateOrUpdateResponse() handles response of new agent’s register or update status’s of existing agent.
 * Method handleUpdateAgentResponse() handles response of specific agent’s update status and inform user with text explanation. 
 
-In directory "GoCD\server\src\main\webapp\WEB-INF\rails" is where the Ruby on Rails front-end is stored. A grep search shows that the "config.force_ssl" is commented out in "GoCD\server\src\main\webapp\WEB-INF\rails\config\environments", and should be changed to "true" in order to enforce SSL/TLS connections to the Rails front-end app when users access the web interface. The cookie session store is handled by Java Servlet as defined by session_store.rb and uses Spring Security.
+In directory "GoCD\server\src\main\webapp\WEB-INF\rails" is where the Ruby on Rails front-end is stored. A grep search shows that the "config.force_ssl" is commented out in "GoCD\server\src\main\webapp\WEB-INF\rails\config\environments", and should be changed to "true" in order to enforce SSL/TLS connections to the Rails front-end app when users access the web interface. However, the Servlet side does enforce SSL/TLS connections in ServerConfigService.java in line 108 through an @Override method with the code `ServerSiteUrlConfig siteUrl = forceSsl || (scheme != null && scheme.equals("https")) ? getSecureSiteUrl() : serverConfig().`. The authors decided to enforce the URI details, including forcing SSL/TLS within the Servlet/Java-side.
+
+The cookie session store and generation is handled by Java Servlet as defined by session_store.rb. The implementation can be found in "GoCD\server\src\main\java\com\thoughtworks\go\server\web" directory.
 
 Rails manages their post and get functions inside the routes.rb class. The file routes.rb is found in "GoCD\server\src\main\webapp\WEB-INF\rails\config". As a rule, any [state changes](https://tools.ietf.org/html/rfc7231#section-4.2.1) should not use GET requests. Every route that is using the GET method should be accessing a page or requesting information, while every POST method shoulbe be creating or updating information in the database. This functionality is largely consistent in the routes.rb to protect against CSRF attacks. One line of concern is the following since the function is making a change on the server.
 * On line 69, `get "admin/config_change/between/:later_md5/and/:earlier_md5" => 'admin/stages#config_change', as: :admin_config_change` might need a `post` instead of a `get`. Looking at the view, the 
