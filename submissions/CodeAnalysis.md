@@ -43,23 +43,25 @@ It seems that method hashCode() in source file [UsernamePassword.java](https://g
 
 **Checklist item 1: login/authentication components**  
 After investigation, [AuthenticationController.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/newsecurity/controllers/AuthenticationController.java) appears to be the main source code for user login authentication in GoCD.  
-Method performLogin() uses a local password file based authentication plugin to authenticate user login.  
-Method redirectToThirdPartyLoginPage() redirect user's login request to proper third party login page based on the third party authentication plugin ID "pluginId".  
-Method authenticateWithWebBasedPlugin() use proper third party authentication plugin to authenticate user login.  
+* Method performLogin() uses a local password file based authentication plugin to authenticate user login.  
+* Method redirectToThirdPartyLoginPage() redirect user's login request to proper third party login page based on the third party authentication plugin ID "pluginId".  
+* Method authenticateWithWebBasedPlugin() use proper third party authentication plugin to authenticate user login.  
 It seems that GoCD does not support user account lockout after N unsuccessful login attempts. It only calls method badAuthentication() to show message "Invalid credentials. Either your username and password are incorrect, or there is a problem with your browser cookies. Please check with your administrator." when authentication fails.  
 Method isSecurityEnabled() in [SecurityService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/SecurityService.java) and [GoConfigService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/GoConfigService.java) is to check if authentication has been enabled or not. By default authentication service is not enabled on a newly installed GoCD Server (See https://docs.gocd.org/current/configuration/dev_authentication.html).  
 Many GoCD system environment constants are defined in source file [SystemEnvironment.java](https://github.com/gocd/gocd/blob/master/base/src/main/java/com/thoughtworks/go/util/SystemEnvironment.java).  
 Looks like GoCD does not support IP range based ACL(Access Control List) even though there is a class called "GoAcl" in [GoAcl.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/security/GoAcl.java) which only determines if a username is contained in a list of authorizedUsers. It is used in method readAclBy() in [GoConfigService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/GoConfigService.java) to create a list of authorizedUsers to access a particular stage of some pipeline. In addition, it is used in method hasOperatePermissionForStage() in [SecurityService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/SecurityService.java) to determine if a particular user has operate permission for a particular stage of some pipeline.  
 Overall, login/authentication components of GoCD could prevent Spoofing attacks after authentication service is enabled. However, it is better to implement IP range based ACL and auto-user account lockout after N unsuccessful login attempts to prevent DoS attacks.
 
-**Checklist item 2: source materials validation components**   
-GoCD contains validator classes in directory "GoCD\server\src\main\java\com\thoughtworks\go\validators". The Validators check for correct IP and port, and include whitelisting of characters for network connections. The files contain: HostNameValidator.java, PortValidator.java, Validator.java classes. 
+**Checklist item 2: Source Materials Validation Components**   
+GoCD contains validator classes in directory "GoCD\server\src\main\java\com\thoughtworks\go\validators". The Validators check for correct IP and port, and include whitelisting of characters for network connections. The files contain: HostNameValidator.java, PortValidator.java, Validator.java classes. These validators help protect against malformed ip packets with GoCD's network connections. Finally, GoCD uses `URISyntaxException` to ensure that the config files are properly using proper URI syntax in "GoCD\server\src\main\java\com\thoughtworks\go\server\web\BaseUrlProvider.java". These classes are used in 
+
+
 
 **Checklist item 3: backup/restore components**  
 [BackupsController.java](https://github.com/gocd/gocd/blob/master/api/api-backups-v1/src/main/java/com/thoughtworks/go/apiv1/admin/backups/BackupsController.java) is the main source code for user to perform the backup process in GoCD.
-Method setupRoutes() handles backup content type, verify backup confirm and authentication processes.
-Method create() handles request and response. Backup server runs based on the current user name and inform user the backup result.
-Method verifyConfirmHeader() verify request to see if it is satisfied in certain condition.
+* Method setupRoutes() handles backup content type, verify backup confirm and authentication processes.
+* Method create() handles request and response. Backup server runs based on the current user name and inform user the backup result.
+* Method verifyConfirmHeader() verify request to see if it is satisfied in certain condition.
 
 [BackupConfigRepresenter.java](https://github.com/gocd/gocd/blob/master/api/api-backup-config-v1/src/main/java/com/thoughtworks/go/apiv1/backupconfig/representers/BackupConfigRepresenter.java) is code that allows user to configure backup settings for the GoCD server.
 Method toJSON() and method fromJSON() contain JSON object with information that lets user know about backup process is success or not.
@@ -86,9 +88,9 @@ TBD
 **Checklist item 9: authorization component**  
 It appears the authorization component of GoCD mainly involves two source files: [SecurityService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/SecurityService.java) and [GoConfigService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/GoConfigService.java).  
 Based on method isAdmin() in [SecurityConfig.java](https://github.com/gocd/gocd/blob/master/config/config-api/src/main/java/com/thoughtworks/go/config/SecurityConfig.java) there are three ways to get Administrator permission in GoCD:  
-!isSecurityEnabled() means no authentication is enabled after initial GoCD installation by default.  
-noAdminsConfigured() means no user is assigned Administrator role by default.  
-adminsConfig.isAdmin(admin, rolesConfig.memberRoles(admin)) means the user is a member of Administrator role.  
+* !isSecurityEnabled() means no authentication is enabled after initial GoCD installation by default.  
+* noAdminsConfigured() means no user is assigned Administrator role by default.  
+* adminsConfig.isAdmin(admin, rolesConfig.memberRoles(admin)) means the user is a member of Administrator role.  
 This is consistent with GoCD's documentation https://docs.gocd.org/current/configuration/dev_authorization.html .  
 Therefore, a new user is actually given Administrator permission if none of existing users has been assigned as Administrator role.  
 
@@ -110,7 +112,9 @@ TBD
 * Method handleCreateOrUpdateResponse() handles response of new agent’s register or update status’s of existing agent.
 * Method handleUpdateAgentResponse() handles response of specific agent’s update status and inform user with text explanation. 
 
-In directory "GoCD\server\src\main\webapp\WEB-INF\rails" is where the Ruby on Rails front-end is stored. A grep search shows that the "config.force_ssl" is commented out in "GoCD\server\src\main\webapp\WEB-INF\rails\config\environments", and should be changed to "true" in order to enforce SSL/TLS connections to the Rails front-end app when users access the web interface. The cookie session store is handled by Java Servlet as defined by session_store.rb and uses Spring Security.
+In directory "GoCD\server\src\main\webapp\WEB-INF\rails" is where the Ruby on Rails front-end is stored. A grep search shows that the "config.force_ssl" is commented out in "GoCD\server\src\main\webapp\WEB-INF\rails\config\environments", and should be changed to "true" in order to enforce SSL/TLS connections to the Rails front-end app when users access the web interface. However, the Servlet side does enforce SSL/TLS connections in ServerConfigService.java in line 108 through an @Override method with the code `ServerSiteUrlConfig siteUrl = forceSsl || (scheme != null && scheme.equals("https")) ? getSecureSiteUrl() : serverConfig().`. The authors decided to enforce the URI details, including forcing SSL/TLS within the Servlet/Java-side.
+
+The cookie session store and generation is handled by Java Servlet as defined by session_store.rb. The implementation can be found in "GoCD\server\src\main\java\com\thoughtworks\go\server\web" directory.
 
 Rails manages their post and get functions inside the routes.rb class. The file routes.rb is found in "GoCD\server\src\main\webapp\WEB-INF\rails\config". As a rule, any [state changes](https://tools.ietf.org/html/rfc7231#section-4.2.1) should not use GET requests. Every route that is using the GET method should be accessing a page or requesting information, while every POST method shoulbe be creating or updating information in the database. This functionality is largely consistent in the routes.rb to protect against CSRF attacks. One line of concern is the following since the function is making a change on the server.
 * On line 69, `get "admin/config_change/between/:later_md5/and/:earlier_md5" => 'admin/stages#config_change', as: :admin_config_change` might need a `post` instead of a `get`. Looking at the view, the 
