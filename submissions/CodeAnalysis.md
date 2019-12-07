@@ -70,7 +70,8 @@ Method toJSON() and method fromJSON() contain JSON object with information that 
 TBD
 
 **Checklist item 5: Pipeline Workflow Components**  
-TBD
+It appears the pipeline workflow components of GoCD involve the source files: GoConfigFileHelper.java and DatabaseAccessHelper.java. Methods addPipeline(), addPipelineToGroup(), updatePipeline(), addStageToPipeline(), addEnvironmentVariableToPipeline(), removePipeline(), addJobToStage(), addMaterialConfigForPipeline(), lockPipeline(), addPipelineCommand() in [GoConfigFileHelper.java](https://github.com/gocd/gocd/blob/master/server/src/test-shared/java/com/thoughtworks/go/util/GoConfigFileHelper.java) and methods configurePipeline(), schedulePipeline(), scheduleJobInstancesAndSavePipeline() in [DatabaseAccessHelper.java](https://github.com/gocd/gocd/blob/master/server/src/test-shared/java/com/thoughtworks/go/server/dao/DatabaseAccessHelper.java) clearly showed the workflow of pipeline in GoCD. None of these have elevation of privileges concerns.
+Overall, pipeline workflow components of GoCD could prevent elevation of privileges attacks.
 
 **Checklist item 6: Web UI Component**  
 TBD
@@ -82,22 +83,6 @@ Comparing to the method enableMaintenanceModestate(), method disableMaintenanceM
 Method getRunningJobs() returns information about the current running job instances. In this method, each running pipeline instance in GoDashboardPipeline.java is collected and return as a list object.
 
 **Checklist item 8: Plugin Extension Point Component**  
-TBD
-
-**Checklist item 4: Poll Material Source Components**  
-TBD
-
-**Checklist item 5: pipeline workflow components**  
-It appears the pipeline workflow components of GoCD involve the source files: GoConfigFileHelper.java and DatabaseAccessHelper.java. Methods addPipeline(), addPipelineToGroup(), updatePipeline(), addStageToPipeline(), addEnvironmentVariableToPipeline(), removePipeline(), addJobToStage(), addMaterialConfigForPipeline(), lockPipeline(), addPipelineCommand() in [GoConfigFileHelper.java](https://github.com/gocd/gocd/blob/master/server/src/test-shared/java/com/thoughtworks/go/util/GoConfigFileHelper.java) and methods configurePipeline(), schedulePipeline(), scheduleJobInstancesAndSavePipeline() in [DatabaseAccessHelper.java](https://github.com/gocd/gocd/blob/master/server/src/test-shared/java/com/thoughtworks/go/server/dao/DatabaseAccessHelper.java) clearly showed the workflow of pipeline in GoCD. None of these have elevation of privileges concerns.
-Overall, pipeline workflow components of GoCD could prevent elevation of privileges attacks.
-
-**Checklist item 6: web ui component**  
-TBD
-
-**Checklist item 7: material update sub-system(MCU) component**  
-TBD
-
-**Checklist item 8:  pluign extension point component**  
 TBD
 
 **Checklist item 9: authorization component**  
@@ -139,13 +124,14 @@ Additionally, the Rail controllers use the function expect() as an additional me
 After exploring the DHS SWAMP scanning platform we attempted to use the system to scan the GoCD source code files. However, the SWAMP platform does not support JDK 11 or above which is required to build GoCD source codes to byte code. Therefore, we directly downloaded precompiled GoCD byte codes in .zip format from https://www.gocd.org/download/#zip and uploaded them to https://www.mir-swamp.org/ to perform various assessments on the byte codes. We did successfully use the SWAMP platform to scan the GoCD Java Bytecode with SpotBugs 3.1.12.  We also used the OWASP Dependency Check 2.1.1 tool to scan the Java code files, but it did not find any issues. Finally, we used RuboCop to scan the Ruby on Rails portion of the server. 
 
 #### Findbugs 3.0.1
-This tool was used in the SWAMP platform to scan the GoCD Java Bytecode.  
+This tool is a Desktop installed software. It was used to scan GoCD Java Bytecode for both Go Server (lib/go.class file) and Go Agent (lib/agent-bootstrapper.class file). 
+For Go Server and Go Agent, the same results are found (see [findbugs_server_result](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/findbugs_goServer.xml) and [findbugs_agent_result](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/findbugs_goAgent.xml)). 4 bugs are found, 2 of them are bad practices, 1 is incorrect lazy initialization, and the last one is inner class that could be made static. Dubious method used (bad practice) are found in two locations (com.thoughtworks.gocd.Boot.run() method invokes System.exit(); com.thoughtworks.gocd.AssertJava.checkSupported(JavaVersion) invokes System.exit()). Incorrect lazy initialization of static field JavaVersion currentJavaVersion at JavaVersion.java [lines81-82] in method com.thoughtworks.gocd.JavaVersion.current() on field com.thoughtworks.JavaVersion.currentJavaVersion. The class Handler$1 could be refactored into a named _static_inner class at Handler.java [lines 55-65] in class com.thoughtworks.gocd.onejar.Handler$1. 
 
 #### SpotBugs 3.1.12
-This tool was used in the SWAMP platform to scan the GoCD Java Bytecode. As shown in the [summary](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/SpotBugs-Scan-Summary.pdf) it has found total 40034 bugs. It turned out that only 152 bugs are related to security or malicious codes groups based on our manual scan of the generated assessment results. As a matter of fact only 23 lines of source codes are from GoCD, the rest are from third-party libraries which is beyond the scope of our code analysis. We further selected 10 bugs which are worth investigations by GoCD development team as shown below:  
+This tool was used in the SWAMP platform to scan the GoCD Java Bytecode. As shown in the [summary](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/SpotBugs-Scan-Summary.pdf) it has found total 40034 bugs. It turned out that only 152 bugs are related to security or malicious codes groups based on our manual scan of the generated assessment results. As a matter of fact only 23 lines of source codes are from GoCD, the rest are from third-party libraries which is beyond the scope of our code analysis. We further selected 14 bugs which are worth investigations by GoCD development team as shown below:  
 **Security Concern 1: Missing Support for Cipher Integrity Check(CWE-353)**  
 This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/SpotBugs-CIPHER_INTEGRITY-AESEncrypter.pdf) is due to usage of insecure Java Cipher API call Cipher.getInstance("AES/CBC/PKCS5Padding") in line 62 and 85 of source file [AESEncrypter.java](https://github.com/gocd/gocd/blob/master/config/config-api/src/main/java/com/thoughtworks/go/security/AESEncrypter.java). Even though GoCD does explicitly provide algorithm(AES), cipher mode(CBC) and padding scheme(PKCS5Padding) as the transformation to avoid the IND-CPA insecure ECB cipher mode as mentioned in a [software security research article](https://dl.acm.org/citation.cfm?doid=2508859.2516693), it is still recommended to use more secure GCM cipher mode to mitigate this security concern.  
-**Security Concern 2: Use of Hard-coded Password(CCWE-259)**  
+**Security Concern 2: Use of Hard-coded Password(CWE-259)**  
 This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/SpotBugs-HARD_CODE_PASSWORD.pdf) is due to usage of hard-coded password in line 280 and 289 of source file [MaterialConfigs.java](https://github.com/gocd/gocd/blob/master/config/config-api/src/main/java/com/thoughtworks/go/config/materials/MaterialConfigs.java) and line 214/243/245 of source file [X509CertificateGenerator.java](https://github.com/gocd/gocd/blob/master/common/src/main/java/com/thoughtworks/go/security/X509CertificateGenerator.java). Hard-coded passwords should always be removed.  
 **Security Concern 3: Use of Insufficiently Random Values(CWE-330)**  
 This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/SpotBugs-PREDICTABLE_RANDOM%20.pdf) is due to usage of less secure random number generator in line 82 of source file [DownloadAction.java](https://github.com/gocd/gocd/blob/master/common/src/main/java/com/thoughtworks/go/domain/DownloadAction.java), in line 264 of source file [X509CertificateGenerator.java](https://github.com/gocd/gocd/blob/master/common/src/main/java/com/thoughtworks/go/security/X509CertificateGenerator.java), and line 55 of source file [SystemUtil.java](https://github.com/gocd/gocd/blob/master/base/src/main/java/com/thoughtworks/go/util/SystemUtil.java). More secure java.security.SecureRandom API should be used.  
@@ -162,16 +148,15 @@ This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/C
 **Security Concern 9: HTTP Parameter Pollution(CAPEC-460)**  
 This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/SpotBugs-HTTP_PARAMETER_POLLUTION.pdf) is due to usage of unvalidated redirection in line 110 of source file [ServerBinaryDownloader.java](https://github.com/gocd/gocd/blob/master/agent-common/src/main/java/com/thoughtworks/go/agent/launcher/ServerBinaryDownloader.java), in line 115 of source file [AgentUpgradeService.java](https://github.com/gocd/gocd/blob/master/agent/src/main/java/com/thoughtworks/go/agent/service/AgentUpgradeService.java) and line 156 of source file [HttpService.java](https://github.com/gocd/gocd/blob/master/common/src/main/java/com/thoughtworks/go/util/HttpService.java).  
 **Security Concern 10: Malicious Code**  
-This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/SpotBugs-DP_CREATE_CLASSLOADER_INSIDE_DO_PRIVILEGED.pdf) is due to creation of classloader not within a doPrivileged block in line 110/111 of source file [JarUtil.java](https://github.com/gocd/gocd/blob/master/agent-common/src/main/java/com/thoughtworks/go/agent/common/util/JarUtil.java). 
-
+This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/SpotBugs-DP_CREATE_CLASSLOADER_INSIDE_DO_PRIVILEGED.pdf) is due to creation of classloader not within a doPrivileged block in line 110/111 of source file [JarUtil.java](https://github.com/gocd/gocd/blob/master/agent-common/src/main/java/com/thoughtworks/go/agent/common/util/JarUtil.java).  
 **Security Concern 11: Improper Handling of Parameters(CWE-233)**   
-This [concern](https://https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/CodeReview_Item_3_7_12/CodeReview/SpotBugs-C-USBR_UNNECESSARY_STORE_BEFORE_RETURN.pdf) about situation in [BackupConfig.java](https://github.com/gocd/gocd/blob/master/config/config-api/src/main/java/com/thoughtworks/go/config/BackupConfig.java): software does not properly handle when the expected number of parameters, fields, or arguments is not provided in input, or if those parameters are undefined.
+This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/SpotBugs-C-USBR_UNNECESSARY_STORE_BEFORE_RETURN.pdf) about situation in [BackupConfig.java](https://github.com/gocd/gocd/blob/master/config/config-api/src/main/java/com/thoughtworks/go/config/BackupConfig.java): software does not properly handle when the expected number of parameters, fields, or arguments is not provided in input, or if those parameters are undefined.  
 **Security Concern 12: Improper Validation of Integrity Check Value (CWE-354)**   
-This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/CodeReview_Item_3_7_12/CodeReview/SpotBugs-C-SEC_SIDE_EFFECT_CONSTRUCTOR.pdf.pdf) is about methods in setBackupDate, getBackupDate in class AppleForkedDateEntry that methods do not validate or incorrectly validates the integrity check values.   
+This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/SpotBugs-C-SEC_SIDE_EFFECT_CONSTRUCTOR.pdf) is about methods in setBackupDate, getBackupDate in class AppleForkedDateEntry that methods do not validate or incorrectly validates the integrity check values.   
 **Security Concern 13: Uncontrolled Resource Consumption(CWE-400)**   
-This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/CodeReview_Item_3_7_12/CodeReview/SpotBugs-C-EI_EXPOSE_REP.pdf) is about software does not properly control the allocation and maintenance of a limited resource thereby enabling an actor to influence.  
+This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/SpotBugs-C-EI_EXPOSE_REP.pdf) is about software does not properly control the allocation and maintenance of a limited resource thereby enabling an actor to influence.  
 **Security Concern 14: External Control of Critical State Data(CWE-642)**   
-This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/CodeReview_Item_3_7_12/CodeReview/SpotBugs-C-EXS_EXCEPTION_SOFTENING_HAS_CHECKED.pdf) is about method getScriptedObject stores security-critical state information about its users that is accessible to unauthorized actors.  
+This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/SpotBugs-C-EXS_EXCEPTION_SOFTENING_HAS_CHECKED.pdf) is about method getScriptedObject stores security-critical state information about its users that is accessible to unauthorized actors.  
 
 ### RuboCop 0.47
 This tool was used in the SWAMP platform to scan the GoCD Ruby on Rails webapp.  As shown in the [summary](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/RuboCop-Scan-Summary.pdf) the tools has found total 293 bugs. The "bugs" are style issues with no serious vulnerabilities identified.
