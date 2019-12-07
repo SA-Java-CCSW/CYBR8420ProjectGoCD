@@ -35,7 +35,8 @@ By scanning output of 'grep -R path|less', it seems that there are many referenc
     }  
     public class LogoutPage {  
         public static final String SPA_BASE = "/auth/logout";  
-    }  `
+    }`
+	
 Therefore, GoCD does not seem to have CWE-22 issue.  
  
 **CWE-759: Use of one-way hash without a salt**  
@@ -55,7 +56,11 @@ Looks like GoCD does not support IP range based ACL(Access Control List) even th
 Overall, login/authentication components of GoCD could prevent Spoofing attacks after authentication service is enabled. However, it is better to implement IP range based ACL and auto-user account lockout after N unsuccessful login attempts to prevent DoS attacks.
 
 **Checklist item 2: Source Materials Validation Components**   
-GoCD contains validator classes in directory "GoCD\server\src\main\java\com\thoughtworks\go\validators". The Validators check for correct IP and port, and include whitelisting of characters for network connections. The files contain: HostNameValidator.java, PortValidator.java, Validator.java classes. These validators help protect against malformed ip packets with GoCD's network connections. Finally, GoCD uses `URISyntaxException` to ensure that the config files are properly using proper URI syntax in "GoCD\server\src\main\java\com\thoughtworks\go\server\web\BaseUrlProvider.java". These classes are used in 
+There are configuration classes that appear to perform basic validation on the data that is provided by the config files which dictate if the data is valid or not. The config files are edited with through the web interface, or manually through a text editor on the server. "GitMaterialConfig.java" in "GoCD\config\config-api\src\main\java\com\thoughtworks\go\config\materials\git" performs some URL and hash checking to ensure if the details provided about the repository is valid. 
+
+Admittedly, the validation mechanisms GoCD uses for its configuration files is highly decoupled and difficult to trace through. GoCD does appear to have various validation mechanisms when converting configuration files to String array representations. This can be seen in "GoCD\config\config-api\src\main\java\com\thoughtworks\go\config\validation" java classes, realized with Filter.java in "GoCD\config\config-api\src\main\java\com\thoughtworks\go\config\materials", and GitMaterialConfig.java.
+
+In "GoCD\server\src\main\java\com\thoughtworks\go\server\service" the java class "MaterialService.java" shows that GoCD creates a unique fingerprint that validates the Material's repository. This data structure can be viewed in MaterialConfig.java located "GoCD\config\config-api\src\main\java\com\thoughtworks\go\domain\materials" with the code `String getFingerprint();`. This fingerprint protects against repository spoofing attack. 
 
 **Checklist item 3: backup/restore components**  
 [BackupsController.java](https://github.com/gocd/gocd/blob/master/api/api-backups-v1/src/main/java/com/thoughtworks/go/apiv1/admin/backups/BackupsController.java) is the main source code for user to perform the backup process in GoCD.
@@ -67,7 +72,21 @@ GoCD contains validator classes in directory "GoCD\server\src\main\java\com\thou
 Method toJSON() and method fromJSON() contain JSON object with information that lets user know about backup process is success or not.
 
 **Checklist item 4: Poll Material Source Components**  
-TBD
+
+The data structure defined in the configuration files is represented by `boolean isAutoUpdate();` in MaterialConfig.java located "GoCD\config\config-api\src\main\java\com\thoughtworks\go\domain\materials". This boolean value defines whether or not this is manual pull or automatic poll. 
+
+This is will be represented by the code in 
+
+`        if (pipelineConfig.isFirstStageManualApproval()) {
+            String message = String.format("Failed to trigger pipeline [%s]", pipelineConfig.name());
+            result.error(message, String.format("The first stage of pipeline \"%s\" has manual approval",
+                                pipelineConfig.name()), type);
+        } else {
+            result.success(type);
+        }
+`
+
+Enforces that the Material Source has manual approval process that can be enabled to prevent attacks.
 
 **Checklist item 5: Pipeline Workflow Components**  
 It appears the pipeline workflow components of GoCD involve the source files: GoConfigFileHelper.java and DatabaseAccessHelper.java. Methods addPipeline(), addPipelineToGroup(), updatePipeline(), addStageToPipeline(), addEnvironmentVariableToPipeline(), removePipeline(), addJobToStage(), addMaterialConfigForPipeline(), lockPipeline(), addPipelineCommand() in [GoConfigFileHelper.java](https://github.com/gocd/gocd/blob/master/server/src/test-shared/java/com/thoughtworks/go/util/GoConfigFileHelper.java) and methods configurePipeline(), schedulePipeline(), scheduleJobInstancesAndSavePipeline() in [DatabaseAccessHelper.java](https://github.com/gocd/gocd/blob/master/server/src/test-shared/java/com/thoughtworks/go/server/dao/DatabaseAccessHelper.java) clearly showed the workflow of pipeline in GoCD. None of these have elevation of privileges concerns.
@@ -112,6 +131,8 @@ TBD
 
 **Checklist item 12: Investigate usage of JRuby on Rails framework against CSRF attack**  
 In directory "GoCD\server\src\main\webapp\WEB-INF\rails" is where the Ruby on Rails front-end is stored. A grep search shows that the "config.force_ssl" is commented out in "GoCD\server\src\main\webapp\WEB-INF\rails\config\environments", and should be changed to "true" in order to enforce SSL/TLS connections to the Rails front-end app when users access the web interface. However, the Servlet side does enforce SSL/TLS connections in ServerConfigService.java in line 108 through an @Override method with the code `ServerSiteUrlConfig siteUrl = forceSsl || (scheme != null && scheme.equals("https")) ? getSecureSiteUrl() : serverConfig().`. The authors decided to enforce the URI details, including forcing SSL/TLS, within the Servlet/Java-side. No bugs seem to be identified through this implementation.
+
+GoCD contains validator classes in directory "GoCD\server\src\main\java\com\thoughtworks\go\validators". The Validators check for correct IP and port, and include whitelisting of characters for network connections. The files contain: HostNameValidator.java, PortValidator.java, Validator.java classes. These validators help protect against forms of network attacks by ensuring correctness. Finally, GoCD uses `URISyntaxException` to ensure that the config files are properly using proper URI syntax in "GoCD\server\src\main\java\com\thoughtworks\go\server\web\BaseUrlProvider.java". 
 
 The cookie session store and generation is handled by Java Servlet as defined by session_store.rb. The implementation can be found in "GoCD\server\src\main\java\com\thoughtworks\go\server\web" directory.
 
