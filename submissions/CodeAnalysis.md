@@ -11,8 +11,8 @@ It seems that the chance of popular classic buffer overflow (CWE-120) in Java is
 
 **CWE-798: Use of hardcoded credentials**  
 Searching with command ( grep -R "password"|less ) shows many hardcode credential usage, but most of them are from source codes written to test GoCD's functionalities. The only concern we have found is use of hardcoded credentials in source file [SystemEnvironment.java](https://github.com/gocd/gocd/blob/master/base/src/main/java/com/thoughtworks/go/util/SystemEnvironment.java):  
-public static GoSystemProperty<String> GO_AGENT_KEYSTORE_PASSWORD = new GoStringSystemProperty("go.agent.keystore.password", "agent5s0repa55w0rd");  
-public static GoSystemProperty<String> GO_SERVER_KEYSTORE_PASSWORD = new GoStringSystemProperty("go.server.keystore.password", "serverKeystorepa55w0rd");  
+* `public static GoSystemProperty<String> GO_AGENT_KEYSTORE_PASSWORD = new GoStringSystemProperty("go.agent.keystore.password", "agent5s0repa55w0rd");`  
+* `public static GoSystemProperty<String> GO_SERVER_KEYSTORE_PASSWORD = new GoStringSystemProperty("go.server.keystore.password", "serverKeystorepa55w0rd");`
 
 Therefore, GoCD seems to have some CWE-798 issue.
  
@@ -30,18 +30,18 @@ By scanning output of 'grep -R checksum|less', it seems that GoCD does use MD5 c
 
 **CWE-22: Path traversal**  
 By scanning output of 'grep -R path|less', it seems that there are many references to controllerBasePath() and scanning output of 'grep -R controllerBasePath|less' seems to show many GoCD's web GUI URLs for different controllers are defined in source file [Routes.java](https://github.com/gocd/gocd/blob/master/spark/spark-base/src/main/java/com/thoughtworks/go/spark/Routes.java). For example, the following codes defined URLs of login and logout pages:  
-    public class LoginPage {  
+`    public class LoginPage {  
         public static final String SPA_BASE = "/auth/login";  
     }  
     public class LogoutPage {  
         public static final String SPA_BASE = "/auth/logout";  
-    }  
+    }  `
 Therefore, GoCD does not seem to have CWE-22 issue.  
  
 **CWE-759: Use of one-way hash without a salt**  
 It seems that method hashCode() in source file [UsernamePassword.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/newsecurity/models/UsernamePassword.java) violates CWE-759.
 
-**Checklist item 1: login/authentication components**  
+**Checklist item 1: Login/authentication Components**  
 After investigation, [AuthenticationController.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/newsecurity/controllers/AuthenticationController.java) appears to be the main source code for user login authentication in GoCD.  
 * Method performLogin() uses a local password file based authentication plugin to authenticate user login.  
 * Method redirectToThirdPartyLoginPage() redirect user's login request to proper third party login page based on the third party authentication plugin ID "pluginId".  
@@ -66,14 +66,14 @@ GoCD contains validator classes in directory "GoCD\server\src\main\java\com\thou
 [BackupConfigRepresenter.java](https://github.com/gocd/gocd/blob/master/api/api-backup-config-v1/src/main/java/com/thoughtworks/go/apiv1/backupconfig/representers/BackupConfigRepresenter.java) is code that allows user to configure backup settings for the GoCD server.
 Method toJSON() and method fromJSON() contain JSON object with information that lets user know about backup process is success or not.
 
-**Checklist item 4: poll material source components**  
+**Checklist item 4: Poll Material Source Components**  
 TBD
 
-**Checklist item 5: pipeline workflow components**  
+**Checklist item 5: Pipeline Workflow Components**  
 It appears the pipeline workflow components of GoCD involve the source files: GoConfigFileHelper.java and DatabaseAccessHelper.java. Methods addPipeline(), addPipelineToGroup(), updatePipeline(), addStageToPipeline(), addEnvironmentVariableToPipeline(), removePipeline(), addJobToStage(), addMaterialConfigForPipeline(), lockPipeline(), addPipelineCommand() in [GoConfigFileHelper.java](https://github.com/gocd/gocd/blob/master/server/src/test-shared/java/com/thoughtworks/go/util/GoConfigFileHelper.java) and methods configurePipeline(), schedulePipeline(), scheduleJobInstancesAndSavePipeline() in [DatabaseAccessHelper.java](https://github.com/gocd/gocd/blob/master/server/src/test-shared/java/com/thoughtworks/go/server/dao/DatabaseAccessHelper.java) clearly showed the workflow of pipeline in GoCD. None of these have elevation of privileges concerns.
 Overall, pipeline workflow components of GoCD could prevent elevation of privileges attacks.
 
-**Checklist item 6: web ui component**  
+**Checklist item 6: Web UI Component**  
 TBD
 
 **Checklist item 7: material update sub-system(MCU) component**  
@@ -82,7 +82,7 @@ Method enableMaintenanceModeState() handles the existing maintenance mode state 
 Comparing to the method enableMaintenanceModestate(), method disableMaintenanceModeState() works in the opposite way, and handles the existing maintenance mode state and notice user with certain information if the server is available.
 Method getRunningJobs() returns information about the current running job instances. In this method, each running pipeline instance in GoDashboardPipeline.java is collected and return as a list object.
 
-**Checklist item 8: pluign extension point component**  
+**Checklist item 8: Plugin Extension Point Component**  
 TBD
 
 **Checklist item 9: authorization component**  
@@ -112,16 +112,16 @@ TBD
 * Method handleCreateOrUpdateResponse() handles response of new agent’s register or update status’s of existing agent.
 * Method handleUpdateAgentResponse() handles response of specific agent’s update status and inform user with text explanation. 
 
-In directory "GoCD\server\src\main\webapp\WEB-INF\rails" is where the Ruby on Rails front-end is stored. A grep search shows that the "config.force_ssl" is commented out in "GoCD\server\src\main\webapp\WEB-INF\rails\config\environments", and should be changed to "true" in order to enforce SSL/TLS connections to the Rails front-end app when users access the web interface. However, the Servlet side does enforce SSL/TLS connections in ServerConfigService.java in line 108 through an @Override method with the code `ServerSiteUrlConfig siteUrl = forceSsl || (scheme != null && scheme.equals("https")) ? getSecureSiteUrl() : serverConfig().`. The authors decided to enforce the URI details, including forcing SSL/TLS within the Servlet/Java-side.
+In directory "GoCD\server\src\main\webapp\WEB-INF\rails" is where the Ruby on Rails front-end is stored. A grep search shows that the "config.force_ssl" is commented out in "GoCD\server\src\main\webapp\WEB-INF\rails\config\environments", and should be changed to "true" in order to enforce SSL/TLS connections to the Rails front-end app when users access the web interface. However, the Servlet side does enforce SSL/TLS connections in ServerConfigService.java in line 108 through an @Override method with the code `ServerSiteUrlConfig siteUrl = forceSsl || (scheme != null && scheme.equals("https")) ? getSecureSiteUrl() : serverConfig().`. The authors decided to enforce the URI details, including forcing SSL/TLS, within the Servlet/Java-side. No bugs seem to be identified through this implementation.
 
 The cookie session store and generation is handled by Java Servlet as defined by session_store.rb. The implementation can be found in "GoCD\server\src\main\java\com\thoughtworks\go\server\web" directory.
 
-Rails manages their post and get functions inside the routes.rb class. The file routes.rb is found in "GoCD\server\src\main\webapp\WEB-INF\rails\config". As a rule, any [state changes](https://tools.ietf.org/html/rfc7231#section-4.2.1) should not use GET requests. Every route that is using the GET method should be accessing a page or requesting information, while every POST method shoulbe be creating or updating information in the database. This functionality is largely consistent in the routes.rb to protect against CSRF attacks. One line of concern is the following since the function is making a change on the server.
+Rails manages their post and get functions inside the routes.rb class. The file routes.rb is found in "GoCD\server\src\main\webapp\WEB-INF\rails\config". As a rule, any [state changes](https://tools.ietf.org/html/rfc7231#section-4.2.1) should not use GET requests. Every route that is using the GET method should be accessing a page or requesting information, while every POST method should be creating or updating information in the database. This functionality is largely consistent in the routes.rb to protect against CSRF attacks. One line of concern is the following since the function is making a change on the server.
 * On line 69, `get "admin/config_change/between/:later_md5/and/:earlier_md5" => 'admin/stages#config_change', as: :admin_config_change` might need a `post` instead of a `get`. Looking at the view, the 
 Additionally, the Rail controllers use the function expect() as an additional mechanism to enforce the type of method (POST or GET) on html requests.
 
 ## Automated Tool Scan
-After exploring the DHS SWAMP scanning platform we attempted to use the system to scan the GoCD source code files. However, the SWAMP platform does not support JDK 11 or above which is required to build GoCD source codes to byte code. Therefore, we directly downloaded precompiled GoCD byte codes in .zip format from https://www.gocd.org/download/#zip and uploaded them to https://www.mir-swamp.org/ to perform various assessments on the byte codes. We did successfully use the SWAMP platform to scan the GoCD Java Bytecode with SpotBugs 3.1.12.  We also used the OWASP Dependency Check 2.1.1 tool to scan the Java code files, but it did not find any issues.
+After exploring the DHS SWAMP scanning platform we attempted to use the system to scan the GoCD source code files. However, the SWAMP platform does not support JDK 11 or above which is required to build GoCD source codes to byte code. Therefore, we directly downloaded precompiled GoCD byte codes in .zip format from https://www.gocd.org/download/#zip and uploaded them to https://www.mir-swamp.org/ to perform various assessments on the byte codes. We did successfully use the SWAMP platform to scan the GoCD Java Bytecode with SpotBugs 3.1.12.  We also used the OWASP Dependency Check 2.1.1 tool to scan the Java code files, but it did not find any issues. Finally, we used RuboCop to scan the Ruby on Rails portion of the server. 
 
 #### Findbugs 3.0.1
 This tool is a Desktop installed software. It was used to scan GoCD Java Bytecode for both Go Server (lib/go.class file) and Go Agent (lib/agent-bootstrapper.class file). 
@@ -157,6 +157,9 @@ This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/C
 This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/SpotBugs-C-EI_EXPOSE_REP.pdf) is about software does not properly control the allocation and maintenance of a limited resource thereby enabling an actor to influence.  
 **Security Concern 14: External Control of Critical State Data(CWE-642)**   
 This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/SpotBugs-C-EXS_EXCEPTION_SOFTENING_HAS_CHECKED.pdf) is about method getScriptedObject stores security-critical state information about its users that is accessible to unauthorized actors.  
+
+###RuboCop 0.47
+This tool was used in the SWAMP platform to scan the GoCD Ruby on Rails webapp.  As shown in the [summary](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/RuboCop-Scan-Summary.pdf) the tools has found total 293 bugs. 
 
 ### Project Links
 * Team Repository: https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD
