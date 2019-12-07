@@ -102,15 +102,19 @@ TBD
 TBD
 
 **Checklist item 12: Investigate usage of JRuby on Rails framework against CSRF attack**  
-(AgentsControllerV6.java)[https://github.com/gocd/gocd/blob/master/api/api-agents-v6/src/main/java/com/thoughtworks/go/apiv6/agents/AgentsControllerV6.java] is the main source code to allow users with administrator role to manage agents.
-Method update() determines agent’s update action of agent with its id. If the updateAgentAttributes successfully update the agent’s attribute, then call the method handleUpdateAgentResponse(). Exception will be handled if the update attribute method throws exception.
-Method bulkUpdate() handles attribute update of agent with certain id. If the update action is successfully finished, text explanation is printed out. Otherwise, exception is handled.
-Method deleteAgents() accepts request to handle deletion of specific agent with text explanation if no exception occurs.
-Method checkSecurityOr403() handles GET request with apiAuthenticationHelper component.
-Method handleCreateOrUpdateResponse() handles response of new agent’s register or update status’s of existing agent.
-Method handleUpdateAgentResponse() handles response of specific agent’s update status and inform user with text explanation. 
+[AgentsControllerV6.java](https://github.com/gocd/gocd/blob/master/api/api-agents-v6/src/main/java/com/thoughtworks/go/apiv6/agents/AgentsControllerV6.java) is the main source code to allow users with administrator role to manage agents.
+*Method update() determines agent’s update action of agent with its id. If the updateAgentAttributes successfully update the agent’s attribute, then call the method handleUpdateAgentResponse(). Exception will be handled if the update attribute method throws exception.
+*Method bulkUpdate() handles attribute update of agent with certain id. If the update action is successfully finished, text explanation is printed out. Otherwise, exception is handled.
+*Method deleteAgents() accepts request to handle deletion of specific agent with text explanation if no exception occurs.
+*Method checkSecurityOr403() handles GET request with apiAuthenticationHelper component.
+*Method handleCreateOrUpdateResponse() handles response of new agent’s register or update status’s of existing agent.
+*Method handleUpdateAgentResponse() handles response of specific agent’s update status and inform user with text explanation. 
 
+In directory "GoCD\server\src\main\webapp\WEB-INF\rails" is where the Ruby on Rails front-end is stored. A grep search shows that the "config.force_ssl" is commented out in "GoCD\server\src\main\webapp\WEB-INF\rails\config\environments", and should be changed to "true" in order to enforce SSL/TLS connections to the Rails front-end app when users access the web interface.
 
+Rails manages their post and get functions inside the routes.rb class. The file routes.rb is found in "GoCD\server\src\main\webapp\WEB-INF\rails\config". As a rule, any [state changes](https://tools.ietf.org/html/rfc7231#section-4.2.1) should not use GET requests. Every route that is using the GET method should be accessing a page or requesting information, while every POST method shoulbe be creating or updating information in the database. This functionality is largely consistent in the routes.rb to protect against CSRF attacks. One line of concern is the following since the function is making a change on the server.
+*On line 69, `get "admin/config_change/between/:later_md5/and/:earlier_md5" => 'admin/stages#config_change', as: :admin_config_change` might need a `post` instead of a `get`. Looking at the view, the 
+Additionally, the Rail controllers use the function expect() as an additional mechanism to enforce the type of method (POST or GET) on html requests.
 
 ## Automated Tool Scan
 After exploring the DHS SWAMP scanning platform we attempted to use the system to scan the GoCD source code files. However, the SWAMP platform does not support JDK 11 or above which is required to build GoCD source codes to byte code. Therefore, we directly downloaded precompiled GoCD byte codes in .zip format from https://www.gocd.org/download/#zip and uploaded them to https://www.mir-swamp.org/ to perform various assessments on the byte codes. We did successfully use the SWAMP platform to scan the GoCD Java Bytecode with SpotBugs 3.1.12.  We also used the OWASP Dependency Check 2.1.1 tool to scan the Java code files, but it did not find any issues.
