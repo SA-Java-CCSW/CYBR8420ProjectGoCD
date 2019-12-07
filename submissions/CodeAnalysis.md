@@ -48,8 +48,10 @@ After investigation, [AuthenticationController.java](https://github.com/gocd/goc
 * Method authenticateWithWebBasedPlugin() use proper third party authentication plugin to authenticate user login. 
 It seems that GoCD does not support user account lockout after N unsuccessful login attempts. It only calls method badAuthentication() to show message "Invalid credentials. Either your username and password are incorrect, or there is a problem with your browser cookies. Please check with your administrator." when authentication fails.  
 * Method isSecurityEnabled() in [SecurityService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/SecurityService.java) and [GoConfigService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/GoConfigService.java) is to check if authentication has been enabled or not. By default authentication service is not enabled on a newly installed GoCD Server (See https://docs.gocd.org/current/configuration/dev_authentication.html).  
+
 Many GoCD system environment constants are defined in source file [SystemEnvironment.java](https://github.com/gocd/gocd/blob/master/base/src/main/java/com/thoughtworks/go/util/SystemEnvironment.java).  
 Looks like GoCD does not support IP range based ACL(Access Control List) even though there is a class called "GoAcl" in [GoAcl.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/security/GoAcl.java) which only determines if a username is contained in a list of authorizedUsers. It is used in method readAclBy() in [GoConfigService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/GoConfigService.java) to create a list of authorizedUsers to access a particular stage of some pipeline. In addition, it is used in method hasOperatePermissionForStage() in [SecurityService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/SecurityService.java) to determine if a particular user has operate permission for a particular stage of some pipeline.  
+
 Overall, login/authentication components of GoCD could prevent Spoofing attacks after authentication service is enabled. However, it is better to implement IP range based ACL and auto-user account lockout after N unsuccessful login attempts to prevent DoS attacks.
 
 **Checklist item 2: Source Materials Validation Components**   
@@ -69,6 +71,7 @@ TBD
 
 **Checklist item 5: Pipeline Workflow Components**  
 It appears the pipeline workflow components of GoCD involve the source files: GoConfigFileHelper.java and DatabaseAccessHelper.java. Methods addPipeline(), addPipelineToGroup(), updatePipeline(), addStageToPipeline(), addEnvironmentVariableToPipeline(), removePipeline(), addJobToStage(), addMaterialConfigForPipeline(), lockPipeline(), addPipelineCommand() in [GoConfigFileHelper.java](https://github.com/gocd/gocd/blob/master/server/src/test-shared/java/com/thoughtworks/go/util/GoConfigFileHelper.java) and methods configurePipeline(), schedulePipeline(), scheduleJobInstancesAndSavePipeline() in [DatabaseAccessHelper.java](https://github.com/gocd/gocd/blob/master/server/src/test-shared/java/com/thoughtworks/go/server/dao/DatabaseAccessHelper.java) clearly showed the workflow of pipeline in GoCD. None of these have elevation of privileges concerns.
+
 Overall, pipeline workflow components of GoCD could prevent elevation of privileges attacks.
 
 **Checklist item 6: Web UI Component**  
@@ -83,7 +86,7 @@ Method getRunningJobs() returns information about the current running job instan
 **Checklist item 8: Plugin Extension Point Component**  
 TBD
 
-**Checklist item 9: authorization component**  
+**Checklist item 9: Authorization Component**  
 It appears the authorization component of GoCD mainly involves two source files: [SecurityService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/SecurityService.java) and [GoConfigService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/GoConfigService.java).  
 Based on method isAdmin() in [SecurityConfig.java](https://github.com/gocd/gocd/blob/master/config/config-api/src/main/java/com/thoughtworks/go/config/SecurityConfig.java) there are three ways to get Administrator permission in GoCD:  
 * !isSecurityEnabled() means no authentication is enabled after initial GoCD installation by default.  
@@ -99,9 +102,6 @@ Overall, authorization component of GoCD could prevent elevation of privileges a
 TBD
 
 **Checklist item 11: Check authentication configuration component against CSRF attack**  
-TBD
-
-**Checklist item 12: Investigate usage of JRuby on Rails framework against CSRF attack**  
 [AgentsControllerV6.java](https://github.com/gocd/gocd/blob/master/api/api-agents-v6/src/main/java/com/thoughtworks/go/apiv6/agents/AgentsControllerV6.java) is the main source code to allow users with administrator role to manage agents.
 * Method update() determines agent’s update action of agent with its id. If the updateAgentAttributes successfully update the agent’s attribute, then call the method handleUpdateAgentResponse(). Exception will be handled if the update attribute method throws exception.
 * Method bulkUpdate() handles attribute update of agent with certain id. If the update action is successfully finished, text explanation is printed out. Otherwise, exception is handled.
@@ -110,6 +110,7 @@ TBD
 * Method handleCreateOrUpdateResponse() handles response of new agent’s register or update status’s of existing agent.
 * Method handleUpdateAgentResponse() handles response of specific agent’s update status and inform user with text explanation. 
 
+**Checklist item 12: Investigate usage of JRuby on Rails framework against CSRF attack**  
 In directory "GoCD\server\src\main\webapp\WEB-INF\rails" is where the Ruby on Rails front-end is stored. A grep search shows that the "config.force_ssl" is commented out in "GoCD\server\src\main\webapp\WEB-INF\rails\config\environments", and should be changed to "true" in order to enforce SSL/TLS connections to the Rails front-end app when users access the web interface. However, the Servlet side does enforce SSL/TLS connections in ServerConfigService.java in line 108 through an @Override method with the code `ServerSiteUrlConfig siteUrl = forceSsl || (scheme != null && scheme.equals("https")) ? getSecureSiteUrl() : serverConfig().`. The authors decided to enforce the URI details, including forcing SSL/TLS, within the Servlet/Java-side. No bugs seem to be identified through this implementation.
 
 The cookie session store and generation is handled by Java Servlet as defined by session_store.rb. The implementation can be found in "GoCD\server\src\main\java\com\thoughtworks\go\server\web" directory.
@@ -156,7 +157,7 @@ This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/C
 **Security Concern 14: External Control of Critical State Data(CWE-642)**   
 This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/SpotBugs-C-EXS_EXCEPTION_SOFTENING_HAS_CHECKED.pdf) is about method getScriptedObject stores security-critical state information about its users that is accessible to unauthorized actors.  
 
-### RuboCop 0.47
+#### RuboCop 0.47
 This tool was used in the SWAMP platform to scan the GoCD Ruby on Rails webapp.  As shown in the [summary](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/RuboCop-Scan-Summary.pdf) the tools has found total 293 bugs. The "bugs" are style issues with no serious vulnerabilities identified.
 
 ### Project Links
