@@ -1,34 +1,35 @@
 ## Code Review Strategy
-Before diving into the detailed code analysis, we did a manual coarse-grained scan of GoCD's code base to see if there is any existance of most popular CWEs(Commone Weakness Enumeration) such as CWE-120/CWE-798/CWE-311/CWE-434/CWE-250/CWE-494/CWE-22/CWE-759. 
+Before diving into the detailed code analysis, we did a manual coarse-grained scan of GoCD's codebase to see if there is any existence of most popular CWEs(Common Weakness Enumeration) such as CWE-120/CWE-798/CWE-311/CWE-434/CWE-250/CWE-494/CWE-22/CWE-759.
 
-Then we started with reviewing our assurance cases, misuse cases, and threat model report. From the review, we discovered the most critical weakness areas in the software and decided to choose the checklist review strategy which is the most appropriate method for analyzing the code of large-scale projects like GoCD. To reduce the effort of going through all the codes for each line we decided to review all 12 items from our [checklist](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/Checklist.md).  
+Then we started with reviewing our assurance cases, misuse cases, and threat model reports. From the review, we discovered the most critical weakness areas in the software. We decided to choose the checklist review strategy, which is the most appropriate method for analyzing the code of large-scale projects like GoCD. We decided to review all 12 items from our [checklist](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/Checklist.md).
 
-We analyzed our code in both automated and manual review process. The automated code review is performed using open source static code analysis tool called **SpotBugs and Findbugs**. The list of resultant vulnerabilities from the automated tool scan was narrowed down to analyze  **CWE(Common Weakness Enumeration)** that are related to our misuse case, assurance cases, and threat model and examined manually.
+We analyzed our code in both automated and manual review processes. The automated code review is performed using an open source static code analysis tool called SpotBugs and Findbugs. The list of resultant vulnerabilities from the automated tool scan was narrowed down to analyze CWE(Common Weakness Enumeration) that are related to our misuse case, assurance cases, and threat model and examined manually.
 
 ## Manual Code Review
 **CWE-120: Classic buffer overflow**  
-It seems that the chance of popular classic buffer overflow (CWE-120) in Java is very small unless JNI(Java Native Interface) is used to call native codes written in c/c++. See https://stackoverflow.com/questions/479701/does-java-have-buffer-overflows. Searches for keyword "native"  and "System.loadLibrary" under top-level gocd directory did not show any usage of JNI in GoCD. Therefore, GoCD does not seem to have CWE-120 issue.
+It seems that the chance of popular classic buffer overflow (CWE-120) in Java is minimal unless JNI(Java Native Interface) is used to call native codes written in c/c++. See https://stackoverflow.com/questions/479701/does-java-have-buffer-overflows. Searches for keyword "native"  and "System.loadLibrary" under top-level GoCD directory did not show any usage of JNI in GoCD. Therefore, GoCD does not seem to have CWE-120 issue.
 
 **CWE-798: Use of hardcoded credentials**  
-Search with command ( grep -R "password"|less ) showed many hardcoded credentials usage, but most of them are from source codes written to test GoCD's functionalities. The only concern we have found is use of hardcoded credentials in source file [SystemEnvironment.java](https://github.com/gocd/gocd/blob/master/base/src/main/java/com/thoughtworks/go/util/SystemEnvironment.java):  
+Searching with command ( grep -R "password"|less ) shows many hardcode credential usage, but most of them are from source codes written to test GoCD's functionalities. The only concern we have found is use of hardcoded credentials in source file [SystemEnvironment.java](https://github.com/gocd/gocd/blob/master/base/src/main/java/com/thoughtworks/go/util/SystemEnvironment.java):  
 public static GoSystemProperty<String> GO_AGENT_KEYSTORE_PASSWORD = new GoStringSystemProperty("go.agent.keystore.password", "agent5s0repa55w0rd");  
 public static GoSystemProperty<String> GO_SERVER_KEYSTORE_PASSWORD = new GoStringSystemProperty("go.server.keystore.password", "serverKeystorepa55w0rd");  
- Therefore, GoCD seems to have some CWE-798 issue.
+
+Therefore, GoCD seems to have some CWE-798 issue.
  
- **CWE-311: Missing encryption**  
- Apparently GoCD has implemented encryption feaures with source files at [such source directory](https://github.com/gocd/gocd/tree/master/config/config-api/src/main/java/com/thoughtworks/go/security).
+**CWE-311: Missing encryption**  
+Apparently, GoCD has implemented encryption feaures with source files at [such source directory](https://github.com/gocd/gocd/tree/master/config/config-api/src/main/java/com/thoughtworks/go/security).
  
- **CWE-434: Unrestricted upload of file with dangerous type**  
-By scanning output of 'grep -R upload|less' it seems that GoCD does not allow users to upload any files from its web GUI. The only file uploading feature in GoCD is to upload Artifact files generated by jobs on Go Agents to the predefined Artifact directory on Go Server. So, The issue of CWE-434 does not apply in GoCD.
+**CWE-434: Unrestricted upload of file with dangerous type**  
+By scanning output of 'grep -R upload|less', it seems that GoCD does not allow users to upload any files from its web GUI. The only file uploading feature in GoCD is to upload Artifact files generated by jobs on Go Agents to the predefined Artifact directory on Go Server. So, The issue of CWE-434 does not apply in GoCD.
 
 **CWE-250: Execution with unnecessary privileges**  
 TBD
 
 **CWE-494: Download of code without integrity check**  
-By scanning output of 'grep -R checksum|less' it seems that GoCD does use MD5 checksum to check integrity of all artifact files before using them. So, GoCD has taken care of issue CWE-494.
+By scanning output of 'grep -R checksum|less', it seems that GoCD does use MD5 checksum to check the integrity of all artifact files before using them. So, GoCD has taken care of the issue CWE-494.
 
 **CWE-22: Path traversal**  
-By scanning output of 'grep -R path|less' it seems that there are many references to controllerBasePath() and scanning output of 'grep -R controllerBasePath|less' seems to show many GoCD's web GUI URLs for different controllers are defined in source file [Routes.java](https://github.com/gocd/gocd/blob/master/spark/spark-base/src/main/java/com/thoughtworks/go/spark/Routes.java). For example, the following codes defined URLs of login and logout pages:  
+By scanning output of 'grep -R path|less', it seems that there are many references to controllerBasePath() and scanning output of 'grep -R controllerBasePath|less' seems to show many GoCD's web GUI URLs for different controllers are defined in source file [Routes.java](https://github.com/gocd/gocd/blob/master/spark/spark-base/src/main/java/com/thoughtworks/go/spark/Routes.java). For example, the following codes defined URLs of login and logout pages:  
     public class LoginPage {  
         public static final String SPA_BASE = "/auth/login";  
     }  
@@ -41,8 +42,8 @@ Therefore, GoCD does not seem to have CWE-22 issue.
 It seems that method hashCode() in source file [UsernamePassword.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/newsecurity/models/UsernamePassword.java) violates CWE-759.
 
 **Checklist item 1: login/authentication components**  
-Looks like [AuthenticationController.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/newsecurity/controllers/AuthenticationController.java) is the main source code for user login authentication in GoCD.  
-Method performLogin() use local password file based authentication plugin to authenticate user login.  
+After investigation, [AuthenticationController.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/newsecurity/controllers/AuthenticationController.java) appears to be the main source code for user login authentication in GoCD.  
+Method performLogin() uses a local password file based authentication plugin to authenticate user login.  
 Method redirectToThirdPartyLoginPage() redirect user's login request to proper third party login page based on the third party authentication plugin ID "pluginId".  
 Method authenticateWithWebBasedPlugin() use proper third party authentication plugin to authenticate user login.  
 It seems that GoCD does not support user account lockout after N unsuccessful login attempts. It only calls method badAuthentication() to show message "Invalid credentials. Either your username and password are incorrect, or there is a problem with your browser cookies. Please check with your administrator." when authentication fails.  
@@ -56,12 +57,12 @@ GoCD contains validator classes in directory "GoCD\server\src\main\java\com\thou
 
 **Checklist item 3: backup/restore components**  
 [BackupsController.java](https://github.com/gocd/gocd/blob/master/api/api-backups-v1/src/main/java/com/thoughtworks/go/apiv1/admin/backups/BackupsController.java) is the main source code for user to perform the backup process in GoCD.
-setupRoutes method handles backup content type, verify backup confirm and authentication processes.
-create method handles request and response. Backup server runs based on the current user name and inform user the backup result.
-verifyConfirmHeader method verify request to see if it is satisfied in certain condition.
+Method setupRoutes() handles backup content type, verify backup confirm and authentication processes.
+Method create() handles request and response. Backup server runs based on the current user name and inform user the backup result.
+Method verifyConfirmHeader() verify request to see if it is satisfied in certain condition.
 
 [BackupConfigRepresenter.java](https://github.com/gocd/gocd/blob/master/api/api-backup-config-v1/src/main/java/com/thoughtworks/go/apiv1/backupconfig/representers/BackupConfigRepresenter.java) is code that allows user to configure backup settings for the GoCD server.
-toJSON method and fromJSON method contain JSON object with information that lets user know about backup process is success or not.
+Method toJSON() and method fromJSON() contain JSON object with information that lets user know about backup process is success or not.
 
 **Checklist item 4: poll material source components**  
 TBD
@@ -74,9 +75,9 @@ TBD
 
 **Checklist item 7: material update sub-system(MCU) component**  
 (ServerMaintenanceModeControllerv1.java)[https://github.com/gocd/gocd/blob/master/api/api-server-maintenance-mode-v1/src/main/java/com/thoughtworks/go/apiv1/servermaintenancemode/ServerMaintenanceModeControllerV1.java] is the main source code to determine which the internal subsystems and processes continue to work.
-enableMaintenanceModeState method handles the existing maintenance mode state and notice user with certain information by checking the existingMaintenanceModeState first to see if the server is available in maintenance mode. 
-Comparing to the enableMaintenanceModestate method, disableMaintenanceModeState method works in the opposite way, it handles the existing maintenance mode state and notice user with certain information if the server is available.
-getRunningJobs method return information about the current running job instances. In this method, each running pipe line instance in the GoDashboardPipeline is collected and return as a list object.
+Method enableMaintenanceModeState() handles the existing maintenance mode state and notice user with certain information by checking the method existingMaintenanceModeState() first to see if the server is available in maintenance mode. 
+Comparing to the method enableMaintenanceModestate(), method disableMaintenanceModeState() works in the opposite way, and handles the existing maintenance mode state and notice user with certain information if the server is available.
+Method getRunningJobs() returns information about the current running job instances. In this method, each running pipeline instance in GoDashboardPipeline.java is collected and return as a list object.
 
 **Checklist item 8: pluign extension point component**  
 TBD
@@ -85,7 +86,7 @@ TBD
 TBD
 
 **Checklist item 5: pipeline workflow components**  
-It seems that pipeline workflow components of GoCD mainly involves source files: GoConfigFileHelper.java, DatabaseAccessHelper.java. Methods addPipeline(), addPipelineToGroup(), updatePipeline(), addStageToPipeline(), addEnvironmentVariableToPipeline(), removePipeline(), addJobToStage(), addMaterialConfigForPipeline(), lockPipeline(), addPipelineCommand() in [GoConfigFileHelper.java](https://github.com/gocd/gocd/blob/master/server/src/test-shared/java/com/thoughtworks/go/util/GoConfigFileHelper.java) and methods configurePipeline(), schedulePipeline(), scheduleJobInstancesAndSavePipeline() in [DatabaseAccessHelper.java](https://github.com/gocd/gocd/blob/master/server/src/test-shared/java/com/thoughtworks/go/server/dao/DatabaseAccessHelper.java) clearly showed the workflow of pipeline in GoCD. None of these have elevation of privileges concerns.
+It appears the pipeline workflow components of GoCD involve the source files: GoConfigFileHelper.java and DatabaseAccessHelper.java. Methods addPipeline(), addPipelineToGroup(), updatePipeline(), addStageToPipeline(), addEnvironmentVariableToPipeline(), removePipeline(), addJobToStage(), addMaterialConfigForPipeline(), lockPipeline(), addPipelineCommand() in [GoConfigFileHelper.java](https://github.com/gocd/gocd/blob/master/server/src/test-shared/java/com/thoughtworks/go/util/GoConfigFileHelper.java) and methods configurePipeline(), schedulePipeline(), scheduleJobInstancesAndSavePipeline() in [DatabaseAccessHelper.java](https://github.com/gocd/gocd/blob/master/server/src/test-shared/java/com/thoughtworks/go/server/dao/DatabaseAccessHelper.java) clearly showed the workflow of pipeline in GoCD. None of these have elevation of privileges concerns.
 Overall, pipeline workflow components of GoCD could prevent elevation of privileges attacks.
 
 **Checklist item 6: web ui component**  
@@ -98,7 +99,7 @@ TBD
 TBD
 
 **Checklist item 9: authorization component**  
-It seems that authorization component of GoCD mainly involves two source files: [SecurityService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/SecurityService.java) and [GoConfigService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/GoConfigService.java).  
+It appears the authorization component of GoCD mainly involves two source files: [SecurityService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/SecurityService.java) and [GoConfigService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/GoConfigService.java).  
 Based on method isAdmin() in [SecurityConfig.java](https://github.com/gocd/gocd/blob/master/config/config-api/src/main/java/com/thoughtworks/go/config/SecurityConfig.java) there are three ways to get Administrator permission in GoCD:  
 !isSecurityEnabled() means no authentication is enabled after initial GoCD installation by default.  
 noAdminsConfigured() means no user is assigned Administrator role by default.  
@@ -117,12 +118,12 @@ TBD
 
 **Checklist item 12: Investigate usage of JRuby on Rails framework against CSRF attack**  
 (AgentsControllerV6.java)[https://github.com/gocd/gocd/blob/master/api/api-agents-v6/src/main/java/com/thoughtworks/go/apiv6/agents/AgentsControllerV6.java] is the main source code to allow users with administrator role to manage agents.
-update method determines agent’s update action of agent with its id. If the updateAgentAttributes successfully update the agent’s attribute, then call the handleUpdateAgentResponse method. Exception will be handled if the update attribute method throws exception.
-bulkUpdate method handles attribute update of agent with certain id. If the update action is successfully finished, text explanation is printed out. Otherwise, exception is handled.
-deleteAgents method accepts request to handle deletion of specific agent with text explanation if no exception occurs.
-checkSecurityOr403 method handles GET request with apiAuthenticationHelper component.
-handleCreateOrUpdateResponse method handles response of new agent’s register or update status’s of existing agent.
-handleUpdateAgentResponse method handles response of specific agent’s update status and inform user with text explanation. 
+Method update() determines agent’s update action of agent with its id. If the updateAgentAttributes successfully update the agent’s attribute, then call the method handleUpdateAgentResponse(). Exception will be handled if the update attribute method throws exception.
+Method bulkUpdate() handles attribute update of agent with certain id. If the update action is successfully finished, text explanation is printed out. Otherwise, exception is handled.
+Method deleteAgents() accepts request to handle deletion of specific agent with text explanation if no exception occurs.
+Method checkSecurityOr403() handles GET request with apiAuthenticationHelper component.
+Method handleCreateOrUpdateResponse() handles response of new agent’s register or update status’s of existing agent.
+Method handleUpdateAgentResponse() handles response of specific agent’s update status and inform user with text explanation. 
 
 
 
