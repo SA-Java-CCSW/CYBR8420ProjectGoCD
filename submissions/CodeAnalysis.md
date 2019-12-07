@@ -110,10 +110,10 @@ TBD
 * Method handleCreateOrUpdateResponse() handles response of new agent’s register or update status’s of existing agent.
 * Method handleUpdateAgentResponse() handles response of specific agent’s update status and inform user with text explanation. 
 
-In directory "GoCD\server\src\main\webapp\WEB-INF\rails" is where the Ruby on Rails front-end is stored. A grep search shows that the "config.force_ssl" is commented out in "GoCD\server\src\main\webapp\WEB-INF\rails\config\environments", and should be changed to "true" in order to enforce SSL/TLS connections to the Rails front-end app when users access the web interface.
+In directory "GoCD\server\src\main\webapp\WEB-INF\rails" is where the Ruby on Rails front-end is stored. A grep search shows that the "config.force_ssl" is commented out in "GoCD\server\src\main\webapp\WEB-INF\rails\config\environments", and should be changed to "true" in order to enforce SSL/TLS connections to the Rails front-end app when users access the web interface. The cookie session store is handled by Java Servlet as defined by session_store.rb and uses Spring Security.
 
 Rails manages their post and get functions inside the routes.rb class. The file routes.rb is found in "GoCD\server\src\main\webapp\WEB-INF\rails\config". As a rule, any [state changes](https://tools.ietf.org/html/rfc7231#section-4.2.1) should not use GET requests. Every route that is using the GET method should be accessing a page or requesting information, while every POST method shoulbe be creating or updating information in the database. This functionality is largely consistent in the routes.rb to protect against CSRF attacks. One line of concern is the following since the function is making a change on the server.
-*On line 69, `get "admin/config_change/between/:later_md5/and/:earlier_md5" => 'admin/stages#config_change', as: :admin_config_change` might need a `post` instead of a `get`. Looking at the view, the 
+* On line 69, `get "admin/config_change/between/:later_md5/and/:earlier_md5" => 'admin/stages#config_change', as: :admin_config_change` might need a `post` instead of a `get`. Looking at the view, the 
 Additionally, the Rail controllers use the function expect() as an additional mechanism to enforce the type of method (POST or GET) on html requests.
 
 ## Automated Tool Scan
