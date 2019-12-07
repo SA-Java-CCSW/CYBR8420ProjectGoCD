@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<BugCollection version="3.0.1" sequence="0" timestamp="1575504264210" analysisTimestamp="1575504321146" release="">
+  <Project projectName="goServer">
+    <Jar>C:\Users\yshi.BES-TECH\Downloads\go-server-19.11.0-10687\go-server-19.11.0\lib\go.jar</Jar>
+  </Project>
+  <BugInstance type="DM_EXIT" priority="3" rank="19" abbrev="Dm" category="BAD_PRACTICE">
+    <Class classname="com.thoughtworks.gocd.AssertJava">
+      <SourceLine classname="com.thoughtworks.gocd.AssertJava" sourcefile="AssertJava.java" sourcepath="com/thoughtworks/gocd/AssertJava.java"/>
+    </Class>
+    <Method classname="com.thoughtworks.gocd.AssertJava" name="checkSupported" signature="(Lcom/thoughtworks/gocd/JavaVersion;)V" isStatic="true">
+      <SourceLine classname="com.thoughtworks.gocd.AssertJava" start="34" end="40" startBytecode="0" endBytecode="151" sourcefile="AssertJava.java" sourcepath="com/thoughtworks/gocd/AssertJava.java"/>
+    </Method>
+    <SourceLine classname="com.thoughtworks.gocd.AssertJava" start="38" end="38" startBytecode="75" endBytecode="75" sourcefile="AssertJava.java" sourcepath="com/thoughtworks/gocd/AssertJava.java"/>
+  </BugInstance>
+  <BugInstance type="DM_EXIT" priority="2" rank="16" abbrev="Dm" category="BAD_PRACTICE">
+    <Class classname="com.thoughtworks.gocd.Boot">
+      <SourceLine classname="com.thoughtworks.gocd.Boot" sourcefile="Boot.java" sourcepath="com/thoughtworks/gocd/Boot.java"/>
+    </Class>
+    <Method classname="com.thoughtworks.gocd.Boot" name="run" signature="()V" isStatic="false">
+      <SourceLine classname="com.thoughtworks.gocd.Boot" start="74" end="95" startBytecode="0" endBytecode="510" sourcefile="Boot.java" sourcepath="com/thoughtworks/gocd/Boot.java"/>
+    </Method>
+    <SourceLine classname="com.thoughtworks.gocd.Boot" start="93" end="93" startBytecode="193" endBytecode="193" sourcefile="Boot.java" sourcepath="com/thoughtworks/gocd/Boot.java"/>
+  </BugInstance>
+  <BugInstance type="LI_LAZY_INIT_STATIC" priority="3" rank="17" abbrev="LI" category="MT_CORRECTNESS">
+    <Class classname="com.thoughtworks.gocd.JavaVersion">
+      <SourceLine classname="com.thoughtworks.gocd.JavaVersion" sourcefile="JavaVersion.java" sourcepath="com/thoughtworks/gocd/JavaVersion.java"/>
+    </Class>
+    <Method classname="com.thoughtworks.gocd.JavaVersion" name="current" signature="()Lcom/thoughtworks/gocd/JavaVersion;" isStatic="true">
+      <SourceLine classname="com.thoughtworks.gocd.JavaVersion" start="81" end="84" startBytecode="0" endBytecode="7" sourcefile="JavaVersion.java" sourcepath="com/thoughtworks/gocd/JavaVersion.java"/>
+    </Method>
+    <Field classname="com.thoughtworks.gocd.JavaVersion" name="currentJavaVersion" signature="Lcom/thoughtworks/gocd/JavaVersion;" isStatic="true" role="FIELD_ON">
+      <SourceLine classname="com.thoughtworks.gocd.JavaVersion" sourcefile="JavaVersion.java" sourcepath="com/thoughtworks/gocd/JavaVersion.java"/>
+    </Field>
+    <SourceLine classname="com.thoughtworks.gocd.JavaVersion" start="81" end="82" startBytecode="0" endBytecode="14" sourcefile="JavaVersion.java" sourcepath="com/thoughtworks/gocd/JavaVersion.java"/>
+  </BugInstance>
+  <BugInstance type="SIC_INNER_SHOULD_BE_STATIC_ANON" priority="3" rank="20" abbrev="SIC" category="PERFORMANCE">
+    <Class classname="com.thoughtworks.gocd.onejar.Handler$1">
+      <SourceLine classname="com.thoughtworks.gocd.onejar.Handler$1" start="55" end="65" sourcefile="Handler.java" sourcepath="com/thoughtworks/gocd/onejar/Handler.java"/>
+    </Class>
+  </BugInstance>
+  <Errors errors="0" missingClasses="0"></Errors>
+  <FindBugsSummary timestamp="Wed, 4 Dec 2019 18:04:24 -0600" total_classes="5" referenced_classes="97" total_bugs="4" total_size="215" num_packages="2" java_version="1.8.0_221" vm_version="25.221-b11" cpu_seconds="75.78" clock_seconds="186.87" peak_mbytes="190.05" alloc_mbytes="1762.00" gc_seconds="0.19" priority_3="3" priority_2="1">
+    <PackageStats package="com.thoughtworks.gocd" total_bugs="3" total_types="3" total_size="177" priority_3="2" priority_2="1">
+      <ClassStats class="com.thoughtworks.gocd.AssertJava" sourceFile="AssertJava.java" interface="false" size="15" bugs="1" priority_3="1"/>
+      <ClassStats class="com.thoughtworks.gocd.Boot" sourceFile="Boot.java" interface="false" size="75" bugs="1" priority_2="1"/>
+      <ClassStats class="com.thoughtworks.gocd.JavaVersion" sourceFile="JavaVersion.java" interface="false" size="87" bugs="1" priority_3="1"/>
+    </PackageStats>
+    <PackageStats package="com.thoughtworks.gocd.onejar" total_bugs="1" total_types="2" total_size="38" priority_3="1">
+      <ClassStats class="com.thoughtworks.gocd.onejar.Handler" sourceFile="Handler.java" interface="false" size="28" bugs="0"/>
+      <ClassStats class="com.thoughtworks.gocd.onejar.Handler$1" sourceFile="Handler.java" interface="false" size="10" bugs="1" priority_3="1"/>
+    </PackageStats>
+    <FindBugsProfile>
+      <ClassProfile name="edu.umd.cs.findbugs.FindBugs2" totalMilliseconds="1822" invocations="2" avgMicrosecondsPerInvocation="911324" maxMicrosecondsPerInvocation="1105216" standardDeviationMircosecondsPerInvocation="193892"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassInfoAnalysisEngine" totalMilliseconds="1564" invocations="749" avgMicrosecondsPerInvocation="2089" maxMicrosecondsPerInvocation="111917" standardDeviationMircosecondsPerInvocation="7179"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FieldItemSummary" totalMilliseconds="751" invocations="97" avgMicrosecondsPerInvocation="7747" maxMicrosecondsPerInvocation="131450" standardDeviationMircosecondsPerInvocation="16514"/>
+      <ClassProfile name="edu.umd.cs.findbugs.OpcodeStack$JumpInfoFactory" totalMilliseconds="568" invocations="377" avgMicrosecondsPerInvocation="1508" maxMicrosecondsPerInvocation="20151" standardDeviationMircosecondsPerInvocation="2444"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindNoSideEffectMethods" totalMilliseconds="508" invocations="97" avgMicrosecondsPerInvocation="5246" maxMicrosecondsPerInvocation="33591" standardDeviationMircosecondsPerInvocation="7065"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.BuildStringPassthruGraph" totalMilliseconds="413" invocations="97" avgMicrosecondsPerInvocation="4260" maxMicrosecondsPerInvocation="268765" standardDeviationMircosecondsPerInvocation="27148"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassDataAnalysisEngine" totalMilliseconds="367" invocations="752" avgMicrosecondsPerInvocation="489" maxMicrosecondsPerInvocation="8070" standardDeviationMircosecondsPerInvocation="728"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.MethodGenFactory" totalMilliseconds="288" invocations="42" avgMicrosecondsPerInvocation="6864" maxMicrosecondsPerInvocation="146117" standardDeviationMircosecondsPerInvocation="24769"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.TypeDataflowFactory" totalMilliseconds="271" invocations="45" avgMicrosecondsPerInvocation="6025" maxMicrosecondsPerInvocation="45558" standardDeviationMircosecondsPerInvocation="8893"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.IsNullValueDataflowFactory" totalMilliseconds="262" invocations="42" avgMicrosecondsPerInvocation="6253" maxMicrosecondsPerInvocation="43879" standardDeviationMircosecondsPerInvocation="9073"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.ValueNumberDataflowFactory" totalMilliseconds="236" invocations="45" avgMicrosecondsPerInvocation="5255" maxMicrosecondsPerInvocation="34501" standardDeviationMircosecondsPerInvocation="8332"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.NoteDirectlyRelevantTypeQualifiers" totalMilliseconds="234" invocations="97" avgMicrosecondsPerInvocation="2421" maxMicrosecondsPerInvocation="36898" standardDeviationMircosecondsPerInvocation="4782"/>
+      <ClassProfile name="edu.umd.cs.findbugs.util.TopologicalSort" totalMilliseconds="223" invocations="708" avgMicrosecondsPerInvocation="315" maxMicrosecondsPerInvocation="7723" standardDeviationMircosecondsPerInvocation="627"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.CFGFactory" totalMilliseconds="216" invocations="42" avgMicrosecondsPerInvocation="5144" maxMicrosecondsPerInvocation="51406" standardDeviationMircosecondsPerInvocation="8357"/>
+      <ClassProfile name="edu.umd.cs.findbugs.ba.npe.NullDerefAndRedundantComparisonFinder" totalMilliseconds="209" invocations="42" avgMicrosecondsPerInvocation="4985" maxMicrosecondsPerInvocation="51556" standardDeviationMircosecondsPerInvocation="8827"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.JavaClassAnalysisEngine" totalMilliseconds="192" invocations="132" avgMicrosecondsPerInvocation="1461" maxMicrosecondsPerInvocation="62180" standardDeviationMircosecondsPerInvocation="5617"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.UnconditionalValueDerefDataflowFactory" totalMilliseconds="181" invocations="42" avgMicrosecondsPerInvocation="4318" maxMicrosecondsPerInvocation="19622" standardDeviationMircosecondsPerInvocation="5136"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.DefaultEncodingDetector" totalMilliseconds="179" invocations="5" avgMicrosecondsPerInvocation="35868" maxMicrosecondsPerInvocation="154511" standardDeviationMircosecondsPerInvocation="59571"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.OverridingEqualsNotSymmetrical" totalMilliseconds="174" invocations="97" avgMicrosecondsPerInvocation="1795" maxMicrosecondsPerInvocation="53388" standardDeviationMircosecondsPerInvocation="5771"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.BuildObligationPolicyDatabase" totalMilliseconds="172" invocations="97" avgMicrosecondsPerInvocation="1779" maxMicrosecondsPerInvocation="19949" standardDeviationMircosecondsPerInvocation="3490"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FunctionsThatMightBeMistakenForProcedures" totalMilliseconds="165" invocations="97" avgMicrosecondsPerInvocation="1708" maxMicrosecondsPerInvocation="16058" standardDeviationMircosecondsPerInvocation="3127"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindInconsistentSync2" totalMilliseconds="164" invocations="5" avgMicrosecondsPerInvocation="32811" maxMicrosecondsPerInvocation="142923" standardDeviationMircosecondsPerInvocation="55123"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.MethodReturnCheck" totalMilliseconds="163" invocations="5" avgMicrosecondsPerInvocation="32722" maxMicrosecondsPerInvocation="129186" standardDeviationMircosecondsPerInvocation="49650"/>
+    </FindBugsProfile>
+  </FindBugsSummary>
+  <ClassFeatures></ClassFeatures>
+  <History></History>
+</BugCollection>
