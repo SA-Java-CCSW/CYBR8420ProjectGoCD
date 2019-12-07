@@ -68,7 +68,8 @@ Method toJSON() and method fromJSON() contain JSON object with information that 
 TBD
 
 **Checklist item 5: pipeline workflow components**  
-TBD
+It appears the pipeline workflow components of GoCD involve the source files: GoConfigFileHelper.java and DatabaseAccessHelper.java. Methods addPipeline(), addPipelineToGroup(), updatePipeline(), addStageToPipeline(), addEnvironmentVariableToPipeline(), removePipeline(), addJobToStage(), addMaterialConfigForPipeline(), lockPipeline(), addPipelineCommand() in [GoConfigFileHelper.java](https://github.com/gocd/gocd/blob/master/server/src/test-shared/java/com/thoughtworks/go/util/GoConfigFileHelper.java) and methods configurePipeline(), schedulePipeline(), scheduleJobInstancesAndSavePipeline() in [DatabaseAccessHelper.java](https://github.com/gocd/gocd/blob/master/server/src/test-shared/java/com/thoughtworks/go/server/dao/DatabaseAccessHelper.java) clearly showed the workflow of pipeline in GoCD. None of these have elevation of privileges concerns.
+Overall, pipeline workflow components of GoCD could prevent elevation of privileges attacks.
 
 **Checklist item 6: web ui component**  
 TBD
@@ -80,22 +81,6 @@ Comparing to the method enableMaintenanceModestate(), method disableMaintenanceM
 Method getRunningJobs() returns information about the current running job instances. In this method, each running pipeline instance in GoDashboardPipeline.java is collected and return as a list object.
 
 **Checklist item 8: pluign extension point component**  
-TBD
-
-**Checklist item 4: poll material source components**  
-TBD
-
-**Checklist item 5: pipeline workflow components**  
-It appears the pipeline workflow components of GoCD involve the source files: GoConfigFileHelper.java and DatabaseAccessHelper.java. Methods addPipeline(), addPipelineToGroup(), updatePipeline(), addStageToPipeline(), addEnvironmentVariableToPipeline(), removePipeline(), addJobToStage(), addMaterialConfigForPipeline(), lockPipeline(), addPipelineCommand() in [GoConfigFileHelper.java](https://github.com/gocd/gocd/blob/master/server/src/test-shared/java/com/thoughtworks/go/util/GoConfigFileHelper.java) and methods configurePipeline(), schedulePipeline(), scheduleJobInstancesAndSavePipeline() in [DatabaseAccessHelper.java](https://github.com/gocd/gocd/blob/master/server/src/test-shared/java/com/thoughtworks/go/server/dao/DatabaseAccessHelper.java) clearly showed the workflow of pipeline in GoCD. None of these have elevation of privileges concerns.
-Overall, pipeline workflow components of GoCD could prevent elevation of privileges attacks.
-
-**Checklist item 6: web ui component**  
-TBD
-
-**Checklist item 7: material update sub-system(MCU) component**  
-TBD
-
-**Checklist item 8:  pluign extension point component**  
 TBD
 
 **Checklist item 9: authorization component**  
