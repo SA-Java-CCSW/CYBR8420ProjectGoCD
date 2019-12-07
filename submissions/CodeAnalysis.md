@@ -158,8 +158,8 @@ This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/C
 **Security Concern 14: External Control of Critical State Data(CWE-642)**   
 This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/SpotBugs-C-EXS_EXCEPTION_SOFTENING_HAS_CHECKED.pdf) is about method getScriptedObject stores security-critical state information about its users that is accessible to unauthorized actors.  
 
-###RuboCop 0.47
-This tool was used in the SWAMP platform to scan the GoCD Ruby on Rails webapp.  As shown in the [summary](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/RuboCop-Scan-Summary.pdf) the tools has found total 293 bugs. 
+### RuboCop 0.47
+This tool was used in the SWAMP platform to scan the GoCD Ruby on Rails webapp.  As shown in the [summary](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/RuboCop-Scan-Summary.pdf) the tools has found total 293 bugs. The "bugs" are style issues with no serious vulnerabilities identified.
 
 ### Project Links
 * Team Repository: https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD
