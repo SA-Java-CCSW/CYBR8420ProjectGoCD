@@ -52,7 +52,7 @@ Looks like GoCD does not support IP range based ACL(Access Control List) even th
 Overall, login/authentication components of GoCD could prevent Spoofing attacks after authentication service is enabled. However, it is better to implement IP range based ACL and auto-user account lockout after N unsuccessful login attempts to prevent DoS attacks.
 
 **Checklist item 2: source materials validation components**   
-TBD
+GoCD contains validator classes in directory "GoCD\server\src\main\java\com\thoughtworks\go\validators". The Validators check for correct IP and port, and include whitelisting of characters for network connections. The files contain: HostNameValidator.java, PortValidator.java, Validator.java classes. 
 
 **Checklist item 3: backup/restore components**  
 [BackupsController.java](https://github.com/gocd/gocd/blob/master/api/api-backups-v1/src/main/java/com/thoughtworks/go/apiv1/admin/backups/BackupsController.java) is the main source code for user to perform the backup process in GoCD.
@@ -168,4 +168,4 @@ This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/CodeRevi
 * Team Repository: https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD
 * Project Board: https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/projects/5
 * Reflection Meeting (December) https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/submissions/ReflectionMeetingDec.md
-
+* CodeDx Assessment Report https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/CodeDx-SecurityScan.pdf
