@@ -118,12 +118,12 @@ TBD
 
 **Checklist item 12: Investigate usage of JRuby on Rails framework against CSRF attack**  
 [AgentsControllerV6.java](https://github.com/gocd/gocd/blob/master/api/api-agents-v6/src/main/java/com/thoughtworks/go/apiv6/agents/AgentsControllerV6.java) is the main source code to allow users with administrator role to manage agents.
-*Method update() determines agent’s update action of agent with its id. If the updateAgentAttributes successfully update the agent’s attribute, then call the method handleUpdateAgentResponse(). Exception will be handled if the update attribute method throws exception.
-*Method bulkUpdate() handles attribute update of agent with certain id. If the update action is successfully finished, text explanation is printed out. Otherwise, exception is handled.
-*Method deleteAgents() accepts request to handle deletion of specific agent with text explanation if no exception occurs.
-*Method checkSecurityOr403() handles GET request with apiAuthenticationHelper component.
-*Method handleCreateOrUpdateResponse() handles response of new agent’s register or update status’s of existing agent.
-*Method handleUpdateAgentResponse() handles response of specific agent’s update status and inform user with text explanation. 
+* Method update() determines agent’s update action of agent with its id. If the updateAgentAttributes successfully update the agent’s attribute, then call the method handleUpdateAgentResponse(). Exception will be handled if the update attribute method throws exception.
+* Method bulkUpdate() handles attribute update of agent with certain id. If the update action is successfully finished, text explanation is printed out. Otherwise, exception is handled.
+* Method deleteAgents() accepts request to handle deletion of specific agent with text explanation if no exception occurs.
+* Method checkSecurityOr403() handles GET request with apiAuthenticationHelper component.
+* Method handleCreateOrUpdateResponse() handles response of new agent’s register or update status’s of existing agent.
+* Method handleUpdateAgentResponse() handles response of specific agent’s update status and inform user with text explanation. 
 
 In directory "GoCD\server\src\main\webapp\WEB-INF\rails" is where the Ruby on Rails front-end is stored. A grep search shows that the "config.force_ssl" is commented out in "GoCD\server\src\main\webapp\WEB-INF\rails\config\environments", and should be changed to "true" in order to enforce SSL/TLS connections to the Rails front-end app when users access the web interface.
 
