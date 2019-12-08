@@ -74,7 +74,7 @@ Method toJSON() and method fromJSON() contain JSON object with information that 
 **Checklist item 4: Poll Material Source Components**  
 The data structure defined in the configuration files is represented by `boolean isAutoUpdate();` in MaterialConfig.java located "GoCD\config\config-api\src\main\java\com\thoughtworks\go\domain\materials". This boolean value defines whether or not this is manual pull or automatic poll. 
 
-This is will be represented by the code in 
+This is ultimately represented by code in implementations in ManualPipelineChecker.java in "GoCD/server/serc/main/java/com/thoughworks/go/server/service" with code such as:
 
 `        if (pipelineConfig.isFirstStageManualApproval()) {
             String message = String.format("Failed to trigger pipeline [%s]", pipelineConfig.name());
@@ -85,7 +85,7 @@ This is will be represented by the code in
         }
 `
 
-Enforces that the Material Source has manual approval process that can be enabled to prevent attacks.
+This implementation enforces that the Material Source has a manual approval process that can be enabled to prevent attacks.
 
 **Checklist item 5: Pipeline Workflow Components**  
 It appears the pipeline workflow components of GoCD involve the source files: GoConfigFileHelper.java and DatabaseAccessHelper.java. Methods addPipeline(), addPipelineToGroup(), updatePipeline(), addStageToPipeline(), addEnvironmentVariableToPipeline(), removePipeline(), addJobToStage(), addMaterialConfigForPipeline(), lockPipeline(), addPipelineCommand() in [GoConfigFileHelper.java](https://github.com/gocd/gocd/blob/master/server/src/test-shared/java/com/thoughtworks/go/util/GoConfigFileHelper.java) and methods configurePipeline(), schedulePipeline(), scheduleJobInstancesAndSavePipeline() in [DatabaseAccessHelper.java](https://github.com/gocd/gocd/blob/master/server/src/test-shared/java/com/thoughtworks/go/server/dao/DatabaseAccessHelper.java) clearly showed the workflow of pipeline in GoCD. None of these have elevation of privileges concerns.
@@ -133,7 +133,7 @@ Methods canEditPipeline(), isGroupAdministrator(), isUserAdminOfGroup(), isUserT
 Overall, authorization component of GoCD could prevent elevation of privileges attacks. However, giving a new user Administrator permission as default is not secure.  
 
 **Checklist item 10: SSL/TLS component**  
-Source code folder for SSL/TLS component is gocd\base\src\main\java\com\thoughtworks\go\agent\common\ssl\: CertificateFileParser.java file's certificates() method generates a list of "X.509" certificates with "X.509" hard-coded. This "X.509" certificate is used for agent trust store using X500Principle in GoAgentServerClientBuilder.java file. GoAgentServerHttpClientBuilder.java creates HttpClient object with SSL certificate. GoAgentServerHttpClient.java file handles HtpRequest with closable-http-response in execute() methods, it also has close() and reset() methods to close http client.
+Source code folder for agents using the SSL/TLS component is "gocd\base\src\main\java\com\thoughtworks\go\agent\common\ssl\" with class CertificateFileParser.java. The classes `certificates()` method generates a list of "X.509" certificates with "X.509" hard-coded. This "X.509" certificate is used for agent trust store using X500Principle in GoAgentServerClientBuilder.java file. GoAgentServerHttpClientBuilder.java creates HttpClient object with SSL certificate. GoAgentServerHttpClient.java file handles HtpRequest with closable-http-response in `execute()` methods, it also has `close()` and `reset()` methods to close http client.
 
 GoCD excludes certain protocols in java classes in "GoCD\jetty9\src\main\java\com\thoughtworks\go\server\config". The class takes information through the "SystemEnvironment.java" file that is found in "GoCD\base\src\main\java\com\thoughtworks\go\util". The file defines the System Environment, including excluded ciphers and protocols. 
 
