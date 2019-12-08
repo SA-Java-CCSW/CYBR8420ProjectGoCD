@@ -72,7 +72,6 @@ In "GoCD\server\src\main\java\com\thoughtworks\go\server\service" the java class
 * Method toJSON() and method fromJSON() contain JSON object with information that lets user know about backup process is success or not.
 
 **Checklist item 4: Poll Material Source Components**  
-
 The data structure defined in the configuration files is represented by `boolean isAutoUpdate();` in MaterialConfig.java located "GoCD\config\config-api\src\main\java\com\thoughtworks\go\domain\materials". This boolean value defines whether or not this is manual pull or automatic poll. 
 
 This is will be represented by the code in 
@@ -134,13 +133,19 @@ Methods canEditPipeline(), isGroupAdministrator(), isUserAdminOfGroup(), isUserT
 Overall, authorization component of GoCD could prevent elevation of privileges attacks. However, giving a new user Administrator permission as default is not secure.  
 
 **Checklist item 10: SSL/TLS component**  
-Validation is performed with classes in directory "GoCD\base\src\main\java\com\thoughtworks\go\agent\common\ssl", including a null check in GoAgentServerHttpClient.java to protect against malformed certificates that failed to properly create the client object for the ssl/tls connection.
+Source code folder for SSL/TLS component is gocd\base\src\main\java\com\thoughtworks\go\agent\common\ssl\: CertificateFileParser.java file's certificates() method generates a list of "X.509" certificates with "X.509" hard-coded. This "X.509" certificate is used for agent trust store using X500Principle in GoAgentServerClientBuilder.java file. GoAgentServerHttpClientBuilder.java creates HttpClient object with SSL certificate. GoAgentServerHttpClient.java file handles HtpRequest with closable-http-response in execute() methods, it also has close() and reset() methods to close http client.
 
 GoCD excludes certain protocols in java classes in "GoCD\jetty9\src\main\java\com\thoughtworks\go\server\config". The class takes information through the "SystemEnvironment.java" file that is found in "GoCD\base\src\main\java\com\thoughtworks\go\util". The file defines the System Environment, including excluded ciphers and protocols. 
 
+SystemEnvironment.java class located in "GoCD\base\src\main\java\com\thoughtworks\go\util" defines what ciphers are excluded and what are included. This includes SSL/TLS certificates. This feature is to guard against insecure certificates to be used by GoCD. Through this file, we see that by default, GoCD uses TLSv2, which is a secure protocol for X509 certificates. This can be seen in the code `GO_SSL_TRANSPORT_PROTOCOL_TO_BE_USED_BY_AGENT = new GoStringSystemProperty("go.ssl.agent.protocol", "TLSv1.2");`. Many classes implement this java class to define what is allows and what is not. 
+
+It should be noted that what is found in SystemEnvironment.java is consistent with GoCD documentation. [GoCD Documentation](https://docs.gocd.org/current/installation/ssl_tls/setting_up_ciphers.html) has mentioned this: "The default transport protocol that agent uses to communicate with Go server is TLSv1.2. This can be overridden by configuring property go.ssl.agent.protocol to a suitable value based on your requirements."
+
 Between agents (processes that do the work across the pipelines in GoCD), SSL/TLS validaiton is performed through SSLInfrastructureService.java. Errors will be delivered to a LOGGER object, then returned in a string as a response. 
 
-Source code folder for SSL component is gocd\base\src\main\java\com\thoughtworks\go\agent\common\ssl\: CertificateFileParser.java file's certificates() method generates a list of "X.509" certificates with "X.509" hard-coded. This "X.509" certificate is used for agent trust store using X500Principle in GoAgentServerClientBuilder.java file. GoAgentServerHttpClientBuilder.java creates HttpClient object with SSL certificate. GoAgentServerHttpClient.java file handles HtpRequest with closable-http-response in execute() methods, it also has close() and reset() methods to close http client.
+Validation is performed with classes in directory "GoCD\base\src\main\java\com\thoughtworks\go\agent\common\ssl", including a null check in GoAgentServerHttpClient.java to protect against malformed certificates that failed to properly create the client object for the ssl/tls connection. Additionally, GoCD accurately implements library `org.apache.http.conn.ssl` for verification of valid SSL/TLS certificates in "SslVerificationMode.java" located in "GoCD\base\src\main\java\com\thoughtworks\go\util".
+
+Through code analysis, it appears that GoCD is accurately validating TLS certificates, and excluding insecure protocols, such as SSL by default. 
 
 **Checklist item 11: Check authentication configuration component against CSRF attack**  
 [AgentsControllerV6.java](https://github.com/gocd/gocd/blob/master/api/api-agents-v6/src/main/java/com/thoughtworks/go/apiv6/agents/AgentsControllerV6.java) is the main source code to allow users with administrator role to manage agents.
