@@ -94,7 +94,9 @@ It appears the pipeline workflow components of GoCD involve the source files: Go
 Overall, pipeline workflow components of GoCD could prevent elevation of privileges attacks.
 
 **Checklist item 6: Web UI Component**  
-TBD
+Web UI source code is located in the following two folders:
+* gocd\server\src\main\java\com\thoughtworks\go\server\ui: has individual java files to handle Agent, PluginInfo, Environment, Job, Pipeline Notification, Stage, Template UI view. these java files have getter, equals(), toString() methods. controller/ResponseRedirector.java file is the ui controller, which redirects response to text/html content using UTF-8 encoding.
+* gocd\server\src\test-fast\java\com\thoughtworks\go\server\ui (for auto-tool testing)
 
 **Checklist item 7: material update sub-system(MCU) component**  
 (ServerMaintenanceModeControllerv1.java)[https://github.com/gocd/gocd/blob/master/api/api-server-maintenance-mode-v1/src/main/java/com/thoughtworks/go/apiv1/servermaintenancemode/ServerMaintenanceModeControllerV1.java] is the main source code to determine which the internal subsystems and processes continue to work.
