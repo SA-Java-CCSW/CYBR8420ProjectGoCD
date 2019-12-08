@@ -133,7 +133,7 @@ Methods canEditPipeline(), isGroupAdministrator(), isUserAdminOfGroup(), isUserT
 Overall, authorization component of GoCD could prevent elevation of privileges attacks. However, giving a new user Administrator permission as default is not secure.  
 
 **Checklist item 10: SSL/TLS component**  
-TBD
+Source code folder for SSL component is gocd\base\src\main\java\com\thoughtworks\go\agent\common\ssl\: CertificateFileParser.java file's certificates() method generates a list of "X.509" certificates with "X.509" hard-coded. This "X.509" certificate is used for agent trust store using X500Principle in GoAgentServerClientBuilder.java file. GoAgentServerHttpClientBuilder.java creates HttpClient object with SSL certificate. GoAgentServerHttpClient.java file handles HtpRequest with closable-http-response in execute() methods, it also has close() and reset() methods to close http client.
 
 **Checklist item 11: Check authentication configuration component against CSRF attack**  
 [AgentsControllerV6.java](https://github.com/gocd/gocd/blob/master/api/api-agents-v6/src/main/java/com/thoughtworks/go/apiv6/agents/AgentsControllerV6.java) is the main source code to allow users with administrator role to manage agents.
