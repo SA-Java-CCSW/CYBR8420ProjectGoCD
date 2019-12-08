@@ -68,8 +68,8 @@ In "GoCD\server\src\main\java\com\thoughtworks\go\server\service" the java class
 * Method create() handles request and response. Backup server runs based on the current user name and inform user the backup result.
 * Method verifyConfirmHeader() verify request to see if it is satisfied in certain condition.
 
-[BackupConfigRepresenter.java](https://github.com/gocd/gocd/blob/master/api/api-backup-config-v1/src/main/java/com/thoughtworks/go/apiv1/backupconfig/representers/BackupConfigRepresenter.java) is code that allows user to configure backup settings for the GoCD server.
-Method toJSON() and method fromJSON() contain JSON object with information that lets user know about backup process is success or not.
+[BackupConfigRepresenter.java](https://github.com/gocd/gocd/blob/master/api/api-backup-config-v1/src/main/java/com/thoughtworks/go/apiv1/backupconfig/representers/BackupConfigRepresenter.java) is code that allows user to configure backup settings for the GoCD server.   
+* Method toJSON() and method fromJSON() contain JSON object with information that lets user know about backup process is success or not.
 
 **Checklist item 4: Poll Material Source Components**  
 
