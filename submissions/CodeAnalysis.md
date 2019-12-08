@@ -103,7 +103,20 @@ Comparing to the method enableMaintenanceModestate(), method disableMaintenanceM
 Method getRunningJobs() returns information about the current running job instances. In this method, each running pipeline instance in GoDashboardPipeline.java is collected and return as a list object.
 
 **Checklist item 8: Plugin Extension Point Component**  
-TBD
+Plugin Extension Point Component has the following source code folders:
+* gocd\server\src\test-fast\java\com\thoughtworks\go\server\service\plugins (mainly include auto-test code)
+* gocd\server\src\main\java\com\thoughtworks\go\server\service\plugins: AnalyticsPluginAssetsService.java takes care of metadata and assets generation/removal using PluginID. Plugin ID is used for metadata store/remove in onPluginMetadataStoreCreate()/onPluginMetadataRemove() methods. Plugin Assets are encoded using hard-code hash algorithm "SHA-256" in cacheStaticAssets() method.
+InvalidPluginTypeException.java defines plugin invalid exception.
+
+* gocd\server\src\main\webapp\WEB-INF\rails\app\views\admin\tasks\plugin (html form pages for plugin)
+* gocd\config\config-api\src\main\java\com\thoughtworks\go\plugins
+* gocd\plugin-infra
+* gocd\api\api-plugin-images
+* gocd\api\api-plugin-infos-v6 (converts plugin information to json)
+* gocd\api\api-plugin-settings-v1 (converts plugin settings to json)
+
+Default plugin extensions includes AuthorizationExtension, SCMExtension, ConfigRepoExtension, ElasticAgentExtension, TaskExtension, PackageMaterialExtension, NotificationPlugin, AnalyticsPlugin, ArtifactPlugin, SecretsExtension. 
+
 
 **Checklist item 9: Authorization Component**  
 It appears the authorization component of GoCD mainly involves two source files: [SecurityService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/SecurityService.java) and [GoConfigService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/GoConfigService.java).  
