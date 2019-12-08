@@ -94,16 +94,32 @@ It appears the pipeline workflow components of GoCD involve the source files: Go
 Overall, pipeline workflow components of GoCD could prevent elevation of privileges attacks.
 
 **Checklist item 6: Web UI Component**  
-TBD
+Web UI source code is located in the following two folders:
+* gocd\server\src\main\java\com\thoughtworks\go\server\ui: has individual java files to handle Agent, PluginInfo, Environment, Job, Pipeline Notification, Stage, Template UI view. these java files have getter, equals(), toString() methods. controller/ResponseRedirector.java file is the ui controller, which redirects response to text/html content using UTF-8 encoding.
+* gocd\server\src\test-fast\java\com\thoughtworks\go\server\ui (for auto-tool testing)
 
 **Checklist item 7: material update sub-system(MCU) component**  
-(ServerMaintenanceModeControllerv1.java)[https://github.com/gocd/gocd/blob/master/api/api-server-maintenance-mode-v1/src/main/java/com/thoughtworks/go/apiv1/servermaintenancemode/ServerMaintenanceModeControllerV1.java] is the main source code to determine which the internal subsystems and processes continue to work.
-Method enableMaintenanceModeState() handles the existing maintenance mode state and notice user with certain information by checking the method existingMaintenanceModeState() first to see if the server is available in maintenance mode. 
-Comparing to the method enableMaintenanceModestate(), method disableMaintenanceModeState() works in the opposite way, and handles the existing maintenance mode state and notice user with certain information if the server is available.
-Method getRunningJobs() returns information about the current running job instances. In this method, each running pipeline instance in GoDashboardPipeline.java is collected and return as a list object.
+Deployment pipeline runs when a material is added. In most cases, it is a source code material repository. GoCD server continuously polls the configured materials and when a new change or commit is found. A pipeline can even be configured with multiple materials.    
+[ServerMaintenanceModeControllerv1.java](https://github.com/gocd/gocd/blob/master/api/api-server-maintenance-mode-v1/src/main/java/com/thoughtworks/go/apiv1/servermaintenancemode/ServerMaintenanceModeControllerV1.java) is the main source code to determine which the internal subsystems and processes continue to work.
+* Method enableMaintenanceModeState() handles the existing maintenance mode state and notice user with certain information by checking the method existingMaintenanceModeState() first to see if the server is available in maintenance mode. 
+* Comparing to the method enableMaintenanceModestate(), method disableMaintenanceModeState() works in the opposite way, and handles the existing maintenance mode state and notice user with certain information if the server is available.
+* Method getRunningJobs() returns information about the current running job instances. In this method, each running pipeline instance in GoDashboardPipeline.java is collected and return as a list object.
 
 **Checklist item 8: Plugin Extension Point Component**  
-TBD
+Plugin Extension Point Component has the following source code folders:
+* gocd\server\src\test-fast\java\com\thoughtworks\go\server\service\plugins (mainly include auto-test code)
+* gocd\server\src\main\java\com\thoughtworks\go\server\service\plugins: AnalyticsPluginAssetsService.java takes care of metadata and assets generation/removal using PluginID. Plugin ID is used for metadata store/remove in onPluginMetadataStoreCreate()/onPluginMetadataRemove() methods. Plugin Assets are encoded using hard-code hash algorithm "SHA-256" in cacheStaticAssets() method.
+InvalidPluginTypeException.java defines plugin invalid exception.
+
+* gocd\server\src\main\webapp\WEB-INF\rails\app\views\admin\tasks\plugin (html form pages for plugin)
+* gocd\config\config-api\src\main\java\com\thoughtworks\go\plugins
+* gocd\plugin-infra
+* gocd\api\api-plugin-images
+* gocd\api\api-plugin-infos-v6 (converts plugin information to json)
+* gocd\api\api-plugin-settings-v1 (converts plugin settings to json)
+
+Default plugin extensions includes AuthorizationExtension, SCMExtension, ConfigRepoExtension, ElasticAgentExtension, TaskExtension, PackageMaterialExtension, NotificationPlugin, AnalyticsPlugin, ArtifactPlugin, SecretsExtension. 
+
 
 **Checklist item 9: Authorization Component**  
 It appears the authorization component of GoCD mainly involves two source files: [SecurityService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/SecurityService.java) and [GoConfigService.java](https://github.com/gocd/gocd/blob/master/server/src/main/java/com/thoughtworks/go/server/service/GoConfigService.java).  
@@ -118,13 +134,13 @@ Methods canEditPipeline(), isGroupAdministrator(), isUserAdminOfGroup(), isUserT
 Overall, authorization component of GoCD could prevent elevation of privileges attacks. However, giving a new user Administrator permission as default is not secure.  
 
 **Checklist item 10: SSL/TLS component**  
-Investigate SSL/TLS component to check if a warning message or alert occurs if a insecure self-signed SSL certificate is being used.
-
 Validation is performed with classes in directory "GoCD\base\src\main\java\com\thoughtworks\go\agent\common\ssl", including a null check in GoAgentServerHttpClient.java to protect against malformed certificates that failed to properly create the client object for the ssl/tls connection.
 
 GoCD excludes certain protocols in java classes in "GoCD\jetty9\src\main\java\com\thoughtworks\go\server\config". The class takes information through the "SystemEnvironment.java" file that is found in "GoCD\base\src\main\java\com\thoughtworks\go\util". The file defines the System Environment, including excluded ciphers and protocols. 
 
 Between agents (processes that do the work across the pipelines in GoCD), SSL/TLS validaiton is performed through SSLInfrastructureService.java. Errors will be delivered to a LOGGER object, then returned in a string as a response. 
+
+Source code folder for SSL component is gocd\base\src\main\java\com\thoughtworks\go\agent\common\ssl\: CertificateFileParser.java file's certificates() method generates a list of "X.509" certificates with "X.509" hard-coded. This "X.509" certificate is used for agent trust store using X500Principle in GoAgentServerClientBuilder.java file. GoAgentServerHttpClientBuilder.java creates HttpClient object with SSL certificate. GoAgentServerHttpClient.java file handles HtpRequest with closable-http-response in execute() methods, it also has close() and reset() methods to close http client.
 
 **Checklist item 11: Check authentication configuration component against CSRF attack**  
 [AgentsControllerV6.java](https://github.com/gocd/gocd/blob/master/api/api-agents-v6/src/main/java/com/thoughtworks/go/apiv6/agents/AgentsControllerV6.java) is the main source code to allow users with administrator role to manage agents.
@@ -151,7 +167,10 @@ After exploring the DHS SWAMP scanning platform we attempted to use the system t
 
 #### Findbugs 3.0.1
 This tool is a Desktop installed software. It was used to scan GoCD Java Bytecode for both Go Server (lib/go.class file) and Go Agent (lib/agent-bootstrapper.class file). 
-For Go Server and Go Agent, the same results are found (see [findbugs_server_result](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/findbugs_goServer.xml) and [findbugs_agent_result](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/findbugs_goAgent.xml)). 4 bugs are found, 2 of them are bad practices, 1 is incorrect lazy initialization, and the last one is inner class that could be made static. Dubious method used (bad practice) are found in two locations (com.thoughtworks.gocd.Boot.run() method invokes System.exit(); com.thoughtworks.gocd.AssertJava.checkSupported(JavaVersion) invokes System.exit()). Incorrect lazy initialization of static field JavaVersion currentJavaVersion at JavaVersion.java [lines81-82] in method com.thoughtworks.gocd.JavaVersion.current() on field com.thoughtworks.JavaVersion.currentJavaVersion. The class Handler$1 could be refactored into a named _static_inner class at Handler.java [lines 55-65] in class com.thoughtworks.gocd.onejar.Handler$1. 
+For Go Server and Go Agent, the same results are found (see [findbugs_server_result](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/findbugs_goServer.xml) and [findbugs_agent_result](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/findbugs_goAgent.xml)). 4 bugs are found, 2 of them are bad practices, 1 is incorrect lazy initialization, and the last one is inner class that could be made static. 
+Dubious method used (bad practice) are found in two locations (com.thoughtworks.gocd.Boot.run() method at gocd\jar-class-loader\src\main\java\com\thoughtworks\gocd\Boot.java line#93; com.thoughtworks.gocd.AssertJava.checkSupported(JavaVersion) method at gocd\jar-class-loader\src\main\java\com\thoughtworks\gocd\AssertJava.java line#38) where System.exit() are invoked. They belong to CWE-382: J2EE Bad Practices: Use of System.exit(). A J2EE application uses System.exit(), which also shuts down its container. It is never a good idea for a web application to attempt to shut down the application container. Access to a function that can shut down the application is an avenue for Denial of Service (DoS) attacks.
+
+Incorrect lazy initialization of static field JavaVersion currentJavaVersion at JavaVersion.java [lines81-82] in method com.thoughtworks.gocd.JavaVersion.current() on field com.thoughtworks.JavaVersion.currentJavaVersion. The class Handler$1 could be refactored into a named _static_inner class at Handler.java [lines 55-65] in class com.thoughtworks.gocd.onejar.Handler$1. 
 
 #### SpotBugs 3.1.12
 This tool was used in the SWAMP platform to scan the GoCD Java Bytecode. As shown in the [summary](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/SpotBugs-Scan-Summary.pdf) it has found total 40034 bugs. It turned out that only 152 bugs are related to security or malicious codes groups based on our manual scan of the generated assessment results. As a matter of fact only 23 lines of source codes are from GoCD, the rest are from third-party libraries which is beyond the scope of our code analysis. We further selected 14 bugs which are worth investigations by GoCD development team as shown below:  
