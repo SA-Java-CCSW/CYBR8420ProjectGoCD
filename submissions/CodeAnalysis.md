@@ -112,8 +112,15 @@ InvalidPluginTypeException.java defines plugin invalid exception.
 
 * gocd\server\src\main\webapp\WEB-INF\rails\app\views\admin\tasks\plugin (html form pages for plugin)
 * gocd\config\config-api\src\main\java\com\thoughtworks\go\plugins
-* gocd\plugin-infra
-* gocd\api\api-plugin-images
+* gocd\plugin-infra\go-plugin-access: implements plugin registry, information, logger, and handles request on access point.
+* gocd\plugin-infra\go-plugin-api: defines the interface for go plugin api communication. It also includes handling for material and task.
+* gocd\plugin-infra\go-plugin-domain: defines several diferent kinds of plugins' info class, including AnalyticsPlugin, ArtifactPlugin, AuthorizationPlugin, ConfigRepoPlugin, ElasticAgentPlugin, NotificationPlugin, PackageMaterialPlugin etc.
+* gocd\plugin-infra\go-plugin-configrepo: defines adapters for Artifact, Material, Task.
+* gocd\plugin-infra\go-plugin-infra: implements high level services for plugin load/unload, validation, management. It includes plugin jar change listener, Plugin change monitor, logging and registry service.
+* gocd\plugin-infra\go-plugin-activator: implements methods for plugin loading/unloading, registry, validation in DefaultGoPluginActivator.java file.
+* gocd\plugin-infra\go-plugin-api-internal: defines interfaces for plugin api logger and plugin registry service. No actual implmentation is done.
+* gocd\plugin-infra\plugins: auto-test source code.
+* gocd\api\api-plugin-images: PluginImagesController.java file handles request for plugin image.
 * gocd\api\api-plugin-infos-v6 (converts plugin information to json)
 * gocd\api\api-plugin-settings-v1 (converts plugin settings to json)
 
