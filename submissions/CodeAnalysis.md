@@ -99,6 +99,7 @@ Web UI source code is located in the following two folders:
 * gocd\server\src\test-fast\java\com\thoughtworks\go\server\ui (for auto-tool testing)
 
 **Checklist item 7: material update sub-system(MCU) component**  
+Deployment pipeline runs when a material is added. In most cases, it is a source code material repository. GoCD server continuously polls the configured materials and when a new change or commit is found. A pipeline can even be configured with multiple materials.    
 [ServerMaintenanceModeControllerv1.java](https://github.com/gocd/gocd/blob/master/api/api-server-maintenance-mode-v1/src/main/java/com/thoughtworks/go/apiv1/servermaintenancemode/ServerMaintenanceModeControllerV1.java) is the main source code to determine which the internal subsystems and processes continue to work.
 * Method enableMaintenanceModeState() handles the existing maintenance mode state and notice user with certain information by checking the method existingMaintenanceModeState() first to see if the server is available in maintenance mode. 
 * Comparing to the method enableMaintenanceModestate(), method disableMaintenanceModeState() works in the opposite way, and handles the existing maintenance mode state and notice user with certain information if the server is available.
