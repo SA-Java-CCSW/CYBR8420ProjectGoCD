@@ -218,6 +218,46 @@ This [concern](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/C
 #### RuboCop 0.47
 This tool was used in the SWAMP platform to scan the GoCD Ruby on Rails webapp.  As shown in the [summary](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/blob/master/CodeReview/RuboCop-Scan-Summary.pdf) the tools has found total 293 bugs. The "bugs" are style issues with no serious vulnerabilities identified.
 
+## Contributions
+Using Code Analysis, the group has narrowed the focus on 3 weaknesses that exist in GoCD. These 3 are: 
+
+**CWE-353: Missing Support for Cipher Integrity Check**  
+*Usage of insecure Java Cipher API call Cipher.getInstance("AES/CBC/PKCS5Padding") in line 62 and 85 of source file [AESEncrypter.java](https://github.com/gocd/gocd/blob/master/config/config-api/src/main/java/com/thoughtworks/go/security/AESEncrypter.java). 
+
+**CWE-798: Use of Hard-coded Credentials**  
+*Hard coded value found in the code is used to set keystore password of GoAgent and GoServer.
+*Hard coded value found in the code is used to set password of svnMaterialConfig.
+Since the issue of remediating hard-coded credentials is a architectural change, this fix will be suggested in the forum post, and not suggested through code. 
+
+**CWE-330: Use of Insufficiently Random Values**  
+*Usage of less secure random number generator in line 82 of source file [DownloadAction.java](https://github.com/gocd/gocd/blob/master/common/src/main/java/com/thoughtworks/go/domain/DownloadAction.java), in line 264 of source file [X509CertificateGenerator.java](https://github.com/gocd/gocd/blob/master/common/src/main/java/com/thoughtworks/go/security/X509CertificateGenerator.java), and line 55 of source file [SystemUtil.java](https://github.com/gocd/gocd/blob/master/base/src/main/java/com/thoughtworks/go/util/SystemUtil.java). More secure java.security.SecureRandom API should be used.
+
+While opening an issue in GoCD's github page, the message field contained "- Security issue? [**DO NOT** report it here. Use [hackerone](https://hackerone.com/gocd) or send a mail to support@thoughtworks.com]". In response, an email was sent to the email address provided, explaining the issue and the next steps to be taken regarding the security weakness.
+
+The email contains this message:
+
+`Hello GoCD Support
+
+Our team from the University of Nebraska at Omaha, SA-Java-CCSW, has analyzed GoCD opensource project as part of our coursework for Software Assurance. Documentation of our cource can be found [here](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD).
+
+The team has identified a few issues that should be fixed. The two main issues involve code changes. 
+
+These issues are as follows:
+
+**CWE-353: Missing Support for Cipher Integrity Check**  
+*Usage of insecure Java Cipher API call Cipher.getInstance("AES/CBC/PKCS5Padding") in line 62 and 85 of source file [AESEncrypter.java](https://github.com/gocd/gocd/blob/master/config/config-api/src/main/java/com/thoughtworks/go/security/AESEncrypter.java). 
+
+**CWE-330: Use of Insufficiently Random Values**  
+*Usage of less secure random number generator in line 82 of source file [DownloadAction.java](https://github.com/gocd/gocd/blob/master/common/src/main/java/com/thoughtworks/go/domain/DownloadAction.java), in line 264 of source file [X509CertificateGenerator.java](https://github.com/gocd/gocd/blob/master/common/src/main/java/com/thoughtworks/go/security/X509CertificateGenerator.java), and line 55 of source file [SystemUtil.java](https://github.com/gocd/gocd/blob/master/base/src/main/java/com/thoughtworks/go/util/SystemUtil.java). More secure java.security.SecureRandom API should be used.
+
+Please advise on best course of action to contribute to this opensource project. 
+
+Thank you. 
+
+Sincerely
+
+SA-Java-CCSW Team (Gavin C., Yifan S., Zhicheng C., Jun W.)` 
+
 ### Project Links
 * Team Repository: https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD
 * Project Board: https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD/projects/5
