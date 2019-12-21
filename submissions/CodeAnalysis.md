@@ -236,27 +236,21 @@ While opening an issue in GoCD's github page, the message field contained "- Sec
 
 The email contains this message:
 
-`Hello GoCD Support
+>Hello GoCD Support
 
-Our team from the University of Nebraska at Omaha, SA-Java-CCSW, has analyzed GoCD opensource project as part of our coursework for Software Assurance. Documentation of our cource can be found [here](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD).
+>Our team from the University of Nebraska at Omaha, SA-Java-CCSW, has analyzed GoCD opensource project as part of our coursework for Software Assurance. Documentation of our cource can be found [here](https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD).
 
-The team has identified a few issues that should be fixed. The two main issues involve code changes. 
+>The team has identified a few issues that should be fixed. The two main issues involve code changes. 
 
-These issues are as follows:
+>These issues are as follows:
 
-**CWE-353: Missing Support for Cipher Integrity Check**  
-*Usage of insecure Java Cipher API call Cipher.getInstance("AES/CBC/PKCS5Padding") in line 62 and 85 of source file [AESEncrypter.java](https://github.com/gocd/gocd/blob/master/config/config-api/src/main/java/com/thoughtworks/go/security/AESEncrypter.java). 
+>CWE-353: Missing Support for Cipher Integrity Check**  
+>Usage of insecure Java Cipher API call Cipher.getInstance("AES/CBC/PKCS5Padding") in line 62 and 85 of source file [AESEncrypter.java](https://github.com/gocd/gocd/blob/master/config/config-api/src/main/java/com/thoughtworks/go/security/AESEncrypter.java). 
 
-**CWE-330: Use of Insufficiently Random Values**  
-*Usage of less secure random number generator in line 82 of source file [DownloadAction.java](https://github.com/gocd/gocd/blob/master/common/src/main/java/com/thoughtworks/go/domain/DownloadAction.java), in line 264 of source file [X509CertificateGenerator.java](https://github.com/gocd/gocd/blob/master/common/src/main/java/com/thoughtworks/go/security/X509CertificateGenerator.java), and line 55 of source file [SystemUtil.java](https://github.com/gocd/gocd/blob/master/base/src/main/java/com/thoughtworks/go/util/SystemUtil.java). More secure java.security.SecureRandom API should be used.
+>CWE-330: Use of Insufficiently Random Values**  
+>Usage of less secure random number generator in line 82 of source file [DownloadAction.java](https://github.com/gocd/gocd/blob/master/common/src/main/java/com/thoughtworks/go/domain/DownloadAction.java), in line 264 of source file [X509CertificateGenerator.java](https://github.com/gocd/gocd/blob/master/common/src/main/java/com/thoughtworks/go/security/X509CertificateGenerator.java), and line 55 of source file [SystemUtil.java](https://github.com/gocd/gocd/blob/master/base/src/main/java/com/thoughtworks/go/util/SystemUtil.java). More secure java.security.SecureRandom API should be used.
 
-Please advise on best course of action to contribute to this opensource project. 
-
-Thank you. 
-
-Sincerely
-
-SA-Java-CCSW Team (Gavin C., Yifan S., Zhicheng C., Jun W.)` 
+>Please advise on best course of action to contribute to this opensource project. 
 
 ### Project Links
 * Team Repository: https://github.com/SA-Java-CCSW/CYBR8420ProjectGoCD
